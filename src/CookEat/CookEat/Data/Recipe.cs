@@ -9,7 +9,7 @@ namespace CookEat
 	public class Recipe
 	{
 		//change properties to private
-		public int id { get; set; }
+        public int id { get; set; }
 		public int preparationTime { get; set; }
 		public string link { get; set; }
 		public int numberOfDiners { get; set; }
