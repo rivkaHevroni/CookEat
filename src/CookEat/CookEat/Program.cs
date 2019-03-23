@@ -8,6 +8,6 @@ namespace CookEat
 {
 	class Program
 	{
-		// my first git proj
+		// my first git proj with new commit
 	}
 }
