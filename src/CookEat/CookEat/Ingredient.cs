@@ -8,7 +8,7 @@ namespace CookEat
 {
 	public class Ingredient
 	{
-		private string name { get; set; }
-		private int quantity { get; set; }
+		public string Name { get; set; }
+		public int Quantity { get; set; }
 	}
 }

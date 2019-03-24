@@ -8,8 +8,9 @@ namespace CookEat
 {
 	public class UserProfile
 	{
-		private string userID { get; set; }
-		private List<Recipe> userRecipes { get; set; }
-
+		public int Id { get; set; }
+		public string UserID { get; set; }
+		public List<string> UserRecipes { get; set; }
+	
 	}
 }
