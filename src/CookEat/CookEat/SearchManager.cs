@@ -3,16 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CookEat.Requests;
 using MongoDB.Driver;
+
 
 namespace CookEat
 {
-    public interface ISearchManager
-    {
-        SearchResponse Search(SearchRequest searchRequest);
-    }
-
     public class SearchManager : ISearchManager
     {
         private readonly DBManager DBManager;
@@ -22,8 +17,8 @@ namespace CookEat
             DBManager = dbManager;
         }
 
-        public SearchResponse Search(SearchRequest searchRequest)
-        {
+		public SearchResponse Search(SearchRequest searchRequest)
+		{
             List<Recipe> results;
             if (searchRequest.SearchQuery != null)
             {
@@ -55,8 +50,8 @@ namespace CookEat
 
         private List<Recipe> SearchByImage(byte[] imageBytes)
         {
-            //upload image to google vision
-            // translate result to hebrew
+            // the frontend create from image bytes!!!!!!!!!
+			//sent the byts to vision helper and get heberw query
             string result = "a"; //instead of translation result
             return SearchByQuery(result);
         }
@@ -68,5 +63,12 @@ namespace CookEat
             //return sorted list
             return new List<Recipe>();
         }
-    }
+
+		public List<Recipe> GetRecipesFromIDsRecipesList(List<string> idsRecipesList) // async??
+		{
+			List<Recipe> result = null;
+			//create recipes list from ids Recipes List
+			return result;
+		}
+	}
 }

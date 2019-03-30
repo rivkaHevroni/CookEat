@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace CookEat
 {
-    public class WallaScraper
-    {
-		
-    }
+	public class tokenizationHelper
+	{
+	}
 }

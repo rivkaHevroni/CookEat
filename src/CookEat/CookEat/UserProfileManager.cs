@@ -43,6 +43,18 @@ namespace CookEat
             userProfile.UserRecipes.Remove(i_RecipeID);
             await collection.ReplaceOneAsync(filter, userProfile);
         }
-    }
+
+		public RecipeResponse SearchRecipes(RecipeRequest searchRecipes)
+		{
+			RecipeResponse result = null;
+			//get IdUser from RecipeRequest
+			// get userProfile from DB manager
+			//sent idRecipeList from userprofile to searchManager
+			//creat RecipeResponse
+
+			return result;
+		}
+
+	}
 }
 
