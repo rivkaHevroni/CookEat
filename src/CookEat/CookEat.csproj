@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\Artifacts\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\Artifacts\bin\Release</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,67 +44,65 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CrawlingManagerProfile.cs" />
+    <Compile Include="Data\CrawlingManagerProfile.cs" />
     <Compile Include="Data\Requests\SearchRequest.cs" />
-    <Compile Include="DBManager.cs" />
-    <Compile Include="Ingredient.cs" />
+    <Compile Include="Utils\DBManager.cs" />
+    <Compile Include="Data\Ingredient.cs" />
     <Compile Include="Data\Requests\RecipeRequest.cs" />
     <Compile Include="Data\Requests\RecipeResponse.cs" />
-    <Compile Include="ISearchManager.cs" />
-    <Compile Include="scrapers\Scraper.cs" />
-    <Compile Include="SearchManager.cs" />
-    <Compile Include="scrapers\MakoScraper.cs" />
+    <Compile Include="Utils\scrapers\Scraper.cs" />
+    <Compile Include="Utils\SearchManager.cs" />
+    <Compile Include="Utils\scrapers\MakoScraper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Data\Recipe.cs" />
     <Compile Include="Data\UserProfile.cs" />
-    <Compile Include="scrapers\ScrapingManager.cs" />
+    <Compile Include="Utils\scrapers\ScrapingManager.cs" />
     <Compile Include="Data\Requests\SearchResponse.cs" />
-    <Compile Include="tokenizationHelper.cs" />
-    <Compile Include="ApiHelpers\TranslateHelper.cs" />
-    <Compile Include="UserProfileManager.cs" />
-    <Compile Include="scrapers\WallaScraper.cs" />
-    <Compile Include="ApiHelpers\VisionHelper.cs" />
-    <Compile Include="WebCrolling.cs" />
+    <Compile Include="Utils\Helpers\tokenizationHelper.cs" />
+    <Compile Include="Utils\Helpers\TranslateHelper.cs" />
+    <Compile Include="Utils\UserProfileManager.cs" />
+    <Compile Include="Utils\scrapers\WallaScraper.cs" />
+    <Compile Include="Utils\Helpers\VisionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncUtilities, Version=0.6.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AsyncUtilities.0.6.1\lib\netstandard1.0\AsyncUtilities.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\AsyncUtilities.0.6.1\lib\netstandard1.0\AsyncUtilities.dll</HintPath>
     </Reference>
     <Reference Include="DnsClient, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
-      <HintPath>..\packages\DnsClient.1.2.0\lib\net45\DnsClient.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\DnsClient.1.2.0\lib\net45\DnsClient.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Google.Apis.1.38.0\lib\net45\Google.Apis.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.Core, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.Core.1.38.0\lib\net45\Google.Apis.Core.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Google.Apis.Core.1.38.0\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
     <Reference Include="Google.Apis.PlatformServices, Version=1.38.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
-      <HintPath>..\packages\Google.Apis.1.38.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Google.Apis.1.38.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.11.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\HtmlAgilityPack.1.11.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Microsoft.Owin.4.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Microsoft.Owin.Host.SystemWeb.4.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Bson.2.8.0\lib\net452\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\MongoDB.Bson.2.8.0\lib\net452\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.2.8.0\lib\net452\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\MongoDB.Driver.2.8.0\lib\net452\MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver.Core, Version=2.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.Core.2.8.0\lib\net452\MongoDB.Driver.Core.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\MongoDB.Driver.Core.2.8.0\lib\net452\MongoDB.Driver.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <HintPath>..\..\Artifacts\obj\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -118,9 +116,6 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

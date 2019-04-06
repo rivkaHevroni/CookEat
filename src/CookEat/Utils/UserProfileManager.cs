@@ -17,10 +17,10 @@ namespace CookEat
             DataBaseManager = dataBaseManager;
         }
 
-        public async Task InsertToRecipesCollection(Recipe i_RecipeToInsert)// remove
+        public async Task InsertToRecipesCollection(Recipe iRecipeToInsert)// remove
         {
             var collection = DataBaseManager.RecipesCollection;
-            await collection.InsertOneAsync(i_RecipeToInsert);
+            await collection.InsertOneAsync(iRecipeToInsert);
         }
 
         public async Task InsertToUserProfileCollection(UserProfile i_UserProfileToInsert)
