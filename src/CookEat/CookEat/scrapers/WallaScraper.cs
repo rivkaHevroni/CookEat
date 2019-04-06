@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace CookEat
 {
-    public class WallaScraper
-    {
-		
-    }
+	public class WallaScraper : Scraper
+	{
+		public WallaScraper()
+			: base("https://food.walla.co.il/")
+		{
+		}
+
+		public override Task<Recipe> ScrapeAsync(string url)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
