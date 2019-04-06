@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Http.Formatting;
-using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.ExceptionHandling;
-using System.Web.Http.Metadata;
-using System.Web.Http.Metadata.Providers;
-using System.Web.Http.Tracing;
-using Autofac.Core.Lifetime;
-using Autofac.Core.Registration;
-using Autofac.Integration.WebApi;
-using CookEat.Extensions;
+﻿using CookEat.Extensions;
 using Microsoft.Owin.Hosting;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Owin;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CookEat
 {
@@ -38,17 +26,8 @@ namespace CookEat
                 new StartOptions("http://*:80"),
                 app =>
                 {
-                    var httpConfiguration = new HttpConfiguration();
-                    httpConfiguration.MapHttpAttributeRoutes();
-                    httpConfiguration.Formatters.Clear();
-                    httpConfiguration.Formatters.Add(new JsonMediaTypeFormatter());
-                    httpConfiguration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
-                    {
-                        ContractResolver = new CamelCasePropertyNamesContractResolver()
-                    };
                     app.
                         UseWebApi(
-                            httpConfiguration,
                             new Dictionary<Type, Func<object>>
                             {
                                 [typeof(SearchManager)] = () => new SearchManager(dbManager)
