@@ -31,7 +31,7 @@ namespace CookEat
                     Single(scraper => scraper.IsRelevantUrl(url)).
                     ScrapeAsync(url);
 
-                    await _dBManager.RecipesCollection.InsertOneAsync(recipe);
+                    //await _dBManager.RecipesCollection.InsertOneAsync(recipe);
                 }).ToList();
         }
 

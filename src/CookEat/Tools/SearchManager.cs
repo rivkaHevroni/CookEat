@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Web.Http;
+using MongoDB.Driver;
 
 namespace CookEat
 {
-    public class SearchManager
+    [RoutePrefix("search")]
+    public class SearchManager : ApiController
     {
         private readonly DBManager _dbManager;
 
@@ -11,7 +16,9 @@ namespace CookEat
             _dbManager = dbManager;
         }
 
-        public SearchResponse Search(SearchRequest searchRequest)
+        [Route("")]
+        [HttpPost]
+        public SearchResponse Search([FromBody] SearchRequest searchRequest)
         {
             List<Recipe> results;
             if (searchRequest.SearchQuery != null)
