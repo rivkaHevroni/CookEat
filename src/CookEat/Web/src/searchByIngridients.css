@@ -1,0 +1,20 @@
+body{
+    background-image: url("ingredients.jpg");
+    background-size: 100%;
+}
+#logo{
+    font-family: 'Baloo Chettan', cursive;
+    font-size: 30px;
+    margin: 0px;
+    padding: 0px;
+}
+#title1{
+    font-size: 40px;
+    font-weight: bold;
+}
+.text-center{
+    text-align: center;
+}
+.search{
+    text-align: center;
+}
