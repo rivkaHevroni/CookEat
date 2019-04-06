@@ -4,11 +4,14 @@ using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
 using System.Web.Http.Dispatcher;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CookEat.Extensions
 {
@@ -16,9 +19,16 @@ namespace CookEat.Extensions
     {
         public static IAppBuilder UseWebApi(
             this IAppBuilder appBuilder,
-            HttpConfiguration httpConfiguration,
             Dictionary<Type, Func<object>> controllerTypeToCreatorMapping)
         {
+            var httpConfiguration = new HttpConfiguration();
+            httpConfiguration.MapHttpAttributeRoutes();
+            httpConfiguration.Formatters.Clear();
+            httpConfiguration.Formatters.Add(new JsonMediaTypeFormatter());
+            httpConfiguration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
             httpConfiguration.DependencyResolver = new DependencyResolver(controllerTypeToCreatorMapping);
             httpConfiguration.Services.Replace(
                 typeof(IHttpControllerSelector),
