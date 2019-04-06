@@ -1,24 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 using MongoDB.Driver;
-
 
 namespace CookEat
 {
-    public class SearchManager : ISearchManager
+    [RoutePrefix("search")]
+    public class SearchManager : ApiController
     {
-        private readonly DBManager DBManager;
+        private readonly DBManager _dbManager;
 
         public SearchManager(DBManager dbManager)
         {
-            DBManager = dbManager;
+            _dbManager = dbManager;
         }
 
-		public SearchResponse Search(SearchRequest searchRequest)
-		{
+        [Route("")]
+        [HttpPost]
+        public SearchResponse Search([FromBody] SearchRequest searchRequest)
+        {
             List<Recipe> results;
             if (searchRequest.SearchQuery != null)
             {
@@ -39,6 +40,13 @@ namespace CookEat
             };
         }
 
+        public List<Recipe> GetRecipesFromIDsRecipesList(List<string> idsRecipesList) // async??
+        {
+            List<Recipe> result = null;
+            //create recipes list from ids Recipes List
+            return result;
+        }
+
         private List<Recipe> SearchByQuery(string query)
         {
             //takes the query
@@ -51,7 +59,7 @@ namespace CookEat
         private List<Recipe> SearchByImage(byte[] imageBytes)
         {
             // the frontend create from image bytes!!!!!!!!!
-			//sent the byts to vision helper and get heberw query
+            //sent the byts to vision helper and get heberw query
             string result = "a"; //instead of translation result
             return SearchByQuery(result);
         }
@@ -63,12 +71,5 @@ namespace CookEat
             //return sorted list
             return new List<Recipe>();
         }
-
-		public List<Recipe> GetRecipesFromIDsRecipesList(List<string> idsRecipesList) // async??
-		{
-			List<Recipe> result = null;
-			//create recipes list from ids Recipes List
-			return result;
-		}
-	}
+    }
 }
