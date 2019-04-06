@@ -1,0 +1,50 @@
+h1{
+    direction: rtl;
+    font-size: 25px;
+}
+h2{
+    font-size: 35px;
+}
+.alignRight{
+    direction: rtl;
+}
+.text-left{
+    text-align: left;
+    margin-top: 200px;
+    margin-left: 50px;
+    width: 50%;
+}
+#logo{
+    font-family: 'Baloo Chettan', cursive;
+    font-size: 30px;
+    margin: 0px;
+    padding: 0px;
+}
+.searchButtons{
+    text-align: center;
+}
+.welcome{
+    text-align: center;
+    color: white;
+}
+body{
+    background-image: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg");
+    background-size: 100%;
+}
+.column{
+    float: left;
+    width: 33.33%;
+    padding: 10px;
+}
+#searchByIng{
+    background-color:#aaa;
+}
+#searchByImg{
+    background-color:#bbb;
+}
+#searchFree{
+    background-color:#ccc;
+}
+
+
+
