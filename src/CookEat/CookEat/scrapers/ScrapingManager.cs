@@ -5,19 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using HtmlAgilityPack;
+using AsyncUtilities;
 
 namespace CookEat
 {
     public class ScrapingManager
     {
-        public WallaScraper WallaScraper;
-        public MakoScraper MakoScraper;
+		private readonly DBManager _dBManager;
+		private readonly List<Scraper> _scrapers;
 
-        public ScrapingManager()
+
+		public ScrapingManager(DBManager dBManager)
         {
-            WallaScraper = new WallaScraper();
-            MakoScraper = new MakoScraper();
+			_dBManager = dBManager;
+			_scrapers = new List<Scraper>
+			{
+				new WallaScraper(),
+				new MakoScraper()
+			};
+
         }
+
+		public async Task ScrapeAsync(List<string> urls)
+		{
+			 await urls.Select(
+				async url =>
+				{
+					var recipe = await _scrapers.
+					Single(scraper => scraper.IsRelevantUrl(url)).
+					ScrapeAsync(url);
+
+					await _dBManager.RecipesCollection.InsertOneAsync(recipe);
+				}).ToList();
+		}
 
 		public void GetPropertiesFromHTML(string url)
 		{
