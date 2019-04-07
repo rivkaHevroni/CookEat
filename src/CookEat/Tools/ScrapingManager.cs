@@ -27,7 +27,7 @@ namespace CookEat
              await urls.Select(
                 async url =>
                 {
-                    var recipe = await _scrapers.
+					Recipe recipe = await _scrapers.
                     Single(scraper => scraper.IsRelevantUrl(url)).
                     ScrapeAsync(url);
 
