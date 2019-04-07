@@ -70,7 +70,7 @@ namespace CookEat.Extensions
         private static TValue GetValueOrDefault<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             TKey key) =>
-                dictionary.TryGetValue(key, out var value)
+                dictionary.TryGetValue(key, out TValue value)
                     ? value
                     : default;
 

@@ -8,11 +8,12 @@ namespace CookEat
 {
 	public class Recipe
 	{
-        public int Id { get; set; }
-		public int PreparationTime { get; set; }
+        public uint Id { get; set; }
+		public string PreparationTime { get; set; }
 		public string Link { get; set; }
-		public int NumberOfDiners { get; set; }
+		public string NumberOfDiners { get; set; }
 		public string Picture { get; set; }
 		public string RecipeTitle { get; set; }
+		public List<Ingredient> IngredientList { get; set; }
 	}
 }
