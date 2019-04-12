@@ -14,6 +14,7 @@ namespace CookEat
 		public string NumberOfDiners { get; set; }
 		public string Picture { get; set; }
 		public string RecipeTitle { get; set; }
-		public List<Ingredient> IngredientList { get; set; }
+
+        public List<Ingredient> IngredientsList { get; set; }
 	}
 }
