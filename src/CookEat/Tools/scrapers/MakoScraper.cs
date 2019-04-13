@@ -32,7 +32,7 @@ namespace CookEat
 			recipeToAdd.NumberOfDiners = numOfDishes[0].InnerText;
 			recipeToAdd.Picture = image;
 			recipeToAdd.RecipeTitle = title;
-			recipeToAdd.IngredientList = createIngredientsList(ingredients);
+			recipeToAdd.IngredientsList = createIngredientsList(ingredients);
 
 			return recipeToAdd;
         }
