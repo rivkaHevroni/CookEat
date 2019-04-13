@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using HtmlAgilityPack;
+using CookEat.Data;
 
 namespace CookEat
 {
@@ -75,8 +76,11 @@ namespace CookEat
 
 			for (int currIngredientIndex = 0; currIngredientIndex < IngredientsListAmounts.Count; currIngredientIndex++)
 			{
-				ingredientsList[currIngredientIndex].Quantity.Amount = IngredientsListAmounts[currIngredientIndex];
-				ingredientsList[currIngredientIndex].Name = IngredientsNamesList[currIngredientIndex];
+				Ingredient newIngredient = new Ingredient();
+
+				newIngredient.Quantity = new Quantity(IngredientsListAmounts[currIngredientIndex]);
+				newIngredient.Name = IngredientsNamesList[currIngredientIndex];
+				ingredientsList.Add(newIngredient);
 			}
 
 			return ingredientsList;
