@@ -45,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\CrawllerProfile.cs" />
+    <Compile Include="Data\Quantity.cs" />
     <Compile Include="Data\Requests\SearchRequest.cs" />
     <Compile Include="Extensions\AppBuilderExtensions.cs" />
     <Compile Include="Extensions\TaskExtension.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Tools\Crawlers\Crawller.cs" />
     <Compile Include="Tools\Crawlers\ShefLavanCrawler.cs" />
     <Compile Include="Tools\CrawllerManager.cs" />
@@ -55,8 +57,8 @@
     <Compile Include="Data\Ingredient.cs" />
     <Compile Include="Data\Requests\GetUserSavedRecipesRequest.cs" />
     <Compile Include="Data\Requests\GetUserSavedRecipesResponse.cs" />
+    <Compile Include="Tools\scrapers\HashefHalavanScraper.cs" />
     <Compile Include="Tools\scrapers\Scraper.cs" />
-    <Compile Include="Tools\scrapers\WallaItemScraper.cs" />
     <Compile Include="Tools\SearchManager.cs" />
     <Compile Include="Tools\scrapers\MakoScraper.cs" />
     <Compile Include="Program.cs" />
@@ -67,7 +69,6 @@
     <Compile Include="Tools\Helpers\tokenizationHelper.cs" />
     <Compile Include="Tools\Helpers\TranslateHelper.cs" />
     <Compile Include="Tools\UserProfileManager.cs" />
-    <Compile Include="Tools\scrapers\WallaRecipeScraper.cs" />
     <Compile Include="Tools\Helpers\VisionHelper.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ namespace CookEat
 
 
             DBManager dbManager = new DBManager();
-            ScrapingManager scrapingManger = new ScrapingManager(dbManager);
+            ScrapingManager scrapingManger = new ScrapingManager(dbManager, cancellationToken);
             await scrapingManger.ScrapeAsync(htmls);
 
             using (WebApp.Start(

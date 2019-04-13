@@ -21,7 +21,7 @@ namespace CookEat
             _dBManager = dBManager;
             _scrapers = new List<Scraper>
             {
-                new WallaItemScraper(),
+                new HashefHalavanScraper(),
                 new MakoScraper()
             };
 
