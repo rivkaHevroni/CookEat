@@ -1,7 +1,11 @@
 ﻿using AsyncUtilities;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using CookEat.Tools.scrapers;
+using Humanizer;
+using TaskExtensions = AsyncUtilities.TaskExtensions;
 
 namespace CookEat
 {
@@ -10,16 +14,32 @@ namespace CookEat
         private readonly DBManager _dBManager;
         private readonly List<Scraper> _scrapers;
 
+        public Queue<string> UrlsQueue;
 
-        public ScrapingManager(DBManager dBManager)
+        public ScrapingManager(DBManager dBManager, CancellationToken cancellationToken)
         {
             _dBManager = dBManager;
             _scrapers = new List<Scraper>
             {
-                new WallaScraper(),
+                new WallaItemScraper(),
                 new MakoScraper()
             };
 
+            UrlsQueue = new Queue<string>();
+
+            TaskExtension.RunPeriodicly(
+                async () =>
+                {
+                    var urlList = new List<string>();
+                    while (UrlsQueue.Count != 0)
+                    {
+                        urlList.Add(UrlsQueue.Dequeue());
+                    }
+
+                    await ScrapeAsync(urlList);
+                },
+                1.Hours(),
+                cancellationToken);
         }
 
         public async Task ScrapeAsync(List<string> urls)
