@@ -11,7 +11,7 @@ namespace CookEat
         public uint Id { get; set; }
         public string PreparationTime { get; set; }
         public string Link { get; set; }
-        public string NumberOfDiners { get; set; }
+        public int NumberOfDishes { get; set; }
         public string Picture { get; set; }
         public string RecipeTitle { get; set; }
         public List<Ingredient> IngredientsList { get; set; }
