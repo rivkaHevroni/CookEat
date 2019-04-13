@@ -11,9 +11,9 @@ namespace CookEat
     {
         private const string connectionString = "mongodb+srv://CookEatUser:lianrivkasapir123@cluster0-dihhr.mongodb.net/test?retryWrites=true";
         
-        public IMongoCollection<Recipe> RecipesCollection { get; set; }
-        public IMongoCollection<UserProfile> UserProfileCollection { get; set; }
-        public IMongoCollection<CrawlingManagerProfile> CrawlingManagerProfileCollection { get; set; }
+        public IMongoCollection<Recipe> RecipesCollection { get;}
+        public IMongoCollection<UserProfile> UserProfileCollection { get; }
+        public IMongoCollection<CrawllerProfile> CrawlingManagerProfileCollection { get; }
 
         public DBManager()
         {
@@ -21,7 +21,7 @@ namespace CookEat
             var database = client.GetDatabase("CookEatDB");
             RecipesCollection = database.GetCollection<Recipe>(nameof(RecipesCollection));
             UserProfileCollection = database.GetCollection<UserProfile>(nameof(UserProfileCollection));
-            CrawlingManagerProfileCollection = database.GetCollection<CrawlingManagerProfile>(nameof(CrawlingManagerProfileCollection));
+            CrawlingManagerProfileCollection = database.GetCollection<CrawllerProfile>(nameof(CrawlingManagerProfileCollection));
         }
     }
 }

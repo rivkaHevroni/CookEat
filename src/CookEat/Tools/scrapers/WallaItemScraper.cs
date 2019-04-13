@@ -50,22 +50,39 @@ namespace CookEat.Tools.scrapers
         private List<Ingredient> createIngredientsList(HtmlNodeCollection ingredientsAmount, HtmlNodeCollection ingredientsName)
         {
             List<int> IngredientsListAmounts = new List<int>();
-            for (int i = 0; i < ingredientsAmount.Count; i++)
-            {
-                IngredientsListAmounts.Add(int.Parse(ingredientsAmount[i].InnerText));
-            }
-
+            List<string> TempIngredientsNamesList = new List<string>();
             List<string> IngredientsNamesList = new List<string>();
+
             for (int i = 0; i < IngredientsNamesList.Count; i++)
             {
-                IngredientsNamesList.Add(ingredientsName[i].InnerText);
+                TempIngredientsNamesList.Add(ingredientsName[i].InnerText);
             }
 
-            List<Ingredient> IngredientsList = new List<Ingredient>();
-            for (int i = 0; i < ingredientsAmount.Count; i++)
+            for (int currIngredient = 0; currIngredient < ingredientsAmount.Count; currIngredient++)
             {
-                IngredientsList[i].Quantity = int.Parse(ingredientsAmount[i].InnerText);
-                IngredientsList[i].Name = ingredientsName[i].InnerText;
+                string nodeToString = ingredientsAmount[currIngredient].InnerText;
+                string[] WordsInStr = nodeToString.Split(' ');
+                int amount;
+                if (int.TryParse(WordsInStr[0], out amount))
+                {
+                    IngredientsListAmounts.Add(amount);
+                    string UpdataedIngredientName= null;
+                    for (int wordToConcatIndex = 1; wordToConcatIndex < WordsInStr.Length; wordToConcatIndex++)
+                    {
+                        UpdataedIngredientName += WordsInStr[wordToConcatIndex];
+                    }
+
+                    UpdataedIngredientName += TempIngredientsNamesList[currIngredient];
+                    IngredientsNamesList.Add(UpdataedIngredientName);
+                }
+            }
+        
+            List<Ingredient> IngredientsList = new List<Ingredient>();
+
+            for (int currIngredient = 0; currIngredient < ingredientsAmount.Count; currIngredient++)
+            {
+                IngredientsList[currIngredient].Quantity = IngredientsListAmounts[currIngredient];
+                IngredientsList[currIngredient].Name = IngredientsNamesList[currIngredient];
             }
             return IngredientsList;
         }
@@ -73,6 +90,5 @@ namespace CookEat.Tools.scrapers
 
 
 
-    }
     }
 }
