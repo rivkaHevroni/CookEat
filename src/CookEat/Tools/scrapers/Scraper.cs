@@ -23,6 +23,25 @@ namespace CookEat
         public bool IsRelevantUrl(string url) =>
             url.StartsWith(BaseUrl);
 
+		public List<string> createnormalaizedIngredientsList(HtmlNodeCollection ingredients)
+		{
+			List<string> normalaizedIngredients = new List<string>();
+
+			for (int currIngredientsIndex = 0; currIngredientsIndex < ingredients.Count; currIngredientsIndex++)
+			{
+				string ingredient = ingredients[currIngredientsIndex].InnerText;
+				List<string> ingredientValues = TokanizationHelper.Tokenaize(ingredient);
+
+				for (int ingredientValueIndex = 0; ingredientValueIndex < ingredientValues.Count; ingredientValueIndex++)
+				{
+					normalaizedIngredients.Add(ingredientValues[ingredientValueIndex]);
+				}
+
+			}
+
+			return normalaizedIngredients;
+		}
+
         protected uint GetIdFromUrl(string url)
         {
             return BitConverter.ToUInt32(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(url)), 0);

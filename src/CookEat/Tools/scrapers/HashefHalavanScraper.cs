@@ -26,16 +26,18 @@ namespace CookEat.Tools.scrapers
             string numberOfDishes = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='properties']/span[@class='property']/strong").InnerText;
             var ingredients = htmlDoc.DocumentNode.SelectNodes("//div[@class='ingredients col-lg-3 col-md-4 col-sm-6 ']/ul[@class='ingredients-list']/li");
 
-            Recipe recipeToAdd = new Recipe
-            {
-                Id = GetIdFromUrl(link),
-                PreparationTime = preperationTime,
-                Link = link,
-                NumberOfDishes = GetNumberOfDishes(numberOfDishes),
-                Picture = image,
-                RecipeTitle = title,
-                IngredientsList = createIngredientsList(ingredients)
-            };
+			Recipe recipeToAdd = new Recipe
+			{
+				Id = GetIdFromUrl(link),
+				PreparationTime = preperationTime,
+				Link = link,
+				NumberOfDishes = GetNumberOfDishes(numberOfDishes),
+				Picture = image,
+				RecipeTitle = title,
+				IngredientsList = createIngredientsList(ingredients),
+				ValuesToSearch = TokanizationHelper.Tokenaize(title),
+				NormalaizedIngredients = createnormalaizedIngredientsList(ingredients)
+			};
 
             return recipeToAdd;
         }
