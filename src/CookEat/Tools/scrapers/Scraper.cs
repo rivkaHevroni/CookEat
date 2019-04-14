@@ -23,7 +23,7 @@ namespace CookEat
         public bool IsRelevantUrl(string url) =>
             url.StartsWith(BaseUrl);
 
-		public List<string> createnormalaizedIngredientsList(HtmlNodeCollection ingredients)
+		public List<string> CreatenormalaizedIngredientsList(HtmlNodeCollection ingredients)
 		{
 			List<string> normalaizedIngredients = new List<string>();
 
