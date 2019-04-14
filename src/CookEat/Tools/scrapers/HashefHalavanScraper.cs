@@ -34,9 +34,9 @@ namespace CookEat.Tools.scrapers
 				NumberOfDishes = GetNumberOfDishes(numberOfDishes),
 				Picture = image,
 				RecipeTitle = title,
-				IngredientsList = createIngredientsList(ingredients),
+				IngredientsList = CreateIngredientsList(ingredients),
 				ValuesToSearch = TokanizationHelper.Tokenaize(title),
-				NormalaizedIngredients = createnormalaizedIngredientsList(ingredients)
+				NormalaizedIngredients = CreatenormalaizedIngredientsList(ingredients)
 			};
 
             return recipeToAdd;

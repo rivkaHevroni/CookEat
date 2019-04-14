@@ -32,9 +32,9 @@ namespace CookEat
                 NumberOfDishes = GetNumberOfDishes(numOfDishes[0].InnerText),
                 Picture = image,
                 RecipeTitle = title,
-                IngredientsList = createIngredientsList(ingredients),
+                IngredientsList = CreateIngredientsList(ingredients),
 				ValuesToSearch = TokanizationHelper.Tokenaize(title),
-				NormalaizedIngredients = createnormalaizedIngredientsList(ingredients)
+				NormalaizedIngredients = CreatenormalaizedIngredientsList(ingredients)
 			};
 
             return recipeToAdd;
