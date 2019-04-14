@@ -61,7 +61,7 @@ namespace CookEat
             return numOfDishes;
         }
 
-		protected List<Ingredient> createIngredientsList(HtmlNodeCollection ingredients)
+		protected List<Ingredient> CreateIngredientsList(HtmlNodeCollection ingredients)
 		{
 			List<double> IngredientsListAmounts = new List<double>();
 			List<string> IngredientsNamesList = new List<string>();
@@ -74,7 +74,7 @@ namespace CookEat
 				if (double.TryParse(WordsInStr[0], out amount))
 				{
 					IngredientsListAmounts.Add(amount);
-					IngredientsNamesList.Add(concatIngredientName(WordsInStr));
+					IngredientsNamesList.Add(ConcatIngredientName(WordsInStr));
 
 				}
 				else if (Constants.IngredientNameToAmount.ContainsKey(WordsInStr[0]))
@@ -82,7 +82,7 @@ namespace CookEat
 					double amountValue = Constants.IngredientNameToAmount[WordsInStr[0]];
 
 					IngredientsListAmounts.Add(amountValue);
-					IngredientsNamesList.Add(concatIngredientName(WordsInStr));
+					IngredientsNamesList.Add(ConcatIngredientName(WordsInStr));
 				}
 				else
 				{
@@ -105,7 +105,7 @@ namespace CookEat
 			return ingredientsList;
 		}
 
-		private string concatIngredientName(string[] splitedWords)
+		private string ConcatIngredientName(string[] splitedWords)
 		{
 			string ingredientName = null;
 			for (int wordToConcatIndex = 1; wordToConcatIndex < splitedWords.Length; wordToConcatIndex++)

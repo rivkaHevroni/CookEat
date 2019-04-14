@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using AsyncUtilities;
+using CookEat.Tools.Crawlers;
 using Humanizer;
 
 namespace CookEat
@@ -15,8 +16,9 @@ namespace CookEat
         {
             _crawllers = new List<Crawller>
             {
-                new ShefLavanCrawler(dbManager,cancellationToken)
-            };
+                new ShefLavanCrawler(dbManager,cancellationToken),
+				new MakoCrawler(dbManager,cancellationToken)
+			};
 
             _scrapingManager = new ScrapingManager(dbManager,cancellationToken);
 
