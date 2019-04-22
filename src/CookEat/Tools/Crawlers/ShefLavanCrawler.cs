@@ -29,11 +29,13 @@ namespace CookEat
 			{
 				string singelUrl = $"{baseUrl}?recipes_per_page=24&amp;page={counterPages}";
 				var htmlInnerDoc = await web.LoadFromWebAsync(singelUrl);
-				htmlDoc.
+				htmlInnerDoc.
 					DocumentNode.
 					SelectNodes("//div[@class='list-box-content-wrapper']/a[@class='card-link']").
 					ForEach(htmlNode => urls.Add(htmlNode.GetAttributeValue("href", "")));
 			}
+
+			CrawlerProfile.SavedUrls = urls;
 
 			return urls;
 		}

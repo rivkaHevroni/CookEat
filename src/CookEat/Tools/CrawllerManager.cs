@@ -34,6 +34,7 @@ namespace CookEat
 
                     urls.ForEach(url => _scrapingManager.UrlsQueue.Enqueue(url));
                 },
+
                 1.Hours(),
                 cancellationToken);
         }
