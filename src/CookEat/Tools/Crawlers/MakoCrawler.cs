@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using AsyncUtilities;
+using HtmlAgilityPack;
+using MoreLinq;
 
 namespace CookEat.Tools.Crawlers
 {
 	public class MakoCrawler : Crawller
 	{
+		private const string baseUrl = "https://www.chef-lavan.co.il/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D";
+
 		private List<string> _recipesCategoriesList = new List<string>
 		{
 			"https://www.mako.co.il/food-recipes/recipes_column-cakes",
@@ -46,9 +51,31 @@ namespace CookEat.Tools.Crawlers
 
 		public List<string> RecipesCategoriesList { get => _recipesCategoriesList; set => _recipesCategoriesList = value; }
 
-		public override Task<List<string>> CrawlAsync()
+		public override async Task<List<string>> CrawlAsync()
 		{
-			throw new System.NotImplementedException();
+			List<string> urls = new List<string>();
+			for (int currRecipeCategorie = 0; currRecipeCategorie < _recipesCategoriesList.Count; currRecipeCategorie++)
+			{
+				var web = new HtmlWeb();
+				var htmlDoc =
+					await web.LoadFromWebAsync(_recipesCategoriesList[currRecipeCategorie]);
+				var lastPageString = htmlDoc.DocumentNode.SelectSingleNode("/div/max").InnerText;
+				int lastPage = int.Parse(lastPageString);
+
+				for (int counterPages = 1; counterPages <= lastPage; counterPages++)
+				{
+					string singelUrl = $"{_recipesCategoriesList[currRecipeCategorie]}?page={counterPages}";
+					var htmlInnerDoc = await web.LoadFromWebAsync(singelUrl);
+					htmlDoc.
+						DocumentNode.
+						SelectNodes("//div[@class='line-clamp']/h5/a").
+						ForEach(htmlNode => urls.Add("www.mako.co.il" + htmlNode.GetAttributeValue("href", "")));
+				}
+			}
+
+			CrawlerProfile.SavedUrls = urls;
+
+			return urls;
 		}
 	}
 }

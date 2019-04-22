@@ -7,6 +7,6 @@ namespace CookEat
     {
         [BsonId]
         public string Id { get; }
-        public List<string> SavedUrls { get; }
+        public List<string> SavedUrls { get; set; }
     }
 }
