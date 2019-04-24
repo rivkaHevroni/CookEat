@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace CookEat
 {
-	public class GetUserSavedRecipesRequest
-	{
-		public string UserId;
-	}
+    public class GetUserSavedRecipesRequest
+    {
+        public string UserId;
+    }
 }

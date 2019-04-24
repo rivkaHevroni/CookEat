@@ -10,10 +10,12 @@ namespace CookEat
     public class SearchManager : ApiController
     {
         private readonly DBManager _dbManager;
+        private readonly VisionHelper _visionHelper;
 
         public SearchManager(DBManager dbManager)
         {
             _dbManager = dbManager;
+            _visionHelper = new VisionHelper();
         }
 
         [Route("")]
@@ -56,8 +58,10 @@ namespace CookEat
             return new List<Recipe>();
         }
 
-        private List<Recipe> SearchByImage(byte[] imageBytes)
+        private async Task<List<Recipe>> SearchByImage(byte[] imageBytes)
         {
+
+            var englishSearchLabels = await _visionHelper.GetImageBestSearchLabelsAsync(imageBytes);
             // the frontend create from image bytes!!!!!!!!!
             //sent the byts to vision helper and get heberw query
             string result = "a"; //instead of translation result

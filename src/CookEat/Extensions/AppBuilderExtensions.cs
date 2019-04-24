@@ -13,7 +13,7 @@ using System.Web.Http.Dispatcher;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace CookEat.Extensions
+namespace CookEat
 {
     public static class AppBuilderExtensions
     {

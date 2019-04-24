@@ -1,22 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Google.Cloud.Vision.V1;
 
 namespace CookEat
 {
     public class VisionHelper
     {
-        public string CreateQueryFromImage(byte[] imageBytes)
-        {
-            string QueryOfRecipe = null;
-            //create json with the byts
-            //sent the json to vision API and get json with Query in english
-            // sent the json to TranslateHelper and get query in Hebrew
-            //create QueryOfRecipe from the json
+        private readonly ImageAnnotatorClient _client;
 
-            return QueryOfRecipe;
+        public VisionHelper()
+        {
+            _client = ImageAnnotatorClient.Create();
+        }
+
+        public async Task<List<string>> GetImageBestSearchLabelsAsync(byte[] imageBytes)
+        {
+            var image = Image.FromBytes(imageBytes);
+
+            var response = await _client.DetectWebInformationAsync(image);
+
+            return response.
+                BestGuessLabels.
+                Where(label => label.LanguageCode == "en").
+                Select(label => label.Label).
+                ToList();
         }
     }
 }

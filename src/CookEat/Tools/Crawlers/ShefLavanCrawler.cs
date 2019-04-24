@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
@@ -6,38 +8,52 @@ using MoreLinq;
 
 namespace CookEat
 {
-    public class ShefLavanCrawler : Crawller
+    public sealed class ShefLavanCrawler : Crawller
     {
-		private const string baseUrl = "https://www.chef-lavan.co.il/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D";
+        private const string _baseUrl = "https://www.chef-lavan.co.il/%D7%9E%D7%AA%D7%9B%D7%95%D7%A0%D7%99%D7%9D?recipes_per_page=96";
 
-		public ShefLavanCrawler(DBManager dbManager, CancellationToken cancellationToken)
+        public ShefLavanCrawler(DBManager dbManager, CancellationToken cancellationToken)
             : base(dbManager, cancellationToken)
         {
         }
 
         public override async Task<List<string>> CrawlAsync()
         {
-			List<string> urls = new List<string>();
-			var web = new HtmlWeb();
-			var htmlDoc =
-				await web.LoadFromWebAsync(baseUrl);
-			var lastPageString = htmlDoc.DocumentNode.SelectSingleNode("//a[@title='עבור לעמוד האחרון']")
-				.GetAttributeValue("data-action-value", "");
-			int lastPage = int.Parse(lastPageString);
+            Console.WriteLine($"{nameof(ShefLavanCrawler)} {nameof(CrawlAsync)} started");
 
-			for (int counterPages = 1; counterPages <= lastPage; counterPages++)
-			{
-				string singelUrl = $"{baseUrl}?recipes_per_page=24&amp;page={counterPages}";
-				var htmlInnerDoc = await web.LoadFromWebAsync(singelUrl);
-				htmlInnerDoc.
-					DocumentNode.
-					SelectNodes("//div[@class='list-box-content-wrapper']/a[@class='card-link']").
-					ForEach(htmlNode => urls.Add(htmlNode.GetAttributeValue("href", "")));
-			}
+            var urls = new List<string>();
+            var web = new HtmlWeb();
+            var htmlDoc = await web.LoadWithRetryAsync(_baseUrl);
 
-			CrawlerProfile.SavedUrls = urls;
+            var lastPageString = htmlDoc.DocumentNode.SelectSingleNode("//a[@title='עבור לעמוד האחרון']")
+                .GetAttributeValue("data-action-value", "");
+            var lastPage = int.Parse(lastPageString);
 
-			return urls;
-		}
+            for (var counterPages = 1; counterPages <= lastPage; counterPages++)
+            {
+                var singleUrl = $"{_baseUrl}&page={counterPages}";
+                var htmlInnerDoc = await web.LoadWithRetryAsync(singleUrl);
+                htmlInnerDoc.
+                    DocumentNode.
+                    SelectNodes("//div[@class='list-box-content-wrapper']/a[@class='card-link']").
+                    ForEach(htmlNode => urls.Add(htmlNode.GetAttributeValue("href", "")));
+
+                Console.WriteLine($"{nameof(ShefLavanCrawler)} {nameof(CrawlAsync)} Crawled {urls.Count} {nameof(urls)}");
+            }
+
+            var nonExistingUrls =
+                urls.
+                    Where(url => !CrawlerProfile.SavedUrls.Contains(url)).
+                    Distinct().
+                    ToList();
+
+            CrawlerProfile.
+                SavedUrls.
+                AddRange(nonExistingUrls);
+
+            Console.WriteLine($"{nameof(ShefLavanCrawler)} {nameof(CrawlAsync)} finished [{nameof(nonExistingUrls.Count)}={nonExistingUrls.Count}]");
+
+            return nonExistingUrls;
+        }
     }
 }
