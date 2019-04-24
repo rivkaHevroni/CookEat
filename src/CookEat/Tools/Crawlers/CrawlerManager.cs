@@ -2,39 +2,37 @@
 using System.Linq;
 using System.Threading;
 using AsyncUtilities;
-using CookEat.Tools.Crawlers;
 using Humanizer;
 
 namespace CookEat
 {
-    public class CrawllerManager
+    public class CrawlerManager
     {
-        private List<Crawller> _crawllers;
+        private List<Crawller> _crawlers;
         private ScrapingManager _scrapingManager;
 
-        public CrawllerManager(DBManager dbManager, CancellationToken cancellationToken)
+        public CrawlerManager(DBManager dbManager, CancellationToken cancellationToken)
         {
-            _crawllers = new List<Crawller>
+            _crawlers = new List<Crawller>
             {
                 new ShefLavanCrawler(dbManager,cancellationToken),
-				new MakoCrawler(dbManager,cancellationToken)
-			};
+                new MakoCrawler(dbManager,cancellationToken)
+            };
 
-            _scrapingManager = new ScrapingManager(dbManager,cancellationToken);
+            _scrapingManager = new ScrapingManager(dbManager);
 
             TaskExtension.RunPeriodicly(
                 async () =>
                 {
                     var urls =
-                        (await _crawllers.
+                        (await _crawlers.
                             Select(async crawler => await crawler.CrawlAsync()).
                             ToList()).
                             SelectMany(list => list).
                             ToList();
 
-                    urls.ForEach(url => _scrapingManager.UrlsQueue.Enqueue(url));
+                    await _scrapingManager.ScrapeAsync(urls);
                 },
-
                 1.Hours(),
                 cancellationToken);
         }

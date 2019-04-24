@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CookEat
 {
     public class Recipe
     {
-        public uint Id { get; set; }
+        [BsonId]
+        public string Id { get; set; }
         public string PreparationTime { get; set; }
         public string Link { get; set; }
         public int NumberOfDishes { get; set; }

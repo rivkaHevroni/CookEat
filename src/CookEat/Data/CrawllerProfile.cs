@@ -6,7 +6,7 @@ namespace CookEat
     public class CrawllerProfile
     {
         [BsonId]
-        public string Id { get; }
+        public string Id { get; set; }
         public List<string> SavedUrls { get; set; }
     }
 }

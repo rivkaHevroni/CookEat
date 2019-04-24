@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CookEat
+﻿namespace CookEat
 {
-	public class TranslateHelper
+    public class TranslateHelper
 	{
 		public string createHebrewQueryFromEnglishQuery(string englishQuery)
 		{
