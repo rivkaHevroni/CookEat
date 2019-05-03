@@ -3,19 +3,26 @@ nav.navbar.navbar-custom{
     padding: 0px;
     width: 100%;
     border-radius: 0px;
-    border-bottom: double;
-    border-top: double; 
 }
 .navbar-custom {
-    background-image:white;
+    background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);
 }
 table{
     border: 0px;
 }
 #upperMenu{
     background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);
-    height: 25px;
+    height: 50px;
     width: 100%;
 }
+.buttonText{
+    font-size: 16px;
+}
+#menuButtons{
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+
 
 
