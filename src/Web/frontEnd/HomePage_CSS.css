@@ -1,3 +1,18 @@
+*{
+    box-sizing: border-box;
+}
+div.container-fluid{
+    padding: 0px;
+}
+nav.navbar.navbar-light.bg-light{
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+}
+.logo{
+    text-align: left;
+}
 h1{
     direction: rtl;
     font-size: 25px;
@@ -10,15 +25,12 @@ h2{
 }
 .text-left{
     text-align: left;
-    margin-top: 200px;
+    margin-top: 80px;
     margin-left: 50px;
     width: 50%;
 }
-#logo{
-    font-family: 'Baloo Chettan', cursive;
-    font-size: 30px;
-    margin: 0px;
-    padding: 0px;
+#privateArea{
+    text-align: right;
 }
 .searchButtons{
     text-align: center;
@@ -30,21 +42,68 @@ h2{
 body{
     background-image: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg");
     background-size: 100%;
+    background-repeat: no-repeat;
 }
 .column{
     float: left;
     width: 33.33%;
     padding: 10px;
 }
-#searchByIng{
-    background-color:#aaa;
+.nav-pills a {
+    background-color: black;
+}
+.buttons{
+    margin-left: 180px;
+}
+#freeSearch{
+    margin-left: 20px;
+}
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
 }
 #searchByImg{
-    background-color:#bbb;
+    margin-left: 50px;
 }
-#searchFree{
-    background-color:#ccc;
+::placeholder{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    font-size: 1.10em;
 }
+#add{
+    font-size: 1.10em;
+    font-weight: 700;
+    border: 1px solid;
+    border-color: #DCDCDC;
+    border-radius: 5px;
+    background-color: white;
+    color: #a9a9a9;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 3px;
+}
+#remove{
+    font-size: 1.10em;
+    font-weight: 700;
+    border: 1px solid;
+    border-color: #DCDCDC;
+    border-radius: 5px;
+    background-color: white;
+    color: #a9a9a9;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 3px;
+}
+#add-remove{
+    margin-left: 52px;
+}
+#content{
+    margin-left: 40px;
+}
+#save{
+    margin-top: 5px;
+    margin-left: 60px;
+}
+
+
+
 
 
 

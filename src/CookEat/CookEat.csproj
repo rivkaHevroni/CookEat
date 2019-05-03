@@ -62,7 +62,6 @@
     <Compile Include="Tools\Helpers\tokenizationHelper.cs" />
     <Compile Include="Tools\Helpers\TranslateHelper.cs" />
     <Compile Include="Tools\UserProfileManager.cs" />
-    <Compile Include="Tools\scrapers\WallaScraper.cs" />
     <Compile Include="Tools\Helpers\VisionHelper.cs" />
   </ItemGroup>
   <ItemGroup>

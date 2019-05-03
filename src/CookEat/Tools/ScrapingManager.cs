@@ -16,7 +16,6 @@ namespace CookEat
             _dBManager = dBManager;
             _scrapers = new List<Scraper>
             {
-                new WallaScraper(),
                 new MakoScraper()
             };
 

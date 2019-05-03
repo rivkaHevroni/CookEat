@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--link html to css--> 
+  <link rel="stylesheet" type="text/css" href="bootstrap_modals.css"> 
+  
+  <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p|M+PLUS+Rounded+1c" rel="stylesheet">
+
+  <!--bootstrap links-->
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Fading Modal</h2>
+        <p>Add the "fade" class to the modal container if you want the modal to fade in on open and fade out on close.</p>
+        
+          <!-- Button to Open the Modal -->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Open modal
+          </button>
+        
+          <!-- The Modal -->
+          <div class="modal fade" id="myModal">
+            <div class="modal-dialog modal-sm" >
+              <div class="modal-content">
+              
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <img id="recipe-img" class="card-img-top" src="..." alt="Card image cap">
+                </div>
+                
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div id="link-style" style="text-align:center">
+                        <a id="recipe_link" class="font_size" href="...">מעבר למתכון המלא</a>
+                    </div>
+                    <br>
+                    <h1 id="recipe_title" class="font_size">שם המתכון: </h1>
+                    <h1 id="recipe_numOfDiners" class="font_size">מספר סועדים: </h1>
+                    <h1 id="recipe-preparationTime" class="font_size">זמן הכנה: </h1>
+                    <h1 id="recipe-ingredientsList" class="font_size">רכיבים:<br></h1> 
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">סגור</button>
+                </div>
+                
+              </div>
+            </div>
+        </div>
+          
+    </div>
+    <script>
+        var recipe = '{"_id":"5","PreparationTime":"200","Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":"5","Picture":"https://static01.nyt.com/images/2017/04/05/dining/05COOKING-NIGMEATBALLS2/05COOKING-NIGMEATBALLS2-articleLarge.jpg","RecipeTitle":"3����2", "Ingredients":[1, 2, 3, 4]}';
+        var recipeObj = JSON.parse(recipe);
+        document.getElementById("recipe-img").src = recipeObj.Picture;
+        document.getElementById("recipe_title").innerHTML += recipeObj.RecipeTitle;
+        document.getElementById("recipe_numOfDiners").innerHTML += recipeObj.NumberOfDiners;
+        document.getElementById("recipe_link").href = recipeObj.Link;
+        document.getElementById("recipe-preparationTime").innerHTML += recipeObj.PreparationTime;
+        for(var i=0; i<recipeObj.Ingredients.length; i++){
+            document.getElementById("recipe-ingredientsList").innerHTML += recipeObj.Ingredients[i] + "<br>";
+        }
+    </script>    
+</body>
+</html>
+        

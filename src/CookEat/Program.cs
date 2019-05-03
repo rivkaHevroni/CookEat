@@ -14,8 +14,8 @@ namespace CookEat
         {
 			List<string> htmls = new List<string>
             {
-                "https://food.walla.co.il/recipe/653062",
-                "https://www.mako.co.il/food-cooking_magazine/healthy-eating-recipes/Recipe-8340ea953c5d951006.htm"
+                //"https://food.walla.co.il/recipe/653062",
+                //"https://www.mako.co.il/food-cooking_magazine/healthy-eating-recipes/Recipe-8340ea953c5d951006.htm"
             };
 
 			DBManager dbManager = new DBManager();
