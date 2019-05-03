@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
@@ -27,6 +28,7 @@ namespace CookEat
             httpConfiguration.Formatters.Add(new JsonMediaTypeFormatter());
             httpConfiguration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
+                
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
             httpConfiguration.DependencyResolver = new DependencyResolver(controllerTypeToCreatorMapping);

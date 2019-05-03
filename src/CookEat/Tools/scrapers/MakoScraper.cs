@@ -7,7 +7,7 @@ namespace CookEat
 {
     public sealed class MakoScraper : Scraper
     {
-        public MakoScraper(DBManager dbManager) : 
+        public MakoScraper(DBManager dbManager) :
             base(dbManager,"https://www.mako.co.il")
         {
         }

@@ -19,13 +19,29 @@ namespace CookEat
             };
         }
 
+        private Scraper GetRelevantScraper(string url)
+        {
+            Scraper relevantScraper=null;
+            foreach (var scraper in _scrapers)
+            {
+                if (scraper.IsRelevantUrl(url))
+                {
+                     relevantScraper = scraper;
+                }
+            }
+            return relevantScraper;
+        } 
+
         public async Task ScrapeAsync(List<string> urls)
         {
             foreach (var url in urls)
             {
-                await _scrapers.
+              Scraper relevantScraper = GetRelevantScraper(url);
+              await relevantScraper.ScrapeAsync(url);
+
+                /*await _scrapers.
                     Single(scraper => scraper.IsRelevantUrl(url)).
-                    ScrapeAsync(url);
+                    ScrapeAsync(url);*/
             }
         }
     }

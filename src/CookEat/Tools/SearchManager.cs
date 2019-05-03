@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using MongoDB.Driver;
+using MoreLinq;
+using MoreLinq.Extensions;
 
 namespace CookEat
 {
@@ -10,6 +14,7 @@ namespace CookEat
     public class SearchManager : ApiController
     {
         private readonly DBManager _dbManager;
+        private readonly CancellationToken _cancellationToken;
 
         public SearchManager(DBManager dbManager)
         {
@@ -47,13 +52,49 @@ namespace CookEat
             return result;
         }
 
-        private List<Recipe> SearchByQuery(string query)
+        public List<Recipe> SearchByQuery(string query)//change to private
         {
-            //takes the query
-            //tokenize
-            //search db
-            //return results
-            return new List<Recipe>();
+            List<string> tokenaizedSearchValues = TokanizationHelper.Tokenaize(query);
+            IFindFluent<Recipe, Recipe> releventCollection =
+                    _dbManager.
+                        RecipesCollection.
+                        Find(recipe => tokenaizedSearchValues.Any(value => recipe.ValuesToSearch.Contains(value)));
+            List<Recipe> recipesBeforSort = releventCollection.ToList();
+
+            /*Dictionary<int, string> matchToQuery = new Dictionary<Recipe, int>();
+            foreach (Recipe recipe in recipesBeforSort)
+            {
+                matchToQuery.Add(CheckNumberOfMatchValues(recipe, tokenaizedSearchValues), recipe.Id);
+            }
+
+            matchToQuery.OrderByDescending(matchValues => matchValues.Key);
+            var matchToQueryIdList = matchToQuery.Values.ToList();
+            List<Recipe> recipesAfterSort = new List<Recipe>();
+            foreach (string id in matchToQueryIdList)
+            {
+                Recipe recipeAfterSort = recipesBeforSort.Find(recipe => recipe.Id == id);
+                recipesAfterSort.Add(recipeAfterSort);
+            }
+
+            return recipesAfterSort;*/
+
+            return recipesBeforSort;
+        }
+
+
+        private int CheckNumberOfMatchValues(Recipe recipe, List<string> tokenaizedSearchValues)
+        {
+            int countMatchWords = 0;
+
+            foreach (string tokenaizedSearchValue in tokenaizedSearchValues)
+            {
+                if (recipe.ValuesToSearch.Contains(tokenaizedSearchValue))
+                {
+                    countMatchWords++;
+                }
+            }
+
+            return countMatchWords;
         }
 
         private List<Recipe> SearchByImage(byte[] imageBytes)
