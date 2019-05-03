@@ -32,6 +32,7 @@ function PrintRecipes(recipes){
                 cell.appendChild(GetRecipeElement(recipes[numOfRecipe]));
                 var saveButton = document.createElement('BUTTON');
                 saveButton.innerHTML="שמור";
+                saveButton.setAttribute("class", "btn btn-danger");
                 var sp1 = document.createElement('span');
                 sp1.setAttribute("class", "glyphicon glyphicon-pushpin");
                 saveButton.appendChild(sp1);
@@ -53,7 +54,6 @@ function PrintRecipes(recipes){
            saveButton.style.bottom="1px";
            saveButton.style.left="1px";
            saveButton.style.borderRadius="5px";
-           saveButton.style.backgroundColor="red";
            saveButton.style.padding="3px";
            saveButton.style.color="white";
            saveButton.style.fontWeight="bold";
