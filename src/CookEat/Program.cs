@@ -1,9 +1,8 @@
-﻿using CookEat.Extensions;
-using Microsoft.Owin.Hosting;
-using Owin;
+﻿using Microsoft.Owin.Hosting;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CookEat
@@ -12,15 +11,19 @@ namespace CookEat
     {
         public static async Task Main(string[] Args)
         {
-			List<string> htmls = new List<string>
-            {
-                //"https://food.walla.co.il/recipe/653062",
-                //"https://www.mako.co.il/food-cooking_magazine/healthy-eating-recipes/Recipe-8340ea953c5d951006.htm"
-            };
+            var cancellationTokenSource = new CancellationTokenSource();
+            var cancellationToken = cancellationTokenSource.Token;
+            DBManager dbManager = new DBManager();
 
-			DBManager dbManager = new DBManager();
-			ScrapingManager scrapingManger = new ScrapingManager(dbManager);
-            await scrapingManger.ScrapeAsync(htmls);
+            //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
+
+            // var searchManager = new SearchManager(dbManager);
+            // var str = "פסטה שמנת עם ברוקולי ופטריות";
+            // var res = searchManager.SearchByQuery(str);
+            // foreach (var r in res)
+            // {
+            //     Console.WriteLine(r.RecipeTitle);
+            // }
 
             using (WebApp.Start(
                 new StartOptions("http://*:80"),
@@ -38,6 +41,8 @@ namespace CookEat
                 Console.WriteLine("WebServer Started. Press Any Key To Close The Program...");
                 Console.ReadKey();
             }
+
+            cancellationTokenSource.Cancel();
         }
     }
 }

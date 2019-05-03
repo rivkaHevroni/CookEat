@@ -29,12 +29,6 @@ namespace CookEat
             await collection.InsertOneAsync(i_UserProfileToInsert);
         }
 
-        public async Task InsertToCrawlingManagerProfileCollection(CrawlingManagerProfile i_CrawlingManagerProfile)// remove
-        {
-            var collection = DataBaseManager.CrawlingManagerProfileCollection;
-            await collection.InsertOneAsync(i_CrawlingManagerProfile);
-        }
-
         public async Task RemoveRecipeFromUserProfile(string i_UserId, string i_RecipeID)
         {
             var collection = DataBaseManager.UserProfileCollection;
@@ -44,13 +38,13 @@ namespace CookEat
             await collection.ReplaceOneAsync(filter, userProfile);
         }
 
-		public RecipeResponse SearchRecipes(RecipeRequest searchRecipes)
+		public GetUserSavedRecipesResponse SearchRecipes(GetUserSavedRecipesRequest searchGetUserSavedRecipeses)
 		{
-			RecipeResponse result = null;
-			//get IdUser from RecipeRequest
+			GetUserSavedRecipesResponse result = null;
+			//get IdUser from GetUserSavedRecipesRequest
 			// get userProfile from DB manager
 			//sent idRecipeList from userprofile to searchManager
-			//creat RecipeResponse
+			//creat GetUserSavedRecipesResponse
 
 			return result;
 		}
