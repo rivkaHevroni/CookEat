@@ -13,8 +13,8 @@ namespace CookEat
         public string Picture { get; set; }
         public string RecipeTitle { get; set; }
         public List<Ingredient> IngredientsList { get; set; }
-		public List<string> ValuesToSearch { get; set; }
-		public List<string> NormalaizedIngredients { get; set; }
+        public List<string> ValuesToSearch { get; set; }
+        public List<string> NormalaizedIngredients { get; set; }
 
         public bool CheckThatAtLeastOneValueToSearchExist(List<string> tokenaizedSearchValues)
         {
