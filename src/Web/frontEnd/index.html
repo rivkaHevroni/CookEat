@@ -6,37 +6,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="HomePage_CSS.css">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="jquery.min.js" type="text/javascript"></script>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <script src="bootstrap.min.js" type="text/javascript"></script>
   </head>
   <body>
-    <header>
-        <nav class="navbar navbar-light bg-light"> 
-            <p id="logo">CookEat</p>
-            <p><a href="#" class="text-white bg-dark">כניסה לאזור האישי</a></p>
+    <div class="container-fluid">
+      <header>
+        <nav class="navbar navbar-light bg-light">
+          <span class="navbar-brand mb-0 h1" style="margin-right:auto; margin:0px; padding:0px; position:relative; top:15px;">CookEat</span>
+          <span style="margin-left:auto; margin-right: 5px;"><button type="button" class="btn btn-danger">כניסה לאזור אישי</button></span>
         </nav>
-    </header>
-    <row id="top">
-        <div class="text-left">
-            <div class="welcome">
-              <h1>ברוכים הבאים ל<span class="alignRight">CookEat</span></h1>
-              <h2>?איך תרצו לחפש את המתכון הבא שלכם</h2><br>
+      </header>
+      <div class="text-left">
+        <div class="welcome">
+          <h1>ברוכים הבאים ל<span class="alignRight">CookEat</span></h1>
+          <h2>?איך תרצו לחפש את המתכון הבא שלכם</h2><br>
+        </div>
+        <div class="buttons" class="row">
+          <div class="col-9">
+            <ul class="nav nav" class="list-inline" class="UL">
+              <li style="margin: 3px;"><a style="color:black; border: solid white 2px; border-radius: 10px; font-weight: bold;" data-toggle="pill" href="#menu1">חיפוש חופשי</a></li>
+              <li style="margin: 3px;"><a style="color:black; border: solid white 2px; border-radius: 10px; font-weight: bold;" data-toggle="pill" href="#menu2">תמונה</a></li>
+              <li style="margin: 3px;"><a style="color:black; border: solid white 2px; border-radius: 10px; font-weight: bold;" data-toggle="pill" href="#menu3">מצרכים</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div id="menu1" class="tab-pane fade" class="buttons">
+          <br><br>
+          <form>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="input-group col-4" id="freeSearch">
+                <span class="input-group-addon">
+                  <button><i class="fa fa-search"></i></button>
+                </span>
+                <input type="text" class="form-control" placeholder="הקלד כאן" style="direction: rtl;"/>
+              </div>
             </div>
-            <div class="searchButtons">
-                <button type="button" class="btn btn-outline-light">חיפוש חופשי</button>
-                <button type="button" class="btn btn-outline-light">תמונה</button>
-                <button type="button" class="btn btn-outline-light">מצרכים</button>
+          </form>
+          </div>
+          <div id="menu2" class="tab-pane fade">
+            <br><br>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-4" id="searchByImg">
+                <input type="file" id="file" class="inputfile"/>
+              </div>
             </div>
           </div>
-    </row>
-
-    <row>
-      <col id="searchByIng" class="column"></col>
-      <col id="searchByImg" class="column"></col>
-      <col id="searchFree" class="column"></col>
-    </row>
-
+          <div id="menu3" class="tab-pane fade">
+            <br><br>
+            <div class="row">
+              <div class="col-4"></div>
+              <div id="searchByIng">
+                <p id="add-remove">
+                  <a id="add" class="add-remove">הוסף מצרך</a>
+                  <a id="remove" class="add-remove">הסר מצרך</a>
+                </p>
+                <div id="content"></div>
+                <div class="row">
+                  <div class="col-3"></div>
+                  <button id="save">חפש</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <script src="main.js"></script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

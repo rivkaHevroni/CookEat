@@ -1,0 +1,21 @@
+nav.navbar.navbar-custom{
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    border-radius: 0px;
+    border-bottom: double;
+    border-top: double; 
+}
+.navbar-custom {
+    background-image:white;
+}
+table{
+    border: 0px;
+}
+#upperMenu{
+    background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);
+    height: 25px;
+    width: 100%;
+}
+
+
