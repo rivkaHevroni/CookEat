@@ -33,7 +33,7 @@ namespace CookEat
 
                     await _scrapingManager.ScrapeAsync(urls);
                 },
-                1.Hours(),
+                1.Days(),
                 cancellationToken);
         }
     }

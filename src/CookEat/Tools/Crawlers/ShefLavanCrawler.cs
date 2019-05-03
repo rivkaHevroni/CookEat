@@ -38,7 +38,7 @@ namespace CookEat
                     SelectNodes("//div[@class='list-box-content-wrapper']/a[@class='card-link']").
                     ForEach(htmlNode => urls.Add(htmlNode.GetAttributeValue("href", "")));
 
-                Console.WriteLine($"{nameof(ShefLavanCrawler)} {nameof(CrawlAsync)} Crawled {urls.Count} {nameof(urls)}");
+               Console.WriteLine($"{nameof(ShefLavanCrawler)} {nameof(CrawlAsync)} Crawled {urls.Count} {nameof(urls)}");
             }
 
             var nonExistingUrls =

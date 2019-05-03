@@ -15,5 +15,20 @@ namespace CookEat
         public List<Ingredient> IngredientsList { get; set; }
 		public List<string> ValuesToSearch { get; set; }
 		public List<string> NormalaizedIngredients { get; set; }
-	}
+
+        public bool CheckThatAtLeastOneValueToSearchExist(List<string> tokenaizedSearchValues)
+        {
+            foreach (var tokenaizedSearchValue in tokenaizedSearchValues)
+            {
+                if (ValuesToSearch.Contains(tokenaizedSearchValue))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+
 }

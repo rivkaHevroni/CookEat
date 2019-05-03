@@ -10,7 +10,7 @@ namespace CookEat
     {
         public static async Task<HtmlDocument> LoadWithRetryAsync(this HtmlWeb htmlWeb, string url)
         {
-            for (var i = 0; i < 3; i++)
+            for (var attempt = 0; attempt < 3; attempt++)
             {
                 try
                 {
