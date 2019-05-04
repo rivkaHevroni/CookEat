@@ -14,16 +14,23 @@ namespace CookEat
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
             DBManager dbManager = new DBManager();
-
+			//
             //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
 
-            // var searchManager = new SearchManager(dbManager);
-            // var str = "פסטה שמנת עם ברוקולי ופטריות";
-            // var res = searchManager.SearchByQuery(str);
-            // foreach (var r in res)
-            // {
-            //     Console.WriteLine(r.RecipeTitle);
-            // }
+             var searchManager = new SearchManager(dbManager);
+			List<string> values = new List<string>
+			{
+				"פסטה",
+				"שמנת",
+				"אספרגוס",
+				"ברוקולי",
+				"לימון"
+			};
+             var res = searchManager.SearchByIngredients(values);
+             foreach (var r in res)
+             {
+                 Console.WriteLine(r.RecipeTitle);
+            }
 
             using (WebApp.Start(
                 new StartOptions("http://*:80"),

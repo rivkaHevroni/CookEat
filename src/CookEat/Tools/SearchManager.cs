@@ -47,42 +47,45 @@ namespace CookEat
 
         public List<Recipe> GetRecipesFromIDsRecipesList(List<string> idsRecipesList) // async??
         {
-            List<Recipe> result = null;
-            //create recipes list from ids Recipes List
-            return result;
+            List<Recipe> recipes = null;
+			IFindFluent<Recipe, Recipe> recipeToConvert = _dbManager.RecipesCollection.
+				Find(recipe => idsRecipesList.Contains(recipe.Id));
+
+			recipes = recipeToConvert.ToList();
+
+			return recipes;
         }
 
-        public List<Recipe> SearchByQuery(string query)//change to private
-        {
-            List<string> tokenaizedSearchValues = TokanizationHelper.Tokenaize(query);
-            IFindFluent<Recipe, Recipe> releventCollection =
-                    _dbManager.
-                        RecipesCollection.
-                        Find(recipe => tokenaizedSearchValues.Any(value => recipe.ValuesToSearch.Contains(value)));
-            List<Recipe> recipesBeforSort = releventCollection.ToList();
+		public List<Recipe> SearchByQuery(string query)//private!!!
+		{
+			List<string> tokenaizedSearchValues = TokanizationHelper.Tokenaize(query);
+			IFindFluent<Recipe, Recipe> releventCollection =
+					_dbManager.
+						RecipesCollection.
+						Find(recipe => tokenaizedSearchValues.Any(value => recipe.ValuesToSearch.Contains(value)));
+			List<Recipe> recipesBeforSort = releventCollection.ToList();
 
-            /*Dictionary<int, string> matchToQuery = new Dictionary<Recipe, int>();
-            foreach (Recipe recipe in recipesBeforSort)
-            {
-                matchToQuery.Add(CheckNumberOfMatchValues(recipe, tokenaizedSearchValues), recipe.Id);
-            }
+			List<RecipeWithRank> matchToQuery = new List<RecipeWithRank>();
 
-            matchToQuery.OrderByDescending(matchValues => matchValues.Key);
-            var matchToQueryIdList = matchToQuery.Values.ToList();
-            List<Recipe> recipesAfterSort = new List<Recipe>();
-            foreach (string id in matchToQueryIdList)
-            {
-                Recipe recipeAfterSort = recipesBeforSort.Find(recipe => recipe.Id == id);
-                recipesAfterSort.Add(recipeAfterSort);
-            }
+			foreach (Recipe recipe in recipesBeforSort)
+			{
+				RecipeWithRank recipeWithRank = new RecipeWithRank(recipe, CheckNumberOfMatchValues(recipe, tokenaizedSearchValues));
 
-            return recipesAfterSort;*/
+				matchToQuery.Add(recipeWithRank);
+			}
 
-            return recipesBeforSort;
-        }
+			IOrderedEnumerable<RecipeWithRank> matchToQueryAfterSort = matchToQuery.OrderByDescending(recipeWithRank => recipeWithRank.Rank);
+			List<Recipe> recipesAfterSort = new List<Recipe>();
 
+			foreach (RecipeWithRank recipeWithRank in matchToQueryAfterSort)
+			{
+				recipesAfterSort.Add(recipeWithRank.Recipe);
+			}
 
-        private int CheckNumberOfMatchValues(Recipe recipe, List<string> tokenaizedSearchValues)
+			return recipesAfterSort;
+		}
+
+		private int CheckNumberOfMatchValues(Recipe recipe, List<string> tokenaizedSearchValues)
         {
             int countMatchWords = 0;
 
@@ -105,12 +108,27 @@ namespace CookEat
             return SearchByQuery(result);
         }
 
-        private List<Recipe> SearchByIngredients(List<string> ingrediantNames)
+        public List<Recipe> SearchByIngredients(List<string> ingredientNames) // private!!!!
         {
-            //Query database for recipes with the ingrediants
-            //sorts the recipes by amount of relevant ingrediants
-            //return sorted list
-            return new List<Recipe>();
+			List<Recipe> recipesAfterSort = new List<Recipe>();
+			List<string> tokenaizedSearchValues = new List<string>();
+
+			foreach (string ingredientName in ingredientNames)
+			{
+				tokenaizedSearchValues.Add(TokanizationHelper.TokenaizeForOneValue(ingredientName));
+			}
+
+			string queryToSearchByIngredients = null;
+
+			foreach (string ingredient in tokenaizedSearchValues)
+			{
+				queryToSearchByIngredients += ingredient;
+				queryToSearchByIngredients += " ";
+			}
+
+			recipesAfterSort = SearchByQuery(queryToSearchByIngredients); 
+
+			return recipesAfterSort;
         }
     }
 }

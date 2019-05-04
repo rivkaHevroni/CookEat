@@ -21,5 +21,14 @@ namespace CookEat
                 Where(value => !Constants.HebrewUnnecessaryToEmptyString.Contains(value)).
                 ToList();
         }
-    }
+
+		public static string TokenaizeForOneValue(string searchStr)
+		{
+			HebrewNLP.HebrewNLP.Password = "RkelEnGYeUcWCDd";
+			List<string> searchValues = HebrewMorphology.NormalizeSentence(searchStr);
+			List<string> tokenaizedSearchValues = RemoveHebrewConnectorsAndAdjectives(searchValues);
+
+			return tokenaizedSearchValues.First();
+		}
+	}
 }
