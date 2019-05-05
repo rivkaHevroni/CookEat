@@ -18,19 +18,8 @@ namespace CookEat
             //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
 
              var searchManager = new SearchManager(dbManager);
-			List<string> values = new List<string>
-			{
-				"פסטה",
-				"שמנת",
-				"אספרגוס",
-				"ברוקולי",
-				"לימון"
-			};
-             var res = searchManager.SearchByIngredients(values);
-             foreach (var r in res)
-             {
-                 Console.WriteLine(r.RecipeTitle);
-            }
+
+             var res = searchManager.SearchByImage();
 
             using (WebApp.Start(
                 new StartOptions("http://*:80"),

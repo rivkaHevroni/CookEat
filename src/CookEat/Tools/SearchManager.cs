@@ -32,7 +32,7 @@ namespace CookEat
             }
             else if (searchRequest.ImageBytes != null)
             {
-                results = SearchByImage(searchRequest.ImageBytes);
+                //results = SearchByImage(searchRequest.ImageBytes);
             }
             else
             {
@@ -41,7 +41,7 @@ namespace CookEat
 
             return new SearchResponse
             {
-                Results = results
+                //Results = results
             };
         }
 
@@ -100,11 +100,13 @@ namespace CookEat
             return countMatchWords;
         }
 
-        private List<Recipe> SearchByImage(byte[] imageBytes)
-        {
-            // the frontend create from image bytes!!!!!!!!!
-            //sent the byts to vision helper and get heberw query
-            string result = "a"; //instead of translation result
+        public List<Recipe> SearchByImage()// private // byte[] imageBytes
+		{
+			VisionHelper visionHelper = new VisionHelper();
+			visionHelper.CreateQueryFromImage();
+			// the frontend create from image bytes!!!!!!!!!
+			//sent the byts to vision helper and get heberw query
+			string result = "a"; //instead of translation result
             return SearchByQuery(result);
         }
 
