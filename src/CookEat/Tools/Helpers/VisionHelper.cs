@@ -1,25 +1,40 @@
-﻿using Google.Cloud.Vision.V1;
-
+﻿using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Vision.V1;
+using Grpc.Auth;
+using Grpc.Core;
 
 namespace CookEat
 {
-    public class VisionHelper
+    
+
+    public sealed class VisionHelper
     {
-		public void CreateQueryFromImage() //byte[] imageBytes , return string
-		{
-			string QueryOfRecipe = null;
-			//var image = Image.FromBytes(imageBytes);
-			var image = Image.FromUri("http://f.nanafiles.co.il/upload/mediastock/img/1789/0/33/33248.jpg");
-			var client = ImageAnnotatorClient.Create();
-			WebDetection annotation = client.DetectWebInformation(image);
-			var bestLabels = annotation.BestGuessLabels;
+        private readonly ImageAnnotatorClient _client;
 
-			//create json with the byts
-			//sent the json to vision API and get json with Query in english
-			// sent the json to TranslateHelper and get query in Hebrew
-			//create QueryOfRecipe from the json
+        public VisionHelper()
+        {
+            var credentials = GoogleCredential.FromFile(@"C:\CookEat-google-api.json");
+            var channel = new Channel(
+                ImageAnnotatorClient.DefaultEndpoint.Host,
+                ImageAnnotatorClient.DefaultEndpoint.Port,
+                credentials.ToChannelCredentials());
 
-			//return QueryOfRecipe;
+            _client = ImageAnnotatorClient.Create(channel);
+        }
+
+        public void CreateQueryFromImage() //byte[] imageBytes , return string
+        {
+            //var image = Image.FromBytes(imageBytes);
+            var image = Image.FromUri("https://www.skinnytaste.com/wp-content/uploads/2011/07/Easiest-Pasta-and-Broccoli-Recipe-550x367.jpg");
+            var annotation = _client.DetectWebInformation(image);
+            var bestLabels = annotation.BestGuessLabels;
+
+            //create json with the byts
+            //sent the json to vision API and get json with Query in english
+            // sent the json to TranslateHelper and get query in Hebrew
+            //create QueryOfRecipe from the json
+
+            //return QueryOfRecipe;
         }
     }
 }
