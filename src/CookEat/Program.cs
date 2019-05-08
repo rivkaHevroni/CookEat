@@ -14,12 +14,7 @@ namespace CookEat
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
             DBManager dbManager = new DBManager();
-			//
-            //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
-
-             var searchManager = new SearchManager(dbManager);
-
-             var res = searchManager.SearchByImage();
+            var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
 
             using (WebApp.Start(
                 new StartOptions("http://*:80"),
