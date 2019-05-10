@@ -66,6 +66,7 @@
     <Compile Include="Data\Ingredient.cs" />
     <Compile Include="Data\Requests\GetUserSavedRecipesRequest.cs" />
     <Compile Include="Data\Requests\GetUserSavedRecipesResponse.cs" />
+    <Compile Include="Tools\Helpers\VisionAndTranslateHelper.cs" />
     <Compile Include="Tools\scrapers\ShefLavanScraper.cs" />
     <Compile Include="Tools\scrapers\Scraper.cs" />
     <Compile Include="Tools\SearchManager.cs" />
@@ -75,9 +76,7 @@
     <Compile Include="Data\UserProfile.cs" />
     <Compile Include="Tools\scrapers\ScrapingManager.cs" />
     <Compile Include="Data\Requests\SearchResponse.cs" />
-    <Compile Include="Tools\Helpers\TranslateHelper.cs" />
     <Compile Include="Tools\UserProfileManager.cs" />
-    <Compile Include="Tools\Helpers\VisionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AsyncUtilities, Version=0.6.1.0, Culture=neutral, processorArchitecture=MSIL">

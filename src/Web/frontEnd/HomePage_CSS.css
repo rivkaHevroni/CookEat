@@ -1,5 +1,6 @@
 *{
     box-sizing: border-box;
+    font-family: 'Varela Round', sans-serif;
 }
 div.container-fluid{
     padding: 0px;
@@ -9,7 +10,16 @@ nav.navbar.navbar-light.bg-light{
     padding: 0px;
     margin: 0px;
     border-radius: 0px;
+    display: inline-block;
+
 }
+
+header{
+    direction: rtl;
+    background-color: white;
+    height: 43px;
+}
+
 .logo{
     text-align: left;
 }
@@ -55,6 +65,7 @@ body{
 .buttons{
     margin-left: 180px;
 }
+
 #freeSearch{
     margin-left: 20px;
 }
@@ -101,6 +112,7 @@ body{
     margin-top: 5px;
     margin-left: 60px;
 }
+
 
 
 
