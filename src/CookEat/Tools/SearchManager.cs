@@ -34,7 +34,7 @@ namespace CookEat
             {
                 try
                 {
-                    //results = SearchByImage(searchRequest.ImageBytes);
+                    results = SearchByImage(searchRequest.ImageBytes);
                 }
                 catch (Exception e)
                 {
@@ -48,7 +48,7 @@ namespace CookEat
 
             return new SearchResponse
             {
-                //Results = results
+                Results = results
             };
         }
 

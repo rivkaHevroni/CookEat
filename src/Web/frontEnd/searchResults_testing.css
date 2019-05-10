@@ -3,15 +3,16 @@ nav.navbar.navbar-custom{
     padding: 0px;
     width: 100%;
     border-radius: 0px;
+    color: red;
 }
 .navbar-custom {
-    background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);
+    background-color: red;
 }
 table{
     border: 0px;
 }
 #upperMenu{
-    background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);
+    /*background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);*/
     height: 50px;
     width: 100%;
 }

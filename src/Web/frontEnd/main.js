@@ -1,6 +1,5 @@
-var numberOfTextBoxesInDocument = 0
-var textBoxValues
-
+var numberOfTextBoxesInDocument = 0;
+var textBoxValues;
 
 document.getElementById('add').addEventListener('click', (clickEvent) =>
 {
@@ -55,3 +54,35 @@ document.getElementById('save').addEventListener('click', (clickEvent) =>
 
     console.log(textBoxValues)
 })
+
+document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) =>
+{
+    clickEvent.preventDefault();
+    try {
+        var searchQuery = document.getElementById('query').value;
+        var searchRequest = {SearchQuery: searchQuery};
+        localStorage.setItem("Request", JSON.stringify(searchRequest));
+        window.location.href = "http://localhost/searchResults_testing.html";
+    }
+    catch(err) {
+        alert(err);
+    }
+})
+
+
+function searchByQuery(searchQuery){
+    
+    //return (sendSearchRequest(searchRequest)).Results;
+}
+
+function sendSearchRequest(request) {
+    return fetch("http://localhost/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(request)
+    }).
+    then(response => response.json()).
+    then(obj => Console.log(JSON.stringify(obj)));
+}
