@@ -4,9 +4,9 @@ function GetRecipeElement(recipe){
     var image = document.createElement('IMG');
     var recipeTitle = document.createElement('p');
     var breakLine = document.createElement('br');
-    recipeTitle.innerHTML=recipe.RecipeTitle;
-    id.innerHTML = recipe._id;
-    image.src = recipe.Picture;
+    recipeTitle.innerHTML=recipe.recipeTitle;
+    id.innerHTML = recipe.id;
+    image.src = recipe.picture;
     recipeTitle.style.textAlign="center";
     image.style.marginLeft="auto";
     image.style.marginRight="auto";
@@ -23,7 +23,6 @@ function GetRecipeElement(recipe){
 }
 
 function moreDetailsEvent(id, recipes){
-    debugger;
     var i;
     for(i=0; i<recipes.length; i++){
         if(id == recipes[i]._id){
@@ -38,6 +37,7 @@ function moreDetailsEvent(id, recipes){
 }
 
 function PrintRecipes(recipes){
+
     var numOfRecipe = 0;
     var numOfRows = Math.ceil((recipes.length)/4, 0);
     var table = document.createElement('table');
@@ -60,7 +60,6 @@ function PrintRecipes(recipes){
                 moreDetails.setAttribute("class", "btn btn-danger");
                 moreDetails.innerHTML = "לפרטים נוספים ";
                 //moreDetails.setAttribute("id", "5");
-                debugger;
                 var demo = recipes[i]._id;
                 moreDetails.onclick = function(){moreDetailsEvent(demo, recipes);};
                 var sp2 = document.createElement('span');
@@ -100,10 +99,19 @@ function PrintRecipes(recipes){
     return table;
 }
 
-var jsonText = '[{"_id":5,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3���2 hghgh hjghjgj jgjgj jgjg hgjhg jhgjgjj jhghgjh hfhg nhghn hgjhg jgtjhg jgtujg jgjgj kjgj"},{"_id":6,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":7,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":9,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":10,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":12,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":11,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":14,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":15,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg","RecipeTitle":"3����2"}]'
-var recipes=JSON.parse(jsonText);
-debugger;
-document.getElementById('ronen').appendChild(PrintRecipes(recipes));
+fetch("http://localhost/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: localStorage.getItem("Request")
+    }).
+    then(response => response.json()).
+    then(searchResponse => document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results)))
+
+//var jsonText = '[{"_id":5,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3���2 hghgh hjghjgj jgjgj jgjg hgjhg jhgjgjj jhghgjh hfhg nhghn hgjhg jgtjhg jgtujg jgjgj kjgj"},{"_id":6,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":7,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":9,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":10,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":12,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":11,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":14,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":15,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg","RecipeTitle":"3����2"}]'
+//var recipes=JSON.parse(jsonText);
+//document.getElementById('ronen').appendChild(PrintRecipes(recipes));
 
 
 
