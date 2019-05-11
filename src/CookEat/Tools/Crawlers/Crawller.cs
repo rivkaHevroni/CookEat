@@ -9,7 +9,7 @@ namespace CookEat
 {
     public abstract class Crawller
     {
-        protected CrawllerProfile CrawlerProfile;
+        protected readonly CrawllerProfile CrawlerProfile;
 
         protected Crawller(DBManager dbManager,CancellationToken cancellationToken)
         {

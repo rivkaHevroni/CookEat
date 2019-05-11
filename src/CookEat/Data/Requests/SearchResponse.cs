@@ -3,7 +3,7 @@
 namespace CookEat
 {
     public class SearchResponse
-	{
-		public List<Recipe> Results;
-	}
+    {
+        public List<Recipe> Results;
+    }
 }
