@@ -45,6 +45,7 @@ namespace CookEat
                 urls.
                     Where(url => !CrawlerProfile.SavedUrls.Contains(url)).
                     Distinct().
+                    Take(400).
                     ToList();
 
             CrawlerProfile.

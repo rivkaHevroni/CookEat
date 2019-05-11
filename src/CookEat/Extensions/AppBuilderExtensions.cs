@@ -1,23 +1,62 @@
-﻿using Microsoft.Owin.FileSystems;
+﻿using Humanizer;
+using Microsoft.AspNet.Identity;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.StaticFiles;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
 using System.Web.Http.Dispatcher;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace CookEat
 {
     public static class AppBuilderExtensions
     {
+        public static IAppBuilder ConfigureAuthentication(this IAppBuilder appBuilder)
+        {
+            appBuilder.
+                UseCookieAuthentication(
+                    new CookieAuthenticationOptions
+                    {
+                        AuthenticationType = DefaultAuthenticationTypes.ExternalCookie
+                    });
+            appBuilder.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            appBuilder.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, 5.Minutes());
+            appBuilder.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+
+            var authenticationOptions = new GoogleOAuth2AuthenticationOptions
+            {
+                ClientId = "132365876142-9m9voh1ih0d3tu1it63jfqdmqaamadfd.apps.googleusercontent.com",
+                ClientSecret = "T4WeMryliLthgCdsWnBfUrk-",
+                Provider = new GoogleOAuth2AuthenticationProvider
+                {
+                    OnAuthenticated = context =>
+                    {
+                        var profileUrl = context.User["image"]["url"].ToString();
+                        context.Identity.AddClaim(new Claim(ClaimTypes.Uri, profileUrl));
+                        return Task.FromResult(0);
+                    }
+                }
+            };
+            authenticationOptions.Scope.Add("profile");
+
+            appBuilder.UseGoogleAuthentication(authenticationOptions);
+
+            return appBuilder;
+        }
+
         public static IAppBuilder UseWebApi(
             this IAppBuilder appBuilder,
             Dictionary<Type, Func<object>> controllerTypeToCreatorMapping)
@@ -26,11 +65,14 @@ namespace CookEat
             httpConfiguration.MapHttpAttributeRoutes();
             httpConfiguration.Formatters.Clear();
             httpConfiguration.Formatters.Add(new JsonMediaTypeFormatter());
-            httpConfiguration.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+
+            var jsonSerializerSettings = new JsonSerializerSettings
             {
-                
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
             };
+            jsonSerializerSettings.Converters.Add(new StringEnumConverter());
+
+            httpConfiguration.Formatters.JsonFormatter.SerializerSettings = jsonSerializerSettings;
             httpConfiguration.DependencyResolver = new DependencyResolver(controllerTypeToCreatorMapping);
             httpConfiguration.Services.Replace(
                 typeof(IHttpControllerSelector),

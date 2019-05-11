@@ -13,18 +13,23 @@ namespace CookEat
         {
             var cancellationTokenSource = new CancellationTokenSource();
             var cancellationToken = cancellationTokenSource.Token;
-            DBManager dbManager = new DBManager();
+            var dbManager = new DBManager();
             //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
+
+            var searchManager = new SearchManager(dbManager);
+            var userProfileManager = new UserProfileManager(dbManager,searchManager);
 
             using (WebApp.Start(
                 new StartOptions("http://*:80"),
                 app =>
                 {
                     app.
+                        ConfigureAuthentication().
                         UseWebApi(
                             new Dictionary<Type, Func<object>>
                             {
-                                [typeof(SearchManager)] = () => new SearchManager(dbManager)
+                                [typeof(SearchManager)] = () => searchManager,
+                                [typeof(UserProfileManager)] = () => userProfileManager
                             }).
                         ServeStaticFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "frontEnd"));
                 }))

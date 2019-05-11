@@ -1,54 +1,106 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using MongoDB.Driver;
+using System.Linq;
+using System.ServiceModel.Channels;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace CookEat
 {
-    public class UserProfileManager
+    [RoutePrefix("Api/UserProfile")]
+    public sealed class UserProfileManager : ApiController
     {
+        private readonly DBManager _dbManager;
+        private readonly SearchManager _searchManager;
 
-        public DBManager DataBaseManager;
-
-        public UserProfileManager(DBManager dataBaseManager)
+        public UserProfileManager(DBManager dbManager, SearchManager searchManager)
         {
-            DataBaseManager = dataBaseManager;
+            _dbManager = dbManager;
+            _searchManager = searchManager;
         }
 
-        public async Task InsertToRecipesCollection(Recipe iRecipeToInsert)// remove
+        [HttpPost]
+        [Route("Login")]
+        public async Task<AuthenticationResponse> Login([FromBody] AuthenticationRequest request)
         {
-            var collection = DataBaseManager.RecipesCollection;
-            await collection.InsertOneAsync(iRecipeToInsert);
+            var userProfile = await TryGetUserProfileAsync(request.UserName);
+
+            if (userProfile == null)
+            {
+                return new AuthenticationResponse
+                {
+                    AuthenticationResult = AuthenticationResult.UserDoesNotExist
+                };
+            }
+
+            return new AuthenticationResponse
+            {
+                AuthenticationResult =
+                    userProfile.Password == request.Password
+                        ? AuthenticationResult.Success
+                        : AuthenticationResult.IncorrectPassword
+            };
         }
 
-        public async Task InsertToUserProfileCollection(UserProfile i_UserProfileToInsert)
+        [HttpPost]
+        [Route("Register")]
+        public async Task<AuthenticationResponse> RegisterAsync([FromBody] AuthenticationRequest request)
         {
-            var collection = DataBaseManager.UserProfileCollection;
-            await collection.InsertOneAsync(i_UserProfileToInsert);
+            if (await TryGetUserProfileAsync(request.UserName) != null)
+            {
+                return new AuthenticationResponse
+                {
+                    AuthenticationResult = AuthenticationResult.UserAlreadyExists
+                };
+            }
+
+            await _dbManager.UserProfileCollection.InsertOneAsync(
+                new UserProfile
+                {
+                    Id = request.UserName,
+                    Password = request.Password,
+                    UserRecipes = new List<string>()
+                });
+
+            return new AuthenticationResponse
+            {
+                AuthenticationResult = AuthenticationResult.Success
+            };
         }
 
-        public async Task RemoveRecipeFromUserProfile(string i_UserId, string i_RecipeID)
+        [HttpPost]
+        [Route("UserRecipes")]
+        public async Task<GetUserSavedRecipesResponse> GetUserRecipesAsync([FromBody] GetUserSavedRecipesRequest request)
         {
-            var collection = DataBaseManager.UserProfileCollection;
-            var filter = Builders<UserProfile>.Filter.Eq(UserProfile => UserProfile.Id, i_UserId);
-            var userProfile = (await collection.FindAsync(filter)).Single();
-            userProfile.UserRecipes.Remove(i_RecipeID);
-            await collection.ReplaceOneAsync(filter, userProfile);
+            var recipeIds = (await TryGetUserProfileAsync(request.UserId)).UserRecipes;
+            return new GetUserSavedRecipesResponse
+            {
+                Recipes = _searchManager.SearchRecipesByIds(recipeIds)
+            };
         }
 
-		public GetUserSavedRecipesResponse SearchRecipes(GetUserSavedRecipesRequest searchGetUserSavedRecipeses)
-		{
-			GetUserSavedRecipesResponse result = null;
-			//get IdUser from GetUserSavedRecipesRequest
-			// get userProfile from DB manager
-			//sent idRecipeList from userprofile to searchManager
-			//creat GetUserSavedRecipesResponse
+        private async Task<UserProfile> TryGetUserProfileAsync(string userId)
+        {
+            return (await _dbManager.
+                UserProfileCollection.
+                FindAsync(profile => profile.Id == userId)).
+                SingleOrDefault();
+        }
 
-			return result;
-		}
+        [HttpGet]
+        [Route("SaveRecipe")]
+        public async Task SaveRecipeInUserProfileAsync(string userId, string recipeId)
+        {
+            var userProfile = await TryGetUserProfileAsync(userId);
+            userProfile.UserRecipes.Add(recipeId);
+        }
 
-	}
+        [HttpGet]
+        [Route("RemoveRecipe")]
+        public async Task RemoveRecipeFromUserProfileAsync(string userId, string recipeId)
+        {
+            var userProfile = await TryGetUserProfileAsync(userId);
+            userProfile.UserRecipes.Remove(recipeId);
+        }
+    }
 }
-
