@@ -13,7 +13,6 @@ nav.navbar.navbar-light.bg-light{
     display: inline-block;
 
 }
-
 header{
     direction: rtl;
     background-color: white;
@@ -67,13 +66,13 @@ body{
 }
 
 #freeSearch{
-    margin-left: 20px;
+    margin-left: 215px;
 }
 .inputfile + label {
 	cursor: pointer; /* "hand" cursor */
 }
 #searchByImg{
-    margin-left: 50px;
+    margin-left:235px;
 }
 ::placeholder{
     font-family: Arial, Helvetica, sans-serif;
@@ -103,15 +102,33 @@ body{
     padding: 3px;
 }
 #add-remove{
-    margin-left: 52px;
+    margin-left: 250px;
 }
 #content{
-    margin-left: 40px;
+    margin-left: 240px;
 }
 #save{
     margin-top: 5px;
-    margin-left: 60px;
+    margin-left: 315px;
 }
+#query{
+    width: 160px;
+}
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+      width: 100%;
+    }
+    .welcome{
+        color: black;
+        margin: 0px;
+    }
+}
+#imageToSearch{
+    margin-left: 80px;
+}
+
+
 
 
 

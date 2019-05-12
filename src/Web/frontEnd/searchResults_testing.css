@@ -12,7 +12,7 @@ table{
     border: 0px;
 }
 #upperMenu{
-    /*background-image: url(https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg);*/
+    background-image: url('https://cdn.pixabay.com/photo/2016/03/30/01/39/wood-1289840_1280.jpg');
     height: 50px;
     width: 100%;
 }
