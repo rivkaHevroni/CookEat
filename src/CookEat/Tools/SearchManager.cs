@@ -1,29 +1,29 @@
-﻿using System;
+﻿using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using MongoDB.Driver;
-using MoreLinq;
-using MoreLinq.Extensions;
 
 namespace CookEat
 {
-    [RoutePrefix("search")]
-    public class SearchManager : ApiController
+    [RoutePrefix("Api/Search")]
+    public sealed class SearchManager : ApiController
     {
         private readonly DBManager _dbManager;
+        private readonly GoogleApiHelper _googleApiHelper;
         private readonly CancellationToken _cancellationToken;
 
         public SearchManager(DBManager dbManager)
         {
             _dbManager = dbManager;
+            _googleApiHelper = new GoogleApiHelper();
         }
 
         [Route("")]
         [HttpPost]
-        public SearchResponse Search([FromBody] SearchRequest searchRequest)
+        public async Task<SearchResponse> Search([FromBody] SearchRequest searchRequest)
         {
             List<Recipe> results;
             if (searchRequest.SearchQuery != null)
@@ -34,7 +34,7 @@ namespace CookEat
             {
                 try
                 {
-                    results = SearchByImage(searchRequest.ImageBytes);
+                    results = await SearchByImageAsync(searchRequest.ImageBytes);
                 }
                 catch (Exception e)
                 {
@@ -52,39 +52,40 @@ namespace CookEat
             };
         }
 
-        public List<Recipe> GetRecipesFromIDsRecipesList(List<string> idsRecipesList) // async??
+        public List<Recipe> SearchRecipesByIds(List<string> idsRecipesList)
         {
-            List<Recipe> recipes = null;
-            IFindFluent<Recipe, Recipe> recipeToConvert = _dbManager.RecipesCollection.
-                Find(recipe => idsRecipesList.Contains(recipe.Id));
-
-            recipes = recipeToConvert.ToList();
-
-            return recipes;
+            return _dbManager.
+                RecipesCollection.
+                Find(recipe => idsRecipesList.Contains(recipe.Id)).
+                ToList();
         }
 
         private List<Recipe> SearchByQuery(string query)
         {
-            List<string> tokenaizedSearchValues = TokanizationHelper.Tokenaize(query);
-            IFindFluent<Recipe, Recipe> releventCollection =
-                    _dbManager.
-                        RecipesCollection.
-                        Find(recipe => tokenaizedSearchValues.Any(value => recipe.ValuesToSearch.Contains(value)));
-            List<Recipe> recipesBeforSort = releventCollection.ToList();
+            var tokenaizedSearchValues = TokanizationHelper.Tokenaize(query);
 
-            List<RecipeWithRank> matchToQuery = new List<RecipeWithRank>();
+            var recipesBeforeSort =
+                _dbManager.
+                    RecipesCollection.
+                    Find(
+                        recipe =>
+                            tokenaizedSearchValues.
+                                Any(value => recipe.ValuesToSearch.Contains(value))).
+                    ToList();
 
-            foreach (Recipe recipe in recipesBeforSort)
+            var recipesWithRank = new List<RecipeWithRank>();
+
+            foreach (var recipe in recipesBeforeSort)
             {
-                RecipeWithRank recipeWithRank = new RecipeWithRank(recipe, CheckNumberOfMatchValues(recipe, tokenaizedSearchValues));
+                var recipeWithRank = new RecipeWithRank(recipe, CheckNumberOfMatchValues(recipe, tokenaizedSearchValues));
 
-                matchToQuery.Add(recipeWithRank);
+                recipesWithRank.Add(recipeWithRank);
             }
 
-            IOrderedEnumerable<RecipeWithRank> matchToQueryAfterSort = matchToQuery.OrderByDescending(recipeWithRank => recipeWithRank.Rank);
-            List<Recipe> recipesAfterSort = new List<Recipe>();
+            var matchToQueryAfterSort = recipesWithRank.OrderByDescending(recipeWithRank => recipeWithRank.Rank);
+            var recipesAfterSort = new List<Recipe>();
 
-            foreach (RecipeWithRank recipeWithRank in matchToQueryAfterSort)
+            foreach (var recipeWithRank in matchToQueryAfterSort)
             {
                 recipesAfterSort.Add(recipeWithRank.Recipe);
             }
@@ -94,9 +95,9 @@ namespace CookEat
 
         private int CheckNumberOfMatchValues(Recipe recipe, List<string> tokenaizedSearchValues)
         {
-            int countMatchWords = 0;
+            var countMatchWords = 0;
 
-            foreach (string tokenaizedSearchValue in tokenaizedSearchValues)
+            foreach (var tokenaizedSearchValue in tokenaizedSearchValues)
             {
                 if (recipe.ValuesToSearch.Contains(tokenaizedSearchValue))
                 {
@@ -107,35 +108,30 @@ namespace CookEat
             return countMatchWords;
         }
 
-        private List<Recipe> SearchByImage(Byte[] imageBytes)
+        private async Task<List<Recipe>> SearchByImageAsync(byte[] imageBytes)
         {
-            VisionAndTranslateHelper visionAndTranslateHelper = new VisionAndTranslateHelper();
-            string res = visionAndTranslateHelper.CreateQueryFromImage(imageBytes);
-            List<Recipe> recipes = SearchByQuery(res);
-            return recipes;
+            var query = await _googleApiHelper.GetQueryFromImage(imageBytes);
+            return SearchByQuery(query);
         }
 
         private List<Recipe> SearchByIngredients(List<string> ingredientNames)
         {
-            List<Recipe> recipesAfterSort = new List<Recipe>();
-            List<string> tokenaizedSearchValues = new List<string>();
+            var tokenaizedSearchValues = new List<string>();
 
-            foreach (string ingredientName in ingredientNames)
+            foreach (var ingredientName in ingredientNames)
             {
                 tokenaizedSearchValues.Add(TokanizationHelper.TokenaizeForOneValue(ingredientName));
             }
 
             string queryToSearchByIngredients = null;
 
-            foreach (string ingredient in tokenaizedSearchValues)
+            foreach (var ingredient in tokenaizedSearchValues)
             {
                 queryToSearchByIngredients += ingredient;
                 queryToSearchByIngredients += " ";
             }
 
-            recipesAfterSort = SearchByQuery(queryToSearchByIngredients); 
-
-            return recipesAfterSort;
+            return SearchByQuery(queryToSearchByIngredients);
         }
     }
 }

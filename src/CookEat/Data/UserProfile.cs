@@ -7,6 +7,7 @@ namespace CookEat
     {
         [BsonId]
         public string Id { get; set; }
+        public string Password { get; set; }
         public List<string> UserRecipes { get; set; }
     }
 }
