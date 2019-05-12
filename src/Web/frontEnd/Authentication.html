@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+        <head>
+                <title>התחברות והרשמה</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                <link rel="stylesheet" type="text/css" href="Authentication.css">
+                <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+        </head>
+
+        <body>
+            <div class="imgcontainer">
+                <img src="cookEatLogo.png" alt="cookEat" class="avatar">
+            </div>
+            <div id=forms>
+            <form id="login" method="POST">
+                <div class="container">
+                    <p>משתמש קיים</p>
+                    <label for="uname"><b>שם משתמש</b></label>
+                    
+                    <input type="text" placeholder="הזן שם משתמש" name="uname" required>
+                    <br>
+                    <label for="psw"><b>סיסמה</b></label>
+        
+                    <input type="password" placeholder="הזן סיסמה" name="psw" required>
+                    <br><br>
+                    <button type="submit">התחבר</button>
+                </div>
+            </form>     
+            <form id="register" method="POST">  
+                    <div class="container">
+                        <p>עדיין לא נרשמת ?</p>
+                        <label for="uname"><b>שם משתמש</b></label>
+                        <input type="text" placeholder="בחר שם משתמש" name="uname" required>
+                        <br>
+                        <label for="psw"><b>סיסמה</b></label>
+                        <input type="password" placeholder="בחר סיסמה" name="psw" required>
+                        <br><br>
+                        <button type="submit">הירשם</button>
+                    </div>
+                </form>
+            </div>
+        </body>
+</html>

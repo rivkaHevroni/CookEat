@@ -1,0 +1,88 @@
+*{
+    direction: rtl;
+    text-align: center;
+    font-family: 'Varela Round', sans-serif;
+}
+
+#forms{
+   margin: auto;
+   width:100%;
+}
+
+#login{
+    border-left: 3px solid;
+    border-left-color: white;
+}
+
+body{
+    background-image: url(https://cdn.pixabay.com/photo/2017/10/22/20/57/knife-2879251_960_720.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 0 auto;
+}
+
+form {
+    width: 49%;
+    margin: 0 auto;
+    background: transparent;
+    float: right;
+    padding: 0px;
+  }
+
+p{
+    font-size: 30px;
+    color: darkred;
+}
+  
+input[type=text], input[type=password] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: auto;
+    display: block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+  
+  /* Set a style for all buttons */
+  button {
+    background-color: darkred;
+    color: white;
+    padding: 14px 20px;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+    width: 30%;
+  }
+  
+  /* Add a hover effect for buttons */
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  
+  /* Center the avatar image inside this container */
+  .imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+  }
+  
+  /* Avatar image */
+  img.avatar {
+    size: 30%;
+  }
+  
+  /* Add padding to containers */
+  .container {
+    padding: 0px;
+  }
+  
+  /* Change styles for span and cancel button on extra small screens */
+  @media screen and (max-width: 300px) {
+    span.psw {
+      display: block;
+      float: none;
+    }
+    .cancelbtn {
+      width: 100%;
+    }
+  }

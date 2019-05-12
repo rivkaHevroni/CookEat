@@ -93,6 +93,9 @@ namespace CookEat
         {
             var userProfile = await TryGetUserProfileAsync(userId);
             userProfile.UserRecipes.Add(recipeId);
+            await _dbManager.
+                UserProfileCollection.
+                FindOneAndReplaceAsync(profile => profile.Id == GetType().Name, userProfile);
         }
 
         [HttpGet]
@@ -101,6 +104,9 @@ namespace CookEat
         {
             var userProfile = await TryGetUserProfileAsync(userId);
             userProfile.UserRecipes.Remove(recipeId);
+            await _dbManager.
+                UserProfileCollection.
+                FindOneAndReplaceAsync(profile => profile.Id == GetType().Name, userProfile);
         }
     }
 }
