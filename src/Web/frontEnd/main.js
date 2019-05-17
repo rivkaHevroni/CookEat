@@ -61,7 +61,7 @@ document.getElementById("QuerySearchButton").addEventListener('click', (clickEve
     try {
         var searchQuery = document.getElementById('query').value;
         var searchRequest = {SearchQuery: searchQuery};
-        localStorage.setItem("Request", JSON.stringify(searchRequest));
+        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
         window.location.href = "http://localhost/searchResults_testing.html";
     }
     catch(err) {
@@ -69,20 +69,8 @@ document.getElementById("QuerySearchButton").addEventListener('click', (clickEve
     }
 })
 
-
-function searchByQuery(searchQuery){
-    
-    //return (sendSearchRequest(searchRequest)).Results;
-}
-
-function sendSearchRequest(request) {
-    return fetch("http://localhost/search", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8"
-        },
-        body: JSON.stringify(request)
-    }).
-    then(response => response.json()).
-    then(obj => Console.log(JSON.stringify(obj)));
-}
+document.getElementById("personalAreaButton").addEventListener('click', (clickEvent) =>
+{
+    clickEvent.preventDefault();
+    window.location.href= "http://localhost/personalArea.html";  
+})

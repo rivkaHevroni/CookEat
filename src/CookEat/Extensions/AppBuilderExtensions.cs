@@ -9,7 +9,9 @@ using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -18,43 +20,40 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Dependencies;
 using System.Web.Http.Dispatcher;
+using Microsoft.Owin;
 using Newtonsoft.Json.Converters;
 
 namespace CookEat
 {
     public static class AppBuilderExtensions
     {
-        public static IAppBuilder ConfigureAuthentication(this IAppBuilder appBuilder)
+        public static IAppBuilder UseExceptionHandler(this IAppBuilder app)
         {
-            appBuilder.
-                UseCookieAuthentication(
-                    new CookieAuthenticationOptions
-                    {
-                        AuthenticationType = DefaultAuthenticationTypes.ExternalCookie
-                    });
-            appBuilder.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-            appBuilder.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, 5.Minutes());
-            appBuilder.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-
-            var authenticationOptions = new GoogleOAuth2AuthenticationOptions
-            {
-                ClientId = "132365876142-9m9voh1ih0d3tu1it63jfqdmqaamadfd.apps.googleusercontent.com",
-                ClientSecret = "T4WeMryliLthgCdsWnBfUrk-",
-                Provider = new GoogleOAuth2AuthenticationProvider
+            return app.Use(
+                async (owinContext, requestHandler) =>
                 {
-                    OnAuthenticated = context =>
+                    var isException = false;
+                    owinContext.Response.OnSendingHeaders(
+                        _ =>
+                        {
+                            if (isException)
+                            {
+                                owinContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                owinContext.Response.ReasonPhrase = HttpStatusCode.InternalServerError.Humanize();
+                            }
+                        },
+                        null);
+
+                    try
                     {
-                        var profileUrl = context.User["image"]["url"].ToString();
-                        context.Identity.AddClaim(new Claim(ClaimTypes.Uri, profileUrl));
-                        return Task.FromResult(0);
+                        await requestHandler();
                     }
-                }
-            };
-            authenticationOptions.Scope.Add("profile");
-
-            appBuilder.UseGoogleAuthentication(authenticationOptions);
-
-            return appBuilder;
+                    catch (Exception exception)
+                    {
+                        isException = true;
+                        ExceptionHandler.Handle(exception);
+                    }
+                });
         }
 
         public static IAppBuilder UseWebApi(

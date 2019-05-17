@@ -24,7 +24,7 @@ namespace CookEat
                 app =>
                 {
                     app.
-                        ConfigureAuthentication().
+                        UseExceptionHandler().
                         UseWebApi(
                             new Dictionary<Type, Func<object>>
                             {

@@ -50,10 +50,10 @@ function PrintRecipes(recipes){
                 cell.style.backgroundColor="#F5F5F5";
                 cell.appendChild(GetRecipeElement(recipes[numOfRecipe]));
                 var saveButton = document.createElement('BUTTON');
-                saveButton.innerHTML="שמור ";
+                saveButton.innerHTML="מחק";
                 saveButton.setAttribute("class", "btn btn-danger");
                 var sp1 = document.createElement('span');
-                sp1.setAttribute("class", "glyphicon glyphicon-pushpin");
+                sp1.setAttribute("class", "glyphicon glyphicon-minus-sign");
                 saveButton.appendChild(sp1);
                 cell.appendChild(saveButton);
                 var moreDetails = document.createElement('BUTTON');
@@ -99,21 +99,24 @@ function PrintRecipes(recipes){
     return table;
 }
 
-fetch("http://localhost/api/search", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json; charset=UTF-8"
-        },
-        body: localStorage.getItem("SearchRequest")
-    }).
-    then(response => response.json()).
-    then(searchResponse => document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results)))
+var userName = localStorage.getItem("userName");
+if (userName == null) {
+    window.location.href = "http://localhost/Authentication.html";
+}
+else {
+    var getUserSavedRecipesRequest = {UserId: userName};
+    fetch("http://localhost/Api/UserProfile/UserRecipes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(getUserSavedRecipesRequest)
+        }).
+        then(response => response.json()).
+        then(getUserSavedRecipesResponse => document.getElementById('ronen').appendChild(PrintRecipes(getUserSavedRecipesResponse.recipes)));
+}
+
 
 //var jsonText = '[{"_id":5,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3���2 hghgh hjghjgj jgjgj jgjg hgjhg jhgjgjj jhghgjh hfhg nhghn hgjhg jgtjhg jgtujg jgjgj kjgj"},{"_id":6,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":7,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":9,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":10,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":12,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"}, {"_id":11,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":14,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://foodrevolution.org/wp-content/uploads/2018/04/blog-featured-diabetes-20180406-1330.jpg","RecipeTitle":"3����2"},{"_id":15,"PreparationTime":200,"Link":"https://www.chef-lavan.co.il/�������/������-�����-������-3-��������","NumberOfDiners":5,"Picture":"https://www.akc.org/wp-content/themes/akc/component-library/assets/img/welcome.jpg","RecipeTitle":"3����2"}]'
 //var recipes=JSON.parse(jsonText);
 //document.getElementById('ronen').appendChild(PrintRecipes(recipes));
-
-
-
-
-
