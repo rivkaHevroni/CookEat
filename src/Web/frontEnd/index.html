@@ -30,17 +30,18 @@
         </nav>
       </header>
       <br><br><br><br><br>
-      <div id="sapir"></div>
       <div class="text-left">
         <div class="welcome">
           <h1>ברוכים הבאים ל<span class="alignRight"> - CookEat</span></h1>
           <h2>?איך תרצו לחפש את המתכון הבא שלכם</h2><br><br>
         </div>
         <div class="buttons" class="row" >
-          <div class="col-9" class = "nav-pills">
-            <a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu1">חיפוש חופשי</a>
-            <a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu2">תמונה</a>
-            <a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu3">מצרכים</a>
+          <div class="col-9" class = "nav nav-pills nav-justified">
+            <ul class="list-inline">
+              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" class="tabs" data-toggle="pill" href="#menu1">חיפוש חופשי</a></li>             
+              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu2">תמונה</a></li> 
+              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu3">מצרכים</a></li>
+            </ul>
           </div>
         </div>
 
@@ -55,8 +56,8 @@
                       <button id="QuerySearchButton"><i class="fa fa-search"></i></button>
                     </span>
                     <input id="query" type="text" class="form-control" placeholder="הקלד כאן" style="direction: rtl;"/>
-                  </div>
                 </div>
+              </div>
               </form>
             </div>
           <div id="menu2" class="tab-pane fade">
@@ -64,7 +65,8 @@
             <div class="row">
               <div class="col-4"></div>
               <div class="col-4" id="searchByImg">
-                <input type="file" id="file" class="inputfile"/>
+                <input type="file" id="image1" class="inputfile"/><br>
+                <button id="imageToSearch"><i class="fa fa-search"></i> חפש</button>
               </div>
             </div>
           </div>

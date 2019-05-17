@@ -43,16 +43,19 @@ document.getElementById('remove').addEventListener('click', (clickEvent) =>
 document.getElementById('save').addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault()
-    textBoxValues = new Array(numberOfTextBoxesInDocument)
+    searchIngredientList = new Array(numberOfTextBoxesInDocument)
 
     for(var i = 0; i < textBoxValues.length; i++)
     {
         var elementId = `tb_${i}`
-        textBoxValues[i] = document.getElementById(elementId).value
-        console.log(textBoxValues[i]);
+        searchIngredientList[i] = document.getElementById(elementId).value
+        console.log(searchIngredientList[i]);
     }
+    console.log(searchIngredientList)
 
-    console.log(textBoxValues)
+    var searchRequest = {SearchIngredientList: searchIngredientList};
+        localStorage.setItem("Request", JSON.stringify(searchRequest));
+        window.location.href = "http://localhost/searchResults_testing.html";
 })
 
 document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) =>
@@ -74,3 +77,37 @@ document.getElementById("personalAreaButton").addEventListener('click', (clickEv
     clickEvent.preventDefault();
     window.location.href= "http://localhost/personalArea.html";  
 })
+
+function searchByQuery(searchQuery){
+    
+    //return (sendSearchRequest(searchRequest)).Results;
+}
+
+function sendSearchRequest(request) {
+    return fetch("http://localhost/search", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(request)
+    }).
+    then(response => response.json()).
+    then(obj => Console.log(JSON.stringify(obj)));
+}
+
+/*document.getElementById("imageToSearch").addEventListener('click', (clickEvent) =>
+{
+    clickEvent.preventDefault();
+    var file= $('file')[0].files[0];
+    try {
+        const buffer = await sharp(file).png().toBuffer()
+        alert(buffer);
+    }
+    catch(err) {
+        alert(err);
+    }
+})*/
+
+/*document.getElementById("imageToSearch").addEventListener('click', (clickEvent) =>
+{
+})*/
