@@ -57,6 +57,7 @@
     <Compile Include="Extensions\HtmlWebExtensions.cs" />
     <Compile Include="Extensions\TaskExtension.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Tools\a.cs" />
     <Compile Include="Tools\Crawlers\MakoCrawler.cs" />
     <Compile Include="Tools\ExceptionHandler.cs" />
     <Compile Include="Tools\Helpers\TokanizationHelper.cs" />

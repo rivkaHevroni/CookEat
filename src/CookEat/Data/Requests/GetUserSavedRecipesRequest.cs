@@ -8,6 +8,6 @@ namespace CookEat
 {
     public class GetUserSavedRecipesRequest
     {
-        public string UserId;
+        public string UserId { get; set; }
     }
 }

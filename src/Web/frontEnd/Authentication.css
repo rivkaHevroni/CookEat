@@ -12,10 +12,15 @@
 #login{
     border-left: 3px solid;
     border-left-color: white;
+    width: 49%;
+    margin: 0 auto;
+    background: transparent;
+    float: right;
+    padding: 0px;
 }
 
 body{
-    background-image: url(https://cdn.pixabay.com/photo/2017/10/22/20/57/knife-2879251_960_720.jpg);
+    /*background-image: url(https://cdn.pixabay.com/photo/2017/10/22/20/57/knife-2879251_960_720.jpg);*/
     background-repeat: no-repeat;
     background-size: 100%;
     margin: 0 auto;
