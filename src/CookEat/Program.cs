@@ -16,9 +16,6 @@ namespace CookEat
             var dbManager = new DBManager();
             //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
 
-            var searchManager = new SearchManager(dbManager);
-            var userProfileManager = new UserProfileManager(dbManager,searchManager);
-
             using (WebApp.Start(
                 new StartOptions("http://*:80"),
                 app =>
@@ -28,8 +25,8 @@ namespace CookEat
                         UseWebApi(
                             new Dictionary<Type, Func<object>>
                             {
-                                [typeof(SearchManager)] = () => searchManager,
-                                [typeof(UserProfileManager)] = () => userProfileManager
+                                [typeof(SearchManager)] = () => new SearchManager(dbManager),
+                                [typeof(UserProfileManager)] = () => new UserProfileManager(dbManager)
                             }).
                         ServeStaticFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "frontEnd"));
                 }))

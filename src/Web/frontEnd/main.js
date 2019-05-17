@@ -1,5 +1,4 @@
 var numberOfTextBoxesInDocument = 0;
-var textBoxValues;
 
 document.getElementById('add').addEventListener('click', (clickEvent) =>
 {
@@ -8,7 +7,7 @@ document.getElementById('add').addEventListener('click', (clickEvent) =>
         alert("אפשר להוסיף עד כחמישה מצרכים")
     }
     else{
-            //create the div that warp up the text box
+    //create the div that warp up the text box
     var textBoxDivWrapperElement = document.createElement('div');
     textBoxDivWrapperElement.setAttribute('id', `div_${numberOfTextBoxesInDocument}`);
 
@@ -43,19 +42,24 @@ document.getElementById('remove').addEventListener('click', (clickEvent) =>
 document.getElementById('save').addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault()
-    searchIngredientList = new Array(numberOfTextBoxesInDocument)
+    try {
+        searchIngredientList = new Array(numberOfTextBoxesInDocument)
 
-    for(var i = 0; i < textBoxValues.length; i++)
-    {
-        var elementId = `tb_${i}`
-        searchIngredientList[i] = document.getElementById(elementId).value
-        console.log(searchIngredientList[i]);
-    }
-    console.log(searchIngredientList)
+        for (var i = 0; i < numberOfTextBoxesInDocument; i++) {
+            var elementId = `tb_${i}`;
+            searchIngredientList[i] = document.getElementById(elementId).value;
+            console.log(searchIngredientList[i]);
+        }
+        console.log(searchIngredientList);
 
-    var searchRequest = {SearchIngredientList: searchIngredientList};
-        localStorage.setItem("Request", JSON.stringify(searchRequest));
+        var searchRequest = { IngrediantNames: searchIngredientList };
+
+        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
         window.location.href = "http://localhost/searchResults_testing.html";
+    }
+    catch (err) {
+        alert(err);
+    }
 })
 
 document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) =>
@@ -111,3 +115,16 @@ function sendSearchRequest(request) {
 /*document.getElementById("imageToSearch").addEventListener('click', (clickEvent) =>
 {
 })*/
+
+document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+    try {
+        var searchQuery = document.getElementById('query').value;
+        var searchRequest = { SearchQuery: searchQuery };
+        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
+        window.location.href = "http://localhost/searchResults_testing.html";
+    }
+    catch (err) {
+        alert(err);
+    }
+})

@@ -13,10 +13,10 @@ namespace CookEat
         private readonly DBManager _dbManager;
         private readonly SearchManager _searchManager;
 
-        public UserProfileManager(DBManager dbManager, SearchManager searchManager)
+        public UserProfileManager(DBManager dbManager)
         {
             _dbManager = dbManager;
-            _searchManager = searchManager;
+            _searchManager = new SearchManager(_dbManager);
         }
 
         [HttpPost]

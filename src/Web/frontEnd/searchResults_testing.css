@@ -6,7 +6,7 @@ nav.navbar.navbar-custom{
     color: red;
 }
 .navbar-custom {
-	background-image: url(https://previews.123rf.com/images/phonlamaiphoto/phonlamaiphoto1611/phonlamaiphoto161101767/65648097-wooden-background-or-timber-wood-background.jpg);
+    background-image: url(https://previews.123rf.com/images/phonlamaiphoto/phonlamaiphoto1611/phonlamaiphoto161101767/65648097-wooden-background-or-timber-wood-background.jpg);
 }
 table{
     border: 0px;
@@ -23,6 +23,8 @@ table{
     margin-left: auto;
     margin-right: 20px;
 }
+
+
 
 
 
