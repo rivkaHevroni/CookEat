@@ -26,9 +26,9 @@ namespace CookEat
             _translateClient = TranslationClient.Create(credentials);
         }
 
-        public async Task<string> GetQueryFromImage(byte[] imageBytes)
+        public async Task<string> GetQueryFromImage(string imageBase64String)
         {
-            var englishQuery = await GetImageBestGuessLabelsAsync(imageBytes);
+            var englishQuery = await GetImageBestGuessLabelsAsync(imageBase64String);
             return await TranslateToHebrewAsync(englishQuery);
         }
 
@@ -39,14 +39,16 @@ namespace CookEat
                 TranslatedText;
         }
 
-        private async Task<string> GetImageBestGuessLabelsAsync(byte[] imageBytes)
+        private async Task<string> GetImageBestGuessLabelsAsync(string imageBase64String)
         {
-            var image = Image.FromBytes(imageBytes);
+			byte[] imageBytes = Convert.FromBase64String(imageBase64String);
+			var image = Image.FromBytes(imageBytes);
             var annotation = await _visionClient.DetectWebInformationAsync(image);
-
+			
             return annotation.
                 BestGuessLabels.
                 ToString();
+
         }
     }
 }

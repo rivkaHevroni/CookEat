@@ -351,7 +351,4 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Grpc.Core.1.18.0\build\net45\Grpc.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Grpc.Core.1.18.0\build\net45\Grpc.Core.targets'))" />
   </Target>
-  <Target Name="OpenBrowser" AfterTargets="AfterBuild">
-    <Exec Command="start chrome localhost"/>
-  </Target>
 </Project>

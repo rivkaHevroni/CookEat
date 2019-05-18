@@ -108,9 +108,9 @@ namespace CookEat
             return countMatchWords;
         }
 
-        private async Task<List<Recipe>> SearchByImageAsync(byte[] imageBytes)
+        private async Task<List<Recipe>> SearchByImageAsync(string imageBase64String)
         {
-            var query = await _googleApiHelper.GetQueryFromImage(imageBytes);
+            var query = await _googleApiHelper.GetQueryFromImage(imageBase64String);
             return SearchByQuery(query);
         }
 

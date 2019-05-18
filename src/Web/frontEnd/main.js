@@ -82,6 +82,16 @@ document.getElementById("personalAreaButton").addEventListener('click', (clickEv
     window.location.href= "http://localhost/personalArea.html";  
 })
 
+document.getElementById("imageToSearch").addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+
+    var imgElement = document.getElementById("usersImage");
+    var chosenPicBase64 = imgElement.src.split("base64,")[1];
+    var searchRequest = { ImageBytes: chosenPicBase64 };
+    localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
+    window.location.href = "http://localhost/searchResults_testing.html";
+})
+
 function searchByQuery(searchQuery){
     
     //return (sendSearchRequest(searchRequest)).Results;
@@ -99,23 +109,6 @@ function sendSearchRequest(request) {
     then(obj => Console.log(JSON.stringify(obj)));
 }
 
-/*document.getElementById("imageToSearch").addEventListener('click', (clickEvent) =>
-{
-    clickEvent.preventDefault();
-    var file= $('file')[0].files[0];
-    try {
-        const buffer = await sharp(file).png().toBuffer()
-        alert(buffer);
-    }
-    catch(err) {
-        alert(err);
-    }
-})*/
-
-/*document.getElementById("imageToSearch").addEventListener('click', (clickEvent) =>
-{
-})*/
-
 document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) => {
     clickEvent.preventDefault();
     try {
@@ -128,3 +121,86 @@ document.getElementById("QuerySearchButton").addEventListener('click', (clickEve
         alert(err);
     }
 })
+
+if (window.FileReader) {
+    var drop;
+    addEventHandler(window, 'load', function () {
+        var status = document.getElementById('status');
+        drop = document.getElementById('drop');
+        var list = document.getElementById('list');
+
+        function cancel(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            return false;
+        }
+
+        // Tells the browser that we *can* drop on this target
+        addEventHandler(drop, 'dragover', cancel);
+        addEventHandler(drop, 'dragenter', cancel);
+
+        addEventHandler(drop, 'drop', function (e) {
+            e = e || window.event; // get window.event if e argument missing (in IE)   
+            if (e.preventDefault) {
+                e.preventDefault();
+            } // stops the browser from redirecting off to the image.
+
+            var dt = e.dataTransfer;
+            var files = dt.files;
+            for (var i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader();
+
+                //attach event handlers here...
+
+                reader.readAsDataURL(file);
+                addEventHandler(reader, 'loadend', function (e, file) {
+                    var bin = this.result;
+                    var newFile = document.createElement('div');
+                    newFile.innerHTML = 'Loaded : ' + file.name + ' size ' + file.size + ' B';
+                    list.appendChild(newFile);
+
+                    var dropElement = document.getElementById("drop");
+                    var img = document.createElement("img");
+                    img.id = "usersImage";
+                    img.file = file;
+                    img.src = bin;
+                    dropElement.innerHTML = "";
+                    dropElement.appendChild(img);
+
+                    var serchButton = document.getElementById("imageToSearch");
+                    serchButton.style.pointerEvents = "unset";
+                    serchButton.style.opacity = "1";
+                }.bindToEventHandler(file));
+            }
+            return false;
+        });
+        Function.prototype.bindToEventHandler = function bindToEventHandler() {
+            var handler = this;
+            var boundParameters = Array.prototype.slice.call(arguments);
+            console.log(boundParameters);
+            //create closure
+            return function (e) {
+                e = e || window.event; // get window.event if e argument missing (in IE)   
+                boundParameters.unshift(e);
+                handler.apply(this, boundParameters);
+            }
+        };
+    });
+} else {
+    document.getElementById('status').innerHTML = 'Your browser does not support the HTML5 FileReader.';
+}
+
+function addEventHandler(obj, evt, handler) {
+    if (obj.addEventListener) {
+        // W3C method
+        obj.addEventListener(evt, handler, false);
+    } else if (obj.attachEvent) {
+        // IE method.
+        obj.attachEvent('on' + evt, handler);
+    } else {
+        // Old school method.
+        obj['on' + evt] = handler;
+    }
+}

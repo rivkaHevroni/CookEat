@@ -37,18 +37,21 @@ function moreDetailsEvent(id, recipes){
     }
 }
 
-function PrintRecipes(recipes){
-    if (recipes.length == 0) {
+function PrintRecipes(recipes) {
+    var table = document.createElement('table');
+
+    if (recipes == null || recipes.length == 0) {
         var messege = document.createElement('span');
         messege.innerText = "מצטערים, לא נמצאו מתכונים מתאימים";
         messege.style.margin = "0 auto";
         messege.style.display = "table";
         messege.style.fontSize = "25px";
         document.getElementById("emptyResult").appendChild(messege);
+
+        return table;
     }
 
     var numOfRows = Math.ceil((recipes.length)/4, 0);
-    var table = document.createElement('table');
     var currentRecipeIndex = 0;
 
     for(var currentRow=0; currentRow<numOfRows; currentRow++){
