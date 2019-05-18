@@ -26,7 +26,7 @@ function GetRecipeElement(recipe){
 function moreDetailsEvent(id, recipes){
     var i;
     for(i=0; i<recipes.length; i++){
-        if(id == recipes[i]._id){
+        if(id == recipes[i].id){
             var modalHeader = document.createElement('div');
             modalHeader.setAttribute("class", "modal-header");
             var image1 = document.createElement('IMG');
@@ -38,7 +38,7 @@ function moreDetailsEvent(id, recipes){
 }
 
 function PrintRecipes(recipes){
-    if (recipes == null) {
+    if (recipes.length == 0) {
         var messege = document.createElement('span');
         messege.innerText = "מצטערים, לא נמצאו מתכונים מתאימים";
         messege.style.margin = "0 auto";
@@ -46,17 +46,20 @@ function PrintRecipes(recipes){
         messege.style.fontSize = "25px";
         document.getElementById("emptyResult").appendChild(messege);
     }
-    var numOfRecipe = 0;
+
     var numOfRows = Math.ceil((recipes.length)/4, 0);
     var table = document.createElement('table');
-    for(var i=0; i<numOfRows; i++){
-        var row = table.insertRow(i);
-        for(var j=0; j<4; j++){
-           if(numOfRecipe<recipes.length){
-                var cell = row.insertCell(j);
+    var currentRecipeIndex = 0;
+
+    for(var currentRow=0; currentRow<numOfRows; currentRow++){
+        var row = table.insertRow(currentRow);
+        for(var currentCol=0; currentCol<4; currentCol++ , currentRecipeIndex++){
+           if(currentRecipeIndex < recipes.length){
+
+                var cell = row.insertCell(currentCol);
                 cell.style.border="solid white 20px";
                 cell.style.backgroundColor="#F5F5F5";
-                cell.appendChild(GetRecipeElement(recipes[numOfRecipe]));
+                cell.appendChild(GetRecipeElement(recipes[currentRecipeIndex]));
                 var saveButton = document.createElement('BUTTON');
                 saveButton.innerHTML="שמור ";
                 saveButton.setAttribute("class", "btn btn-danger");
@@ -66,10 +69,12 @@ function PrintRecipes(recipes){
                 cell.appendChild(saveButton);
                 var moreDetails = document.createElement('BUTTON');
                 moreDetails.setAttribute("class", "btn btn-danger");
+                moreDetails.setAttribute("id", recipes[currentRecipeIndex].id);
                 moreDetails.innerHTML = "לפרטים נוספים ";
                 //moreDetails.setAttribute("id", "5");
-                var demo = recipes[i]._id;
-                moreDetails.onclick = function(){moreDetailsEvent(demo, recipes);};
+                moreDetails.onclick = function(ev) {
+                    moreDetailsOnClick(recipes, ev.target.id)
+                }; /*moreDetailsEvent(demo, recipes);*/
                 var sp2 = document.createElement('span');
                 sp2.setAttribute("class", "glyphicon glyphicon-plus")
                 moreDetails.appendChild(sp2);
@@ -77,13 +82,14 @@ function PrintRecipes(recipes){
                 //var demo = document.getElementById(recipes[i]._id);
            }
            else{
-                var cell = row.insertCell(j);
+                var cell = row.insertCell(currentCol);
                 var image = document.createElement('IMG');
                 image.src="http://www.allwhitebackground.com/images/2/2270.jpg";
                 image.style.width="90%";
                 image.style.height= "180px";
                 cell.appendChild(image);
            }
+           
            cell.style.padding="0";
            cell.style.width="400px";
            cell.style.verticalAlign="top";
@@ -101,10 +107,18 @@ function PrintRecipes(recipes){
            moreDetails.style.borderRadius="5px";
            moreDetails.style.fontWeight="bold";
            moreDetails.style.padding="3px";
-           numOfRecipe++;
         }
     }
     return table;
+}
+
+function moreDetailsOnClick(recipes, id){
+    var recipeDetails = recipes.find(function(recipe) {
+        return recipe.id === id;
+      });
+
+    document.getElementById('recipe-modal').style.display = "block"; // Make the modal visble
+    document.getElementById("recipe-title").innerHTML = recipeDetails.recipeTitle;
 }
 
 fetch("http://localhost/api/search", {
@@ -117,8 +131,27 @@ fetch("http://localhost/api/search", {
     then(response => response.json()).
     then(searchResponse => document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results)))
 
-
-
+    var enterToPersonalInfoElm = document.getElementById('a');
+    enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {
+        clickEvent.preventDefault();
+        try {
+            window.location.href= "http://localhost/index.html";
+        }
+        catch (err) {
+            alert(err);
+        }
+    })
+    
+    var enterHomePageElm = document.getElementById('b');
+    enterHomePageElm.addEventListener('click', (clickEvent) => {
+        clickEvent.preventDefault();
+        try {
+            window.location.href= "http://localhost/Authentication.html";
+        }
+        catch (err) {
+            alert(err);
+        }
+    })
 
 
 
