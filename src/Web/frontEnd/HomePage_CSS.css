@@ -124,15 +124,23 @@ body{
         margin: 0px;
     }
 }
-#imageToSearch{
-    margin-left: 80px;
+#imageToSearch {
+	margin-left: 80px;
+	pointer-events: none;
+	opacity: 0.5;
 }
 
+#drop {
+	min-height: 150px;
+	width: 250px;
+	margin: 10px;
+	padding: 10px;
+	border: double 2px;
+	text-align: center;
+	height: 150px;
+	display: table-cell;
+}
 
-
-
-
-
-
-
-
+#usersImage {
+	height: 120px;
+}
