@@ -42,11 +42,11 @@ table{
   /* Modal Content */
   #recipe-modal-content {
     background-color: #fefefe;
-    margin: auto;
+    margin: 0 auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 40%;
     position: relative;
+    display: table;
   }
 
   /* The Close Button */
@@ -68,8 +68,61 @@ table{
     cursor: pointer;
 }
 
+#recipe-image{
+    width: 240px;
+    height: 200px;
+}
 
+#recipe-title{
+    text-align: center;
+    font-size: 15px;
+    background-color: 	#F0E68C;
+    border-radius: 15%;
+    font-weight: bold;   
+}
 
+#recipe-preparation-time{
+    text-align: center;
+    font-size: 14px;
+    margin: 0 auto;
+}
 
+#time{
+    display: inline-block;
+}
 
+#recipe-link{
+    text-align: center;
+    font-size: 14px;
+    background-color: 	#F0E68C;
+    color: black;
+    margin: 0 auto;
+    display: table-row;
+}
 
+#recipe-num-of-dishes{
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    margin: 0 auto;
+    display: table;
+}
+
+#dishes{
+    display: inline-block;
+    direction: rtl;
+}
+
+#numOfDis{
+    display: inline-block;
+}
+
+#icondis{
+    margin-left: 3px;
+}
+
+#plus-minus{
+    border: 1px solid black;
+    border-radius: 10%;
+    display: inline-block;
+}

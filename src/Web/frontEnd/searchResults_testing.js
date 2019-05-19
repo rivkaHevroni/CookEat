@@ -3,9 +3,16 @@ function GetRecipeElement(recipe){
     var id = document.createElement('p');
     var image = document.createElement('IMG');
     var recipeTitle = document.createElement('p');
+    var ingrediants = document.createElement('div');
     var breakLine = document.createElement('br');
+    var preparationTime = document.createElement('div');
+    var link = document.createElement('a');
+    var numberOfDishes = document.createElement('p');
+    numberOfDishes.innerHTML = recipe.numOfDishes;
+    link.innerHTML- recipe.link;
     recipeTitle.innerHTML=recipe.recipeTitle;
     id.innerHTML = recipe.id;
+    preparationTime.innerHTML = recipe.preparationTime;
     image.src = recipe.picture;
     recipeTitle.style.textAlign = "center";
     recipeTitle.style.fontSize = "14px";
@@ -74,15 +81,13 @@ function PrintRecipes(recipes) {
                 moreDetails.setAttribute("class", "btn btn-danger");
                 moreDetails.setAttribute("id", recipes[currentRecipeIndex].id);
                 moreDetails.innerHTML = "לפרטים נוספים ";
-                //moreDetails.setAttribute("id", "5");
                 moreDetails.onclick = function(ev) {
                     moreDetailsOnClick(recipes, ev.target.id)
-                }; /*moreDetailsEvent(demo, recipes);*/
+                }; 
                 var sp2 = document.createElement('span');
                 sp2.setAttribute("class", "glyphicon glyphicon-plus")
                 moreDetails.appendChild(sp2);
                 cell.appendChild(moreDetails);
-                //var demo = document.getElementById(recipes[i]._id);
            }
            else{
                 var cell = row.insertCell(currentCol);
@@ -121,7 +126,16 @@ function moreDetailsOnClick(recipes, id){
       });
 
     document.getElementById('recipe-modal').style.display = "block"; // Make the modal visble
+    document.getElementById("recipe-image").src= recipeDetails.picture;
     document.getElementById("recipe-title").innerHTML = recipeDetails.recipeTitle;
+    document.getElementById("time").innerHTML = recipeDetails.preparationTime;
+    document.getElementById("recipe-link").href = recipeDetails.link;
+    document.getElementById("recipe-link").innerHTML = "למעבר למתכון המלא לחץ כאן";
+    if(recipeDetails.numberOfDishes != 0){
+        document.getElementById("numOfDis").innerHTML = recipeDetails.numberOfDishes;
+        document.getElementsByClassName("space").innerHTML = "  ";
+        document.getElementById("dishes").innerHTML = " מנות ";
+    }
 }
 
 fetch("http://localhost/api/search", {
