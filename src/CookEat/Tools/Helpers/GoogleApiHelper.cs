@@ -48,7 +48,6 @@ namespace CookEat
             return annotation.
                 BestGuessLabels.
                 ToString();
-
         }
     }
 }

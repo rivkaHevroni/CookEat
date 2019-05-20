@@ -130,6 +130,7 @@ function moreDetailsOnClick(recipes, id){
     document.getElementById("recipe-title").innerHTML = recipeDetails.recipeTitle;
     document.getElementById("time").innerHTML = recipeDetails.preparationTime;
     document.getElementById("recipe-link").href = recipeDetails.link;
+    document.getElementById("recipe-link").target ="_blank";
     document.getElementById("recipe-link").innerHTML = "למעבר למתכון המלא לחץ כאן";
     if(recipeDetails.numberOfDishes != 0){
         document.getElementById("numOfDis").innerHTML = recipeDetails.numberOfDishes;
@@ -170,5 +171,26 @@ fetch("http://localhost/api/search", {
         }
     })
 
+    document.getElementById("minus").addEventListener('click', (clickEvent) => {
+        {
+            clickEvent.preventDefault();
+            var numberOfDishes = document.getElementById("numOfDis").textContent;
+            numberOfDishes--;
+            if(numberOfDishes<=0)
+            {
+                alert("לא ניתן להציג מספר מנות שלילי");
+            }
+            else{
+                document.getElementById("numOfDis").innerHTML = numberOfDishes;
+            }
+        }
+    })
 
-
+    document.getElementById("plus").addEventListener('click', (clickEvent) => {
+        {
+            clickEvent.preventDefault();
+            var numberOfDishes = document.getElementById("numOfDis").textContent;
+            numberOfDishes++;
+            document.getElementById("numOfDis").innerHTML = numberOfDishes;
+        }
+    })
