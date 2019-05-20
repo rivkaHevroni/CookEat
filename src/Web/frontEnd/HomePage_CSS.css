@@ -138,9 +138,20 @@ body{
 	border: double 2px;
 	text-align: center;
 	height: 150px;
-	display: table-cell;
+    display: table-cell;
+    color: white;
 }
 
 #usersImage {
 	height: 120px;
+}
+
+#status{
+    color: white;
+    direction: rtl;
+    text-align: center;
+}
+
+#center{
+    text-align: center;
 }
