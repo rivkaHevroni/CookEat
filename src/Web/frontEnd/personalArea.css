@@ -35,5 +35,111 @@ p{
 }
 
 
+#recipe-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
 
+/* Modal Content */
+#recipe-modal-content {
+  background-color: #fefefe;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #888;
+  position: relative;
+  display: table;
+}
+
+/* The Close Button */
+#close-recipe-modal {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  float: right;
+}
+
+#close-recipe-modal:hover,
+#close-recipe-modal:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#recipe-image{
+  width: 240px;
+  height: 200px;
+}
+
+#recipe-title{
+  text-align: center;
+  font-size: 15px;
+  background-color: 	#F0E68C;
+  border-radius: 15%;
+  font-weight: bold;   
+}
+
+#recipe-ingrediants{
+  direction: rtl;
+  text-align: right;
+  font-size: 14px;
+}
+
+#recipe-preparation-time{
+  text-align: center;
+  font-size: 14px;
+  margin: 0 auto;
+}
+
+#time{
+  display: inline-block;
+}
+
+#recipe-link{
+  text-align: center;
+  font-size: 14px;
+  background-color: 	#F0E68C;
+  color: black;
+  margin: 0 auto;
+  display: table-row;
+}
+
+#recipe-num-of-dishes{
+  text-align: center;
+  font-size: 14px;
+  display: inline-block;
+  margin: 0 auto;
+  display: table;
+}
+
+#dishes{
+  display: inline-block;
+  direction: rtl;
+}
+
+#numOfDis{
+  display: inline-block;
+}
+
+#icondis{
+  margin-left: 3px;
+}
+
+#plus-minus{
+  border: 1px solid black;
+  border-radius: 10%;
+  display: inline-block;
+}
 

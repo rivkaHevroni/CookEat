@@ -81,6 +81,12 @@ table{
     font-weight: bold;   
 }
 
+#recipe-ingrediants{
+    direction: rtl;
+    text-align: right;
+    font-size: 14px;
+}
+
 #recipe-preparation-time{
     text-align: center;
     font-size: 14px;
