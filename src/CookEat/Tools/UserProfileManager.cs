@@ -87,12 +87,12 @@ namespace CookEat
                 SingleOrDefault();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("SaveRecipe")]
-        public async Task SaveRecipeInUserProfileAsync(string userId, string recipeId)
+        public async Task SaveRecipeInUserProfileAsync([FromBody] SaveRecipeRequest recipeToSave) 
         {
-            var userProfile = await TryGetUserProfileAsync(userId);
-            userProfile.UserRecipes.Add(recipeId);
+            var userProfile = await TryGetUserProfileAsync(recipeToSave.UserId);
+            userProfile.UserRecipes.Add(recipeToSave.RecipeId);
             await _dbManager.
                 UserProfileCollection.
                 FindOneAndReplaceAsync(profile => profile.Id == GetType().Name, userProfile);

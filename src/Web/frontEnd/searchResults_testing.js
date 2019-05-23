@@ -73,6 +73,10 @@ function PrintRecipes(recipes) {
                 var saveButton = document.createElement('BUTTON');
                 saveButton.innerHTML="שמור ";
                 saveButton.setAttribute("class", "btn btn-danger");
+                saveButton.setAttribute("id", recipes[currentRecipeIndex].id);
+                saveButton.onclick = function(ev) {
+                    saveButtonOnClick(recipes, ev.target.id)
+                }; 
                 var sp1 = document.createElement('span');
                 sp1.setAttribute("class", "glyphicon glyphicon-pushpin");
                 saveButton.appendChild(sp1);
@@ -120,6 +124,34 @@ function PrintRecipes(recipes) {
     return table;
 }
 
+function saveButtonOnClick(recipes, recipeId){ 
+    
+    if(recipes.find(recipe.id === id))
+    {
+        alert("מתכון זה נמצא ברשימת המתכונים שלך");
+    }
+    else if(localStorage.getItem("userName")== null)
+    {
+        window.location.href= "http://localhost/Authentication.html";
+    }
+    else{
+        var userId= localStorage.getItem("userName");
+        var SaveRecipeRequest = {
+            UserId: userId, 
+            RecipeId: recipeId
+        };
+        fetch("http://localhost/Api/UserProfile/SaveRecipe", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(SaveRecipeRequest)
+        }).
+        then(response => response.json()).
+        then( window.location.href= "http://localhost/personalArea.html");
+    }
+}
+
 function moreDetailsOnClick(recipes, id){
     var recipeDetails = recipes.find(function(recipe) {
         return recipe.id === id;
@@ -164,7 +196,14 @@ fetch("http://localhost/api/search", {
     enterHomePageElm.addEventListener('click', (clickEvent) => {
         clickEvent.preventDefault();
         try {
-            window.location.href= "http://localhost/Authentication.html";
+            if(localStorage.getItem("userName")== null)
+            {
+                window.location.href= "http://localhost/Authentication.html";
+            }
+            else{
+
+                window.location.href= "http://localhost/personalArea.html";
+            }
         }
         catch (err) {
             alert(err);
