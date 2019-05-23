@@ -5,6 +5,19 @@ document.getElementById("loginButton").addEventListener('click', (clickEvent) =>
 try {
         userName = document.getElementById('loginUserName').value;
         password = document.getElementById('loginPassword').value;
+        var position = userName.search(/[\u0590-\u05FF]/); //check if there is hebrew characters in this string
+        if(userName == ""){
+            alert("אנא הכנס שם משתמש")
+            return
+        }
+        else if(password==""){
+            alert("אנא הכנס סיסמא")
+            return
+        }
+        else if (position >=0) {
+            alert("אנא הזן שם משתמש באותיות אנגליות בלבד")
+            return
+        }
         var authenticationRequest= {
             UserName: userName,
             Password: password
@@ -44,10 +57,24 @@ try {
 document.getElementById("registerButton").addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault();
+
     console.log("hey");
 try {
         userName = document.getElementById('registerUserNum').value;
         password = document.getElementById('registerPassword').value;
+        var position = userName.search(/[\u0590-\u05FF]/); //check if there is hebrew characters in this string
+        if(userName == ""){
+            alert("אנא בחר שם משתמש")
+            return
+        }
+        else if(password==""){
+            alert("אנא בחר סיסמא")
+            return
+        }
+        else if (position >=0) {
+            alert("אנא בחר שם משתמש באותיות אנגליות בלבד")
+            return
+        }
         var authenticationRequest= {
             UserName: userName,
             Password: password
