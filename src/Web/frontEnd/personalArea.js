@@ -52,6 +52,8 @@ function PrintRecipes(recipes){
                 var saveButton = document.createElement('BUTTON');
                 saveButton.innerHTML="מחק";
                 saveButton.setAttribute("class", "btn btn-danger");
+                saveButton.setAttribute("id", recipes[numOfRecipe].id);
+                saveButton.onclick = ev => deleteRecipe(ev.target.id);
                 var sp1 = document.createElement('span');
                 sp1.setAttribute("class", "glyphicon glyphicon-minus-sign");
                 saveButton.appendChild(sp1);
@@ -59,9 +61,11 @@ function PrintRecipes(recipes){
                 var moreDetails = document.createElement('BUTTON');
                 moreDetails.setAttribute("class", "btn btn-danger");
                 moreDetails.innerHTML = "לפרטים נוספים ";
+                moreDetails.setAttribute("id", recipes[numOfRecipe].id);
                 //moreDetails.setAttribute("id", "5");
-                var demo = recipes[i]._id;
-                moreDetails.onclick = function(){moreDetailsEvent(demo, recipes);};
+                moreDetails.onclick = function(ev) {
+                    moreDetailsOnClick(recipes, ev.target.id)
+                }; 
                 var sp2 = document.createElement('span');
                 sp2.setAttribute("class", "glyphicon glyphicon-plus")
                 moreDetails.appendChild(sp2);
@@ -97,6 +101,66 @@ function PrintRecipes(recipes){
         }
     }
     return table;
+}
+
+function deleteRecipe(recipeId) {
+    var userId = localStorage.getItem("userName");
+
+    var removeRecipeRequest = {
+        UserId: userId, 
+        RecipeId: recipeId
+    };
+
+    fetch("http://localhost/Api/UserProfile/RemoveRecipe", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+        },
+        body: JSON.stringify(removeRecipeRequest)
+    }).
+    then(() => {
+        alert("המתכון הוסר בהצלחה!");
+        window.location.href = "http://localhost/PersonalArea.html";
+    });
+}
+
+function moreDetailsOnClick(recipes, id){
+    var recipeDetails = recipes.find(function(recipe) {
+        return recipe.id === id;
+      });
+
+    document.getElementById('recipe-modal').style.display = "block"; // Make the modal visble
+    document.getElementById("recipe-image").src= recipeDetails.picture;
+    document.getElementById("recipe-title").innerHTML = recipeDetails.recipeTitle;
+    document.getElementById("time").innerHTML = recipeDetails.preparationTime;
+    document.getElementById("recipe-link").href = recipeDetails.link;
+    document.getElementById("recipe-link").target ="_blank";
+    document.getElementById("recipe-link").innerHTML = "למעבר למתכון המלא לחץ כאן";
+    if(recipeDetails.numberOfDishes != 0){
+        document.getElementById("numOfDis").innerHTML = recipeDetails.numberOfDishes;
+        document.getElementsByClassName("space").innerHTML = "  ";
+        document.getElementById("dishes").innerHTML = "&nbsp מנות";
+    }
+    var recipeIngrediantsDiv = document.getElementById("recipe-ingrediants");
+    recipeIngrediantsDiv.innerHTML = null;
+    recipeDetails.ingredientsList.forEach(ingredient => {
+        var ingredientRow = document.createElement("tr");
+
+        var ingredientAmountColumn = document.createElement("td");
+        var amount = ingredient.quantity.amount;
+        if (amount != 0)
+        {
+            ingredientAmountColumn.className = "amount";
+            ingredientAmountColumn.innerHTML = amount;
+        }
+        ingredientRow.appendChild(ingredientAmountColumn);
+
+        var ingredientNameColumn = document.createElement("td");
+        ingredientNameColumn.innerHTML = "&nbsp" + ingredient.name;
+        ingredientRow.appendChild(ingredientNameColumn);
+
+        recipeIngrediantsDiv.appendChild(ingredientRow);
+    });
 }
 
 var userName = localStorage.getItem("userName");

@@ -21,6 +21,7 @@ namespace CookEat
                 app =>
                 {
                     app.
+                        DisableCache().
                         UseExceptionHandler().
                         UseWebApi(
                             new Dictionary<Type, Func<object>>

@@ -11,11 +11,11 @@ namespace CookEat
         public static Dictionary<string, double> IngredientNameToAmount { get; } = new Dictionary<string, double>()
         {
             { "1/2", 0.5},
-            { "1/3", (double)1/3},
+            { "1/3", 0.33},
             { "1/4", 0.25},
-            { "2/3", (double)2/3},
+            { "2/3", 0.66},
             { "חצי", 0.5},
-            { "שליש", (double)1/3},
+            { "שליש", 0.33},
             { "רבע", 0.25},
             { "מיכל", 1},
         };

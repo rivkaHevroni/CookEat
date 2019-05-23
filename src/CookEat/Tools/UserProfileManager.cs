@@ -89,24 +89,24 @@ namespace CookEat
 
         [HttpPost]
         [Route("SaveRecipe")]
-        public async Task SaveRecipeInUserProfileAsync([FromBody] SaveRecipeRequest recipeToSave) 
+        public async Task SaveRecipeInUserProfileAsync([FromBody] SaveRecipeRequest saveRecipeRequest) 
         {
-            var userProfile = await TryGetUserProfileAsync(recipeToSave.UserId);
-            userProfile.UserRecipes.Add(recipeToSave.RecipeId);
+            var userProfile = await TryGetUserProfileAsync(saveRecipeRequest.UserId);
+            userProfile.UserRecipes.Add(saveRecipeRequest.RecipeId);
             await _dbManager.
                 UserProfileCollection.
-                FindOneAndReplaceAsync(profile => profile.Id == GetType().Name, userProfile);
+                FindOneAndReplaceAsync(profile => profile.Id == saveRecipeRequest.UserId, userProfile);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("RemoveRecipe")]
-        public async Task RemoveRecipeFromUserProfileAsync(string userId, string recipeId)
+        public async Task RemoveRecipeFromUserProfileAsync([FromBody] RemoveRecipeRequest removeRecipeRequest)
         {
-            var userProfile = await TryGetUserProfileAsync(userId);
-            userProfile.UserRecipes.Remove(recipeId);
+            var userProfile = await TryGetUserProfileAsync(removeRecipeRequest.UserId);
+            userProfile.UserRecipes.Remove(removeRecipeRequest.RecipeId);
             await _dbManager.
                 UserProfileCollection.
-                FindOneAndReplaceAsync(profile => profile.Id == GetType().Name, userProfile);
+                FindOneAndReplaceAsync(profile => profile.Id == removeRecipeRequest.UserId, userProfile);
         }
     }
 }

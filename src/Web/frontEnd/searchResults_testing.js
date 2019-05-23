@@ -75,7 +75,7 @@ function PrintRecipes(recipes) {
                 saveButton.setAttribute("class", "btn btn-danger");
                 saveButton.setAttribute("id", recipes[currentRecipeIndex].id);
                 saveButton.onclick = function(ev) {
-                    saveButtonOnClick(recipes, ev.target.id)
+                    saveButtonOnClick(ev.target.id)
                 }; 
                 var sp1 = document.createElement('span');
                 sp1.setAttribute("class", "glyphicon glyphicon-pushpin");
@@ -124,31 +124,45 @@ function PrintRecipes(recipes) {
     return table;
 }
 
-function saveButtonOnClick(recipes, recipeId){ 
-    
-    if(recipes.find(recipe.id === id))
-    {
-        alert("מתכון זה נמצא ברשימת המתכונים שלך");
+function saveButtonOnClick(recipeId){ 
+    var userName = localStorage.getItem("userName");
+    if (userName == null) {
+        window.location.href = "http://localhost/Authentication.html";
     }
-    else if(localStorage.getItem("userName")== null)
-    {
-        window.location.href= "http://localhost/Authentication.html";
-    }
-    else{
-        var userId= localStorage.getItem("userName");
+    else {
+        var getUserSavedRecipesRequest = {UserId: userName};
         var SaveRecipeRequest = {
-            UserId: userId, 
+            UserId: userName, 
             RecipeId: recipeId
         };
-        fetch("http://localhost/Api/UserProfile/SaveRecipe", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(SaveRecipeRequest)
-        }).
-        then(response => response.json()).
-        then( window.location.href= "http://localhost/personalArea.html");
+
+        fetch("http://localhost/Api/UserProfile/UserRecipes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(getUserSavedRecipesRequest)
+            }).
+            then(response => response.json()).
+            then(savedRecipes => {
+                if (savedRecipes.recipes.find(function(recipe) {
+                    return recipe.id === recipeId;
+                  }))
+                {
+                    alert("מתכון זה נמצא ברשימת המתכונים שלך");
+                }
+                else {
+
+                    fetch("http://localhost/Api/UserProfile/SaveRecipe", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json; charset=UTF-8"
+                        },
+                        body: JSON.stringify(SaveRecipeRequest)
+                    }).
+                    then(alert("המתכון נשמר בהצלחה!"));
+                }
+            });
     }
 }
 
@@ -167,8 +181,28 @@ function moreDetailsOnClick(recipes, id){
     if(recipeDetails.numberOfDishes != 0){
         document.getElementById("numOfDis").innerHTML = recipeDetails.numberOfDishes;
         document.getElementsByClassName("space").innerHTML = "  ";
-        document.getElementById("dishes").innerHTML = " מנות ";
+        document.getElementById("dishes").innerHTML = "&nbsp מנות";
     }
+    var recipeIngrediantsDiv = document.getElementById("recipe-ingrediants");
+    recipeIngrediantsDiv.innerHTML = null;
+    recipeDetails.ingredientsList.forEach(ingredient => {
+        var ingredientRow = document.createElement("tr");
+
+        var ingredientAmountColumn = document.createElement("td");
+        var amount = ingredient.quantity.amount;
+        if (amount != 0)
+        {
+            ingredientAmountColumn.className = "amount";
+            ingredientAmountColumn.innerHTML = amount;
+        }
+        ingredientRow.appendChild(ingredientAmountColumn);
+
+        var ingredientNameColumn = document.createElement("td");
+        ingredientNameColumn.innerHTML = "&nbsp" + ingredient.name;
+        ingredientRow.appendChild(ingredientNameColumn);
+
+        recipeIngrediantsDiv.appendChild(ingredientRow);
+    });
 }
 
 fetch("http://localhost/api/search", {
@@ -179,7 +213,10 @@ fetch("http://localhost/api/search", {
         body: localStorage.getItem("SearchRequest")
     }).
     then(response => response.json()).
-    then(searchResponse => document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results)))
+    then(searchResponse => {
+        console.log(JSON.stringify(searchResponse));
+        document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results));
+    });
 
     var enterToPersonalInfoElm = document.getElementById('a');
     enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {

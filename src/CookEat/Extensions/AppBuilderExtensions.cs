@@ -27,6 +27,20 @@ namespace CookEat
 {
     public static class AppBuilderExtensions
     {
+        public static IAppBuilder DisableCache(this IAppBuilder app)
+        {
+            app.Use((context, next) =>
+            {
+                context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+                context.Response.Headers["Pragma"] = "no-cache";
+                context.Response.Headers["Expires"] = "0";
+
+                return next.Invoke();
+            });
+
+            return app;
+        }
+
         public static IAppBuilder UseExceptionHandler(this IAppBuilder app)
         {
             return app.Use(
