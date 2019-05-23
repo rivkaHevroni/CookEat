@@ -67,6 +67,7 @@
     <Compile Include="Data\Quantity.cs" />
     <Compile Include="Data\RecipeWithRank.cs" />
     <Compile Include="Data\Requests\AuthenticationRequest.cs" />
+    <Compile Include="Data\Requests\SaveRecipeRequest.cs" />
     <Compile Include="Data\Requests\SearchRequest.cs" />
     <Compile Include="Extensions\AppBuilderExtensions.cs" />
     <Compile Include="Extensions\HtmlWebExtensions.cs" />
