@@ -39,7 +39,7 @@ p{
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 50px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -51,12 +51,13 @@ p{
 
 /* Modal Content */
 #recipe-modal-content {
-  background-color: #fefefe;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #888;
-  position: relative;
-  display: table;
+	background-color: #fefefe;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #888;
+	position: relative;
+	display: table;
+	width: 240px;
 }
 
 /* The Close Button */
@@ -78,9 +79,10 @@ p{
   cursor: pointer;
 }
 
-#recipe-image{
-  width: 240px;
-  height: 200px;
+#recipe-image {
+	width: 240px;
+	height: 200px;
+	margin: 10px;
 }
 
 #recipe-title{
@@ -91,10 +93,13 @@ p{
   font-weight: bold;   
 }
 
-#recipe-ingrediants{
-  direction: rtl;
-  text-align: right;
-  font-size: 14px;
+#recipe-ingrediants {
+	direction: rtl;
+	text-align: right;
+	font-size: 14px;
+	overflow-y: scroll;
+	max-height: 120px;
+	margin-top: 10px;
 }
 
 #recipe-preparation-time{
@@ -103,6 +108,18 @@ p{
   margin: 0 auto;
 }
 
+.amount {
+	width: 15%;
+	text-align: center;
+}
+
+.ingredient-name {
+	width: 85%;
+}
+
+.ingredient-row {
+	display: flex;
+}
 #time{
   display: inline-block;
 }
