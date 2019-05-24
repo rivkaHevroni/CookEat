@@ -186,18 +186,26 @@ function moreDetailsOnClick(recipes, id){
     var recipeIngrediantsDiv = document.getElementById("recipe-ingrediants");
     recipeIngrediantsDiv.innerHTML = null;
     recipeDetails.ingredientsList.forEach(ingredient => {
-        var ingredientRow = document.createElement("tr");
+        var ingredientRow = document.createElement("div");
+        ingredientRow.className = "ingredient-row";
 
-        var ingredientAmountColumn = document.createElement("td");
+        var ingredientAmountColumn = document.createElement("div");
         var amount = ingredient.quantity.amount;
-        if (amount != 0)
-        {
-            ingredientAmountColumn.className = "amount";
+        ingredientAmountColumn.className = "amount";
+
+        if (amount != 0) {
+            if (Math.round(amount) !== amount) {
+                amount = amount.toFixed(2);
+            }
+
             ingredientAmountColumn.innerHTML = amount;
+        } else {
+            ingredientAmountColumn.innerHTML = "";
         }
         ingredientRow.appendChild(ingredientAmountColumn);
 
-        var ingredientNameColumn = document.createElement("td");
+        var ingredientNameColumn = document.createElement("div");
+        ingredientNameColumn.className = "ingredient-name";
         ingredientNameColumn.innerHTML = "&nbsp" + ingredient.name;
         ingredientRow.appendChild(ingredientNameColumn);
 
