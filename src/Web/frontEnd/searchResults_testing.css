@@ -93,12 +93,12 @@ table{
 }
 
 .amount {
-	width: 15%;
+	width: 25%;
 	text-align: center;
 }
 
 .ingredient-name {
-	width: 85%;
+	width: 75%;
 }
 
 .ingredient-row {
