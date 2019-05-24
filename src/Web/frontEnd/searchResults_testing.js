@@ -192,6 +192,10 @@ function moreDetailsOnClick(recipes, id){
         var amount = ingredient.quantity.amount;
         if (amount != 0)
         {
+            if (Math.round(amount) !== amount) {
+                amount = amount.toFixed(2);
+            }
+
             ingredientAmountColumn.className = "amount";
             ingredientAmountColumn.innerHTML = amount;
         }
