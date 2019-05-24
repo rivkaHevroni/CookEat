@@ -8,7 +8,12 @@ function GetRecipeElement(recipe){
     var preparationTime = document.createElement('div');
     var link = document.createElement('a');
     var numberOfDishes = document.createElement('p');
-    numberOfDishes.innerHTML = recipe.numOfDishes;
+    if (recipe.numOfDishes == 0 || recipe.numOfDishes == null) {
+        numberOfDishes.innerHTML = 1;
+    }
+    else {
+        numberOfDishes.innerHTML = recipe.numOfDishes;
+    }
     link.innerHTML- recipe.link;
     recipeTitle.innerHTML=recipe.recipeTitle;
     id.innerHTML = recipe.id;
@@ -170,7 +175,6 @@ function moreDetailsOnClick(recipes, id){
     var recipeDetails = recipes.find(function(recipe) {
         return recipe.id === id;
       });
-
     document.getElementById('recipe-modal').style.display = "block"; // Make the modal visble
     document.getElementById("recipe-image").src= recipeDetails.picture;
     document.getElementById("recipe-title").innerHTML = recipeDetails.recipeTitle;
@@ -178,11 +182,19 @@ function moreDetailsOnClick(recipes, id){
     document.getElementById("recipe-link").href = recipeDetails.link;
     document.getElementById("recipe-link").target ="_blank";
     document.getElementById("recipe-link").innerHTML = "למעבר למתכון המלא לחץ כאן";
-    if(recipeDetails.numberOfDishes != 0){
+    if (recipeDetails.numberOfDishes != 0 && recipeDetails.numberOfDishes != null) {
         document.getElementById("numOfDis").innerHTML = recipeDetails.numberOfDishes;
-        document.getElementsByClassName("space").innerHTML = "  ";
-        document.getElementById("dishes").innerHTML = "&nbsp מנות";
+        document.getElementById("numOfDis-hidden").innerHTML = recipeDetails.numberOfDishes;
+
     }
+    else {
+        document.getElementById("numOfDis").innerHTML = 1;
+        document.getElementById("numOfDis-hidden").innerHTML = 1;
+    }
+
+    document.getElementsByClassName("space").innerHTML = "  ";
+    document.getElementById("dishes").innerHTML = "&nbsp מנות";
+
     var recipeIngrediantsDiv = document.getElementById("recipe-ingrediants");
     recipeIngrediantsDiv.innerHTML = null;
     recipeDetails.ingredientsList.forEach(ingredient => {
@@ -190,19 +202,28 @@ function moreDetailsOnClick(recipes, id){
         ingredientRow.className = "ingredient-row";
 
         var ingredientAmountColumn = document.createElement("div");
+        var ingredientAmountColumnHidden = document.createElement("div");
         var amount = ingredient.quantity.amount;
+
+        ingredientAmountColumnHidden.className = "origin-amount";
+        ingredientAmountColumnHidden.setAttribute("hidden", true);
         ingredientAmountColumn.className = "amount";
 
         if (amount != 0) {
+
             if (Math.round(amount) !== amount) {
-                amount = amount.toFixed(2);
+                amount = amount.toFixed(1);
             }
 
             ingredientAmountColumn.innerHTML = amount;
-        } else {
+            ingredientAmountColumnHidden.innerHTML = amount;
+        }
+        else {
             ingredientAmountColumn.innerHTML = "";
+            ingredientAmountColumnHidden.innerHTML = "";
         }
         ingredientRow.appendChild(ingredientAmountColumn);
+        ingredientRow.appendChild(ingredientAmountColumnHidden);
 
         var ingredientNameColumn = document.createElement("div");
         ingredientNameColumn.className = "ingredient-name";
@@ -255,26 +276,48 @@ fetch("http://localhost/api/search", {
         }
     })
 
-    document.getElementById("minus").addEventListener('click', (clickEvent) => {
-        {
-            clickEvent.preventDefault();
-            var numberOfDishes = document.getElementById("numOfDis").textContent;
-            numberOfDishes--;
-            if(numberOfDishes<=0)
-            {
-                alert("לא ניתן להציג מספר מנות שלילי");
-            }
-            else{
-                document.getElementById("numOfDis").innerHTML = numberOfDishes;
-            }
-        }
-    })
+document.getElementById("minus").addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+    onNumOfDisChange(/*isPlus*/ false);
+})
 
-    document.getElementById("plus").addEventListener('click', (clickEvent) => {
-        {
-            clickEvent.preventDefault();
-            var numberOfDishes = document.getElementById("numOfDis").textContent;
-            numberOfDishes++;
-            document.getElementById("numOfDis").innerHTML = numberOfDishes;
+document.getElementById("plus").addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+    onNumOfDisChange(/*isPlus*/ true);
+})
+
+function onNumOfDisChange(isPlus) {
+    var numberOfDishes = document.getElementById("numOfDis").textContent;
+    var numberOfDishesOrigin = document.getElementById("numOfDis-hidden").textContent;
+    var originAmounts = document.getElementsByClassName("origin-amount");
+
+    isPlus ? numberOfDishes++ : numberOfDishes--;
+    if (numberOfDishes <= 0) {
+        alert("לא ניתן להציג מספר מנות שלילי");
+    }
+    else {
+        document.getElementById("numOfDis").innerHTML = numberOfDishes;
+
+        var amountsToMultiple = document.getElementsByClassName("amount");
+
+        for (var amountIndex = 0; amountIndex < amountsToMultiple.length; amountIndex++) {
+            if (amountsToMultiple[amountIndex].textContent != "") {
+                var newAmount = (originAmounts[amountIndex].textContent / numberOfDishesOrigin) * numberOfDishes;
+                var fixedOfsset;
+
+                if ((newAmount * 100) % 100 >= 10) {
+                    fixedOfsset = 1;
+                }
+                else {
+                    fixedOfsset = 0;
+                }
+
+                newAmount = newAmount.toFixed(fixedOfsset);
+                newAmount = newAmount == 0 ? 0.1 : newAmount;
+
+                amountsToMultiple[amountIndex].textContent = newAmount;
+                document.getElementsByClassName("amount")[amountIndex].textContent = amountsToMultiple[amountIndex].textContent;
+            }
         }
-    })
+    } 
+}
