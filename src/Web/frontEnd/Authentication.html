@@ -1,19 +1,19 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
-        <head>
-                <title>התחברות והרשמה</title>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-                <link rel="stylesheet" type="text/css" href="Authentication.css">
-                <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-        </head>
-
+<head>
+	<title>התחברות והרשמה</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" type="text/css" href="Authentication.css">
+	<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head>
         <body>
             <div class="imgcontainer">
                 <img src="cookEatLogo.png" alt="cookEat" class="avatar">
             </div>
-            <div id=forms>
-            <div id="login">
+            <div class="forms">
+            <div id="loginChange" class="login NewLogin">
                 <div class="container">
                     <p>משתמש קיים</p>
                     <label for="uname"><b>שם משתמש</b></label>
@@ -27,7 +27,7 @@
                     <button id="loginButton">התחבר</button>
                 </div>
             </div>     
-            <form id="register" method="POST">  
+            <form id="register" method="POST" class="baseForm newForm">  
                     <div class="container">
                         <p>עדיין לא נרשמת ?</p>
                         <label for="uname"><b>שם משתמש</b></label>
@@ -38,8 +38,41 @@
                         <br><br>
                         <button id="registerButton">הירשם</button>
                     </div>
-                </form>
+             </form>
             </div>
             <script src="Authentication.js"></script> 
+			<script>
+				$(window).on('resize', function () {
+					var win = $(this);
+					if (win.width() < 768) {
+						$('#register').removeClass('baseForm');
+						$('#register').addClass('newForm');
+						$('#loginChange').removeClass('login');
+						$('#loginChange').addClass('NewLogin');
+					}
+					else {
+						$('#register').removeClass('newForm');
+						$('#register').addClass('baseForm');
+						$('#loginChange').removeClass('NewLogin');
+						$('#loginChange').addClass('login');
+					}
+				});
+
+				$(window).on('load', function () {
+					var win = $(this);
+					if (win.width() < 768) {
+						$('#register').removeClass('baseForm');
+						$('#register').addClass('newForm');
+						$('#loginChange').removeClass('login');
+						$('#loginChange').addClass('NewLogin');
+					}
+					else {
+						$('#register').removeClass('newForm');
+						$('#register').addClass('baseForm');
+						$('#loginChange').removeClass('NewLogin');
+						$('#loginChange').addClass('login');
+					}
+				});
+			</script>
         </body>
 </html>

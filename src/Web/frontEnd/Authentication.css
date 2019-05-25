@@ -4,12 +4,12 @@
     font-family: 'Varela Round', sans-serif;
 }
 
-#forms{
+.forms{
    margin: auto;
    width:100%;
 }
 
-#login{
+.login{
     border-left: 3px solid;
     border-left-color: white;
     width: 49%;
@@ -19,20 +19,21 @@
     padding: 0px;
 }
 
-body{
-    background-image: url("bread-bunch-flatlay-349610.jpg");
-    background-repeat: no-repeat;
-    background-size: 100%;
-    margin: 0 auto;
+body {
+	background: url("bread-bunch-flatlay-349610.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
 }
 
-form {
-    width: 49%;
-    margin: 0 auto;
-    background: transparent;
-    float: right;
-    padding: 0px;
-  }
+.baseForm {
+	width: 49%;
+	margin: 0 auto;
+	background: transparent;
+	float: right;
+	padding: 0px;
+}
 
 p{
     font-size: 30px;
@@ -82,12 +83,14 @@ input[type=text], input[type=password] {
   }
   
   /* Change styles for span and cancel button on extra small screens */
-  @media screen and (max-width: 300px) {
-    span.psw {
-      display: block;
-      float: none;
-    }
-    .cancelbtn {
-      width: 100%;
-    }
-  }
+.newForm {
+	width: 100%;
+	background: transparent;
+	padding: 0px;
+}
+
+.NewLogin {
+	width: 100%;
+	background: transparent;
+	padding: 0px;
+}
