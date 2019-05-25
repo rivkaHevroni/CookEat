@@ -7,20 +7,20 @@ document.getElementById('add').addEventListener('click', (clickEvent) =>
         alert("אפשר להוסיף עד כחמישה מצרכים")
     }
     else{
-    //create the div that warp up the text box
-    var textBoxDivWrapperElement = document.createElement('div');
-    textBoxDivWrapperElement.setAttribute('id', `div_${numberOfTextBoxesInDocument}`);
+        //create the div that warp up the text box
+        var textBoxDivWrapperElement = document.createElement('div');
+        textBoxDivWrapperElement.setAttribute('id', `div_${numberOfTextBoxesInDocument}`);
 
-    //create the text box
-    var textBoxElement = document.createElement('input')
-    textBoxElement.setAttribute('type', 'text')
-    textBoxElement.setAttribute('id', `tb_${numberOfTextBoxesInDocument}`)
+        //create the text box
+        var textBoxElement = document.createElement('input')
+        textBoxElement.setAttribute('type', 'text')
+        textBoxElement.setAttribute('id', `tb_${numberOfTextBoxesInDocument}`)
 
-    textBoxDivWrapperElement.appendChild(textBoxElement)
+        textBoxDivWrapperElement.appendChild(textBoxElement)
 
-    document.getElementById('content').appendChild(textBoxDivWrapperElement)
+        document.getElementById('content').appendChild(textBoxDivWrapperElement)
 
-    numberOfTextBoxesInDocument++
+        numberOfTextBoxesInDocument++;
     }
 })
 
@@ -42,34 +42,51 @@ document.getElementById('remove').addEventListener('click', (clickEvent) =>
 document.getElementById('save').addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault()
+    var allIngredientFull = true;
     try {
         searchIngredientList = new Array(numberOfTextBoxesInDocument)
 
         for (var i = 0; i < numberOfTextBoxesInDocument; i++) {
             var elementId = `tb_${i}`;
-            searchIngredientList[i] = document.getElementById(elementId).value;
-            console.log(searchIngredientList[i]);
+            if (document.getElementById(elementId).value != "") {
+                searchIngredientList[i] = document.getElementById(elementId).value;
+                console.log(searchIngredientList[i]);
+            }
+            else {
+                allIngredientFull = false;
+            }
         }
         console.log(searchIngredientList);
 
-        var searchRequest = { IngrediantNames: searchIngredientList };
+        if (allIngredientFull == true) {
+            var searchRequest = { IngrediantNames: searchIngredientList };
 
-        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-        window.location.href = "http://localhost/searchResults_testing.html";
+            localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
+            window.location.href = "http://localhost/searchResults.html";
+        }
+        else {
+            alert("לא ניתן להכניס ערך ריק");
+        }
+
     }
     catch (err) {
         alert(err);
     }
 })
 
-document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) =>
-{
+document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) =>{
+
     clickEvent.preventDefault();
     try {
-        var searchQuery = document.getElementById('query').value;
-        var searchRequest = {SearchQuery: searchQuery};
-        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-        window.location.href = "http://localhost/searchResults_testing.html";
+        if (document.getElementById('query').value != "") {
+            var searchQuery = document.getElementById('query').value;
+            var searchRequest = { SearchQuery: searchQuery };
+            localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
+            window.location.href = "http://localhost/searchResults.html";
+        }
+        else {
+            alert("יש להכניס ערך לחיפוש");
+        }
     }
     catch(err) {
         alert(err);
@@ -84,18 +101,12 @@ document.getElementById("personalAreaButton").addEventListener('click', (clickEv
 
 document.getElementById("imageToSearch").addEventListener('click', (clickEvent) => {
     clickEvent.preventDefault();
-
-    var imgElement = document.getElementById("usersImage");
-    var chosenPicBase64 = imgElement.src.split("base64,")[1];
-    var searchRequest = { ImageBytes: chosenPicBase64 };
-    localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-    window.location.href = "http://localhost/searchResults_testing.html";
+        var imgElement = document.getElementById("usersImage");
+        var chosenPicBase64 = imgElement.src.split("base64,")[1];
+        var searchRequest = { ImageBytes: chosenPicBase64 };
+        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
+        window.location.href = "http://localhost/searchResults.html";
 })
-
-function searchByQuery(searchQuery){
-    
-    //return (sendSearchRequest(searchRequest)).Results;
-}
 
 function sendSearchRequest(request) {
     return fetch("http://localhost/search", {
@@ -108,19 +119,6 @@ function sendSearchRequest(request) {
     then(response => response.json()).
     then(obj => Console.log(JSON.stringify(obj)));
 }
-
-document.getElementById("QuerySearchButton").addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    try {
-        var searchQuery = document.getElementById('query').value;
-        var searchRequest = { SearchQuery: searchQuery };
-        localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-        window.location.href = "http://localhost/searchResults_testing.html";
-    }
-    catch (err) {
-        alert(err);
-    }
-})
 
 if (window.FileReader) {
     var drop;
