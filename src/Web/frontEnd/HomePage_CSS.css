@@ -25,19 +25,21 @@ header{
 h1{
     direction: rtl;
     font-size: 25px;
+    font-weight: bold;
 }
 h2{
     font-size: 35px;
+    font-weight: bold;
 }
 .alignRight{
     direction: rtl;
 }
-.text-left{
+/*.text-left{
     text-align: left;
     margin-top: 80px;
     margin-left: 50px;
     width: 50%;
-}
+}*/
 #privateArea{
     text-align: right;
 }
@@ -48,11 +50,13 @@ h2{
     text-align: center;
     color: white;
 }
-body{
-    background-image: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg");
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
+body { 
+    background: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+  }
 .column{
     float: left;
     width: 33.33%;
@@ -62,17 +66,25 @@ body{
     background-color: black;
 }
 .buttons{
-    margin-left: 180px;
+    margin-left: 40%;
+}
+
+#tabs-center{
+    margin-left: 46%;
 }
 
 #freeSearch{
-    margin-left: 215px;
+    margin: 0 auto;
 }
 .inputfile + label {
 	cursor: pointer; /* "hand" cursor */
 }
-#searchByImg{
-    margin-left:235px;
+#searchByImgWrapper {
+	margin-left: -70px;
+	margin-right: 0px;
+}
+#searchByImg {
+	margin: 0 auto;
 }
 ::placeholder{
     font-family: Arial, Helvetica, sans-serif;
@@ -101,15 +113,9 @@ body{
     font-family: Arial, Helvetica, sans-serif;
     padding: 3px;
 }
-#add-remove{
-    margin-left: 250px;
-}
-#content{
-    margin-left: 240px;
-}
-#save{
-    margin-top: 5px;
-    margin-left: 315px;
+
+#save {
+	margin-top: 5px;
 }
 #query{
     width: 160px;
@@ -118,10 +124,6 @@ body{
     /* For mobile phones: */
     [class*="col-"] {
       width: 100%;
-    }
-    .welcome{
-        color: black;
-        margin: 0px;
     }
 }
 #imageToSearch {
@@ -164,3 +166,20 @@ body{
 #homeLogo{
     padding: 0px
 }
+
+.smallWinClass{
+    margin: 0 auto;
+}
+.centerHome{
+    position: relative;
+}
+
+#row {
+	margin-left: 50px;
+	margin-right: 0px;
+}
+
+#searchByIng {
+	margin: 0 auto;
+}
+
