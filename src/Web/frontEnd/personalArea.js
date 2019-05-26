@@ -45,13 +45,15 @@ function moreDetailsEvent(id, recipes){
 }
 
 function PrintRecipes(recipes){
-
+	var table = document.createElement('table');
+	localStorage.setItem("allRecipes", JSON.stringify(recipes));
+	var numOfRecipesInRow = getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize);
     var numOfRecipe = 0;
-    var numOfRows = Math.ceil((recipes.length)/4, 0);
+    var numOfRows = Math.ceil((recipes.length)/numOfRecipesInRow, 0);
     var table = document.createElement('table');
     for(var i=0; i<numOfRows; i++){
         var row = table.insertRow(i);
-        for(var j=0; j<4; j++){
+        for(var j=0; j<numOfRecipesInRow; j++){
            if(numOfRecipe<recipes.length){
                 var cell = row.insertCell(j);
                 cell.style.border="solid white 20px";
@@ -132,6 +134,14 @@ function deleteRecipe(recipeId) {
     });
 }
 
+function updateTableResults() {
+	var foo = JSON.parse(localStorage.getItem("allRecipes"));
+	var newTable = PrintRecipes(foo);
+	var child = document.getElementById("result").lastElementChild;
+	document.getElementById("result").removeChild(child);
+	document.getElementById("result").appendChild(newTable);
+}
+
 function moreDetailsOnClick(recipes, id){
     var recipeDetails = recipes.find(function(recipe) {
         return recipe.id === id;
@@ -198,76 +208,97 @@ function moreDetailsOnClick(recipes, id){
 
 var userName = localStorage.getItem("userName");
 if (userName == null) {
-    window.location.href = "http://localhost/Authentication.html";
-}
-else {
-    var getUserSavedRecipesRequest = {UserId: userName};
-    fetch("http://localhost/Api/UserProfile/UserRecipes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8"
-            },
-            body: JSON.stringify(getUserSavedRecipesRequest)
-        }).
-        then(response => response.json()).
-        then(getUserSavedRecipesResponse => document.getElementById('result').appendChild(PrintRecipes(getUserSavedRecipesResponse.recipes)));
-}
-
-document.getElementById("logoffBut").addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    localStorage.removeItem("userName");
-    window.location.href = "http://localhost/index.html";
-})
-
-document.getElementById("homePageBut").addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    window.location.href = "http://localhost/index.html";
-})
-
-document.getElementById("minus").addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    onNumOfDisChange(/*isPlus*/ false);
-})
-
-document.getElementById("plus").addEventListener('click', (clickEvent) => {
-    clickEvent.preventDefault();
-    onNumOfDisChange(/*isPlus*/ true);
-})
-
-function onNumOfDisChange(isPlus) {
-    var numberOfDishes = document.getElementById("numOfDis").textContent;
-    var numberOfDishesOrigin = document.getElementById("numOfDis-hidden").textContent;
-    var originAmounts = document.getElementsByClassName("origin-amount");
-
-    isPlus ? numberOfDishes++ : numberOfDishes--;
-    if (numberOfDishes <= 0) {
-        alert("לא ניתן להציג מספר מנות שלילי");
-    }
-    else {
-        document.getElementById("numOfDis").innerHTML = numberOfDishes;
-
-        var amountsToMultiple = document.getElementsByClassName("amount");
-
-        for (var amountIndex = 0; amountIndex < amountsToMultiple.length; amountIndex++) {
-            if (amountsToMultiple[amountIndex].textContent != "") {
-                var newAmount = (originAmounts[amountIndex].textContent / numberOfDishesOrigin) * numberOfDishes;
-                var fixedOfsset;
-
-                if ((newAmount * 100) % 100 >= 10) {
-                    fixedOfsset = 1;
-                }
-                else {
-                    fixedOfsset = 0;
-                }
-
-                newAmount = newAmount.toFixed(fixedOfsset);
-                newAmount = newAmount == 0 ? 0.1 : newAmount;
-
-                amountsToMultiple[amountIndex].textContent = newAmount;
-                document.getElementsByClassName("amount")[amountIndex].textContent = amountsToMultiple[amountIndex].textContent;
-            }
-        }
-    }
+	window.location.href = "http://localhost/Authentication.html";
+} else {
+	var getUserSavedRecipesRequest = { UserId: userName };
+	fetch("http://localhost/Api/UserProfile/UserRecipes",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json; charset=UTF-8"
+				},
+				body: JSON.stringify(getUserSavedRecipesRequest)
+			}).
+		then(response => response.json()).
+		then(getUserSavedRecipesResponse => {
+			document.getElementById('result').
+				appendChild(PrintRecipes(getUserSavedRecipesResponse.recipes));
+		}).then(function() {
+			window.addEventListener("resize", updateTableResults);
+		});
 }
 
+document.getElementById("logoffBut").addEventListener('click',
+		(clickEvent) => {
+			clickEvent.preventDefault();
+			localStorage.removeItem("userName");
+			window.location.href = "http://localhost/index.html";
+		})
 
+	document.getElementById("homePageBut").addEventListener('click',
+		(clickEvent) => {
+			clickEvent.preventDefault();
+			window.location.href = "http://localhost/index.html";
+		})
+
+	document.getElementById("minus").addEventListener('click',
+		(clickEvent) => {
+			clickEvent.preventDefault();
+			onNumOfDisChange(/*isPlus*/ false);
+		})
+
+	document.getElementById("plus").addEventListener('click',
+		(clickEvent) => {
+			clickEvent.preventDefault();
+			onNumOfDisChange(/*isPlus*/ true);
+		})
+
+	function onNumOfDisChange(isPlus) {
+		var numberOfDishes = document.getElementById("numOfDis").textContent;
+		var numberOfDishesOrigin = document.getElementById("numOfDis-hidden").textContent;
+		var originAmounts = document.getElementsByClassName("origin-amount");
+
+		isPlus ? numberOfDishes++ : numberOfDishes--;
+		if (numberOfDishes <= 0) {
+			alert("לא ניתן להציג מספר מנות שלילי");
+		} else {
+			document.getElementById("numOfDis").innerHTML = numberOfDishes;
+
+			var amountsToMultiple = document.getElementsByClassName("amount");
+
+			for (var amountIndex = 0; amountIndex < amountsToMultiple.length; amountIndex++) {
+				if (amountsToMultiple[amountIndex].textContent != "") {
+					var newAmount = (originAmounts[amountIndex].textContent / numberOfDishesOrigin) * numberOfDishes;
+					var fixedOfsset;
+
+					if ((newAmount * 100) % 100 >= 10) {
+						fixedOfsset = 1;
+					} else {
+						fixedOfsset = 0;
+					}
+
+					newAmount = newAmount.toFixed(fixedOfsset);
+					newAmount = newAmount == 0 ? 0.1 : newAmount;
+
+					amountsToMultiple[amountIndex].textContent = newAmount;
+					document.getElementsByClassName("amount")[amountIndex].textContent = amountsToMultiple[amountIndex].textContent;
+				}
+			}
+		}
+	}
+
+	var largeScreenSize = window.matchMedia("(max-Width: 910px)");
+	var mediumScreenSize = window.matchMedia("(max-Width: 570px)");
+	var smallScreenSize = window.matchMedia("(max-Width: 400px)");
+
+	function getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize) {
+		if (smallScreenSize.matches) {
+			return 1;
+		} else if (mediumScreenSize.matches) {
+			return 2;
+		} else if (largeScreenSize.matches) {
+			return 3;
+		} else {
+			return 4;
+		}
+	}
