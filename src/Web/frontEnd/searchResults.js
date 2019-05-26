@@ -51,7 +51,8 @@ function moreDetailsEvent(id, recipes){
 
 function PrintRecipes(recipes) {
     var table = document.createElement('table');
-
+    localStorage.setItem("allRecipes", JSON.stringify(recipes));
+    var numOfRecipesInRow = getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize);
     if (recipes == null || recipes.length == 0) {
         var messege = document.createElement('span');
         messege.innerText = "מצטערים, לא נמצאו מתכונים מתאימים";
@@ -63,12 +64,12 @@ function PrintRecipes(recipes) {
         return table;
     }
 
-    var numOfRows = Math.ceil((recipes.length)/4, 0);
+    var numOfRows = Math.ceil((recipes.length)/numOfRecipesInRow, 0);
     var currentRecipeIndex = 0;
 
     for(var currentRow=0; currentRow<numOfRows; currentRow++){
         var row = table.insertRow(currentRow);
-        for(var currentCol=0; currentCol<4; currentCol++ , currentRecipeIndex++){
+        for(var currentCol=0; currentCol<numOfRecipesInRow; currentCol++ , currentRecipeIndex++){
            if(currentRecipeIndex < recipes.length){
 
                 var cell = row.insertCell(currentCol);
@@ -244,9 +245,18 @@ fetch("http://localhost/api/search", {
     then(response => response.json()).
     then(searchResponse => {
         console.log(JSON.stringify(searchResponse));
-        document.getElementById('ronen').appendChild(PrintRecipes(searchResponse.results));
+        document.getElementById('result').appendChild(PrintRecipes(searchResponse.results));
+    }).then(function() {
+	    window.addEventListener("resize", updateTableResults);
     });
 
+	function updateTableResults() {
+		var foo = JSON.parse(localStorage.getItem("allRecipes"));
+		var newTable = PrintRecipes(foo);
+		var child = document.getElementById("result").lastElementChild;
+		document.getElementById("result").removeChild(child);
+		document.getElementById("result").appendChild(newTable);
+	}
     var enterToPersonalInfoElm = document.getElementById('a');
     enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {
         clickEvent.preventDefault();
@@ -320,4 +330,23 @@ function onNumOfDisChange(isPlus) {
             }
         }
     } 
+}
+
+var largeScreenSize = window.matchMedia("(max-Width: 910px)");
+var mediumScreenSize = window.matchMedia("(max-Width: 570px)");
+var smallScreenSize = window.matchMedia("(max-Width: 400px)");
+
+function getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize){
+	if (smallScreenSize.matches) {
+		return 1;
+	}
+	else if(mediumScreenSize.matches){
+		return 2;
+	}
+	else if (largeScreenSize.matches) {
+		return 3;
+	} 
+	else{
+		return  4;
+	}
 }

@@ -210,7 +210,7 @@ else {
             body: JSON.stringify(getUserSavedRecipesRequest)
         }).
         then(response => response.json()).
-        then(getUserSavedRecipesResponse => document.getElementById('ronen').appendChild(PrintRecipes(getUserSavedRecipesResponse.recipes)));
+        then(getUserSavedRecipesResponse => document.getElementById('result').appendChild(PrintRecipes(getUserSavedRecipesResponse.recipes)));
 }
 
 document.getElementById("logoffBut").addEventListener('click', (clickEvent) => {
