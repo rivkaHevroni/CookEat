@@ -70,10 +70,6 @@ body {
     margin-left: 40%;
 }
 
-#tabs-center{
-    margin-left: 46%;
-}
-
 #freeSearch{
     margin: 0 auto;
 }
@@ -83,9 +79,6 @@ body {
 #searchByImgWrapper {
 	margin-left: -70px;
 	margin-right: 0px;
-}
-#searchByImg {
-	margin: 0 auto;
 }
 ::placeholder{
     font-family: Arial, Helvetica, sans-serif;
@@ -175,12 +168,25 @@ body {
     position: relative;
 }
 
-#row {
+#search-wrapper {
 	margin-left: 50px;
+	margin-right: 0px;
+	display: inline-block;
+}
+
+#searchByImg {
+	margin: 0 auto;
+}
+
+
+#menu3-content {
+	margin-left: 0px;
 	margin-right: 0px;
 }
 
-#searchByIng {
+#searchByIngredients {
+	align-items: center;
+	width: 160px;
 	margin: 0 auto;
 }
 
