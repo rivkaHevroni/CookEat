@@ -50,14 +50,14 @@ h2{
     text-align: center;
     color: white;
 }
-body { 
-    background: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg") no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-	overflow-x:hidden;
-  }
+body {
+	background: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow-x: hidden;
+}
 .column{
     float: left;
     width: 33.33%;
