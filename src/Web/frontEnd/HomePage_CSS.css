@@ -67,8 +67,9 @@ body {
     background-color: black;
 }
 
-#freeSearch{
-    margin: 0 auto;
+#freeSearch {
+	margin: 0 auto;
+	width: 215px;
 }
 .inputfile + label {
 	cursor: pointer; /* "hand" cursor */
