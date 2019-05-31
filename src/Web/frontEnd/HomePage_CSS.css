@@ -66,9 +66,6 @@ body {
 .nav-pills a {
     background-color: black;
 }
-.buttons{
-    margin-left: 40%;
-}
 
 #freeSearch{
     margin: 0 auto;
@@ -187,6 +184,12 @@ body {
 #searchByIngredients {
 	align-items: center;
 	width: 160px;
+	margin: 0 auto;
+}
+
+#home-page-buttons {
+	align-items: center;
+	width: 259px;
 	margin: 0 auto;
 }
 
