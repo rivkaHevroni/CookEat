@@ -50,14 +50,14 @@ h2{
     text-align: center;
     color: white;
 }
-body { 
-    background: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg") no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-	overflow:hidden;
-  }
+body {
+	background: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/background-cooking-11.jpg") no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	overflow-x: hidden;
+}
 .column{
     float: left;
     width: 33.33%;
@@ -66,26 +66,17 @@ body {
 .nav-pills a {
     background-color: black;
 }
-.buttons{
-    margin-left: 40%;
-}
 
-#tabs-center{
-    margin-left: 46%;
-}
-
-#freeSearch{
-    margin: 0 auto;
+#freeSearch {
+	margin: 0 auto;
+	width: 215px;
 }
 .inputfile + label {
 	cursor: pointer; /* "hand" cursor */
 }
 #searchByImgWrapper {
-	margin-left: -70px;
+	margin-left: 0px;
 	margin-right: 0px;
-}
-#searchByImg {
-	margin: 0 auto;
 }
 ::placeholder{
     font-family: Arial, Helvetica, sans-serif;
@@ -116,7 +107,7 @@ body {
 }
 
 #save {
-	margin-top: 5px;
+	margin-top: 20px;
 }
 #query{
     width: 160px;
@@ -175,12 +166,32 @@ body {
     position: relative;
 }
 
-#row {
+#search-wrapper {
 	margin-left: 50px;
+	margin-right: 0px;
+	display: inline-block;
+}
+
+#searchByImg {
+	margin: 0 auto;
+	width: 250px;
+}
+
+
+#menu3-content {
+	margin-left: 0px;
 	margin-right: 0px;
 }
 
-#searchByIng {
+#searchByIngredients {
+	align-items: center;
+	width: 160px;
+	margin: 0 auto;
+}
+
+#home-page-buttons {
+	align-items: center;
+	width: 259px;
 	margin: 0 auto;
 }
 
