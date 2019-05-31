@@ -247,6 +247,7 @@ fetch("http://localhost/api/search", {
         console.log(JSON.stringify(searchResponse));
         document.getElementById('result').appendChild(PrintRecipes(searchResponse.results));
         document.getElementById("waiting-img-wrapper").setAttribute("hidden", true);
+        document.getElementById("sorted-title-wrapper").removeAttribute("hidden")
     }).then(function() {
 	    window.addEventListener("resize", updateTableResults);
     });

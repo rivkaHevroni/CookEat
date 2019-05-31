@@ -162,3 +162,11 @@ table{
 	margin: auto;
 	width: 100%;
 }
+
+#sorted-title-wrapper {
+	width: 230px;
+	padding: 10px;
+	margin: auto;
+	font-weight: bold;
+	font-size: 15px;
+}
