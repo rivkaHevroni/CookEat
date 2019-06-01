@@ -253,13 +253,6 @@ fetch("http://localhost/api/search", {
 	    window.addEventListener("resize", updateTableResults);
     });
 
-	function updateTableResults() {
-		var foo = JSON.parse(localStorage.getItem("allRecipes"));
-		var newTable = PrintRecipes(foo);
-		var child = document.getElementById("result").lastElementChild;
-		document.getElementById("result").removeChild(child);
-		document.getElementById("result").appendChild(newTable);
-	}
     var enterToPersonalInfoElm = document.getElementById('a');
     enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {
         clickEvent.preventDefault();
@@ -352,4 +345,12 @@ function getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize){
 	else{
 		return  4;
 	}
+}
+
+function updateTableResults() {
+    var recipes = JSON.parse(localStorage.getItem("allRecipes"));
+    var newTable = PrintRecipes(recipes);
+    var child = document.getElementById("result").lastElementChild;
+    document.getElementById("result").removeChild(child);
+    document.getElementById("result").appendChild(newTable);
 }
