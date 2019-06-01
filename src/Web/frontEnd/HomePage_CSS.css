@@ -18,7 +18,6 @@ header{
     background-color: white;
     height: 43px;
 }
-
 .logo{
     text-align: left;
 }
@@ -34,12 +33,6 @@ h2{
 .alignRight{
     direction: rtl;
 }
-/*.text-left{
-    text-align: left;
-    margin-top: 80px;
-    margin-left: 50px;
-    width: 50%;
-}*/
 #privateArea{
     text-align: right;
 }
@@ -66,7 +59,6 @@ body {
 .nav-pills a {
     background-color: black;
 }
-
 #freeSearch {
 	margin: 0 auto;
 	width: 215px;
@@ -105,8 +97,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     padding: 3px;
 }
-
-#save {
+#sercheIng {
 	margin-top: 20px;
 }
 #query{
@@ -123,7 +114,6 @@ body {
 	pointer-events: none;
 	opacity: 0.5;
 }
-
 #drop {
 	min-height: 150px;
 	width: 250px;
@@ -135,7 +125,6 @@ body {
     display: table-cell;
     color: white;
 }
-
 #usersImage {
 	height: 120px;
 }

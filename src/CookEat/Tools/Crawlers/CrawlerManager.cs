@@ -30,11 +30,10 @@ namespace CookEat
                             ToList()).
                             SelectMany(list => list).
                             ToList();
-
                     await _scrapingManager.ScrapeAsync(urls);
                 },
                 1.Days(),
-                cancellationToken);
+				cancellationToken);
         }
     }
 }
