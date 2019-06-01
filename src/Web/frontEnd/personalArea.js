@@ -47,7 +47,17 @@ function moreDetailsEvent(id, recipes){
 function PrintRecipes(recipes){
 	var table = document.createElement('table');
 	localStorage.setItem("allRecipes", JSON.stringify(recipes));
-	var numOfRecipesInRow = getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize);
+    var numOfRecipesInRow = getNumberOfCols(largeScreenSize, mediumScreenSize, smallScreenSize);
+    if (recipes == null || recipes.length == 0) {
+        var messege = document.createElement('span');
+        messege.innerText ="עדיין לא שמרת מתכונים, הגיע הזמן להתחיל!";
+        messege.style.margin = "0 auto";
+        messege.style.display = "table";
+        messege.style.fontSize = "25px";
+        document.getElementById("emptyResult").appendChild(messege);
+
+        return table;
+    }
     var numOfRecipe = 0;
     var numOfRows = Math.ceil((recipes.length)/numOfRecipesInRow, 0);
     var table = document.createElement('table');
