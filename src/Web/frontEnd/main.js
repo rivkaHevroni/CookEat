@@ -62,7 +62,7 @@ document.getElementById('save').addEventListener('click', (clickEvent) =>
             var searchRequest = { IngrediantNames: searchIngredientList };
 
             localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-            window.location.href = "http://localhost/searchResults.html";
+            window.location.href = "/searchResults.html";
         }
         else {
             alert("לא ניתן להכניס ערך ריק");
@@ -82,7 +82,7 @@ document.getElementById("QuerySearchButton").addEventListener('click', (clickEve
             var searchQuery = document.getElementById('query').value;
             var searchRequest = { SearchQuery: searchQuery };
             localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-            window.location.href = "http://localhost/searchResults.html";
+            window.location.href = "/searchResults.html";
         }
         else {
             alert("יש להכניס ערך לחיפוש");
@@ -96,7 +96,7 @@ document.getElementById("QuerySearchButton").addEventListener('click', (clickEve
 document.getElementById("personalAreaButton").addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault();
-    window.location.href= "http://localhost/personalArea.html";  
+    window.location.href= "/personalArea.html";  
 })
 
 document.getElementById("imageToSearch").addEventListener('click', (clickEvent) => {
@@ -105,11 +105,11 @@ document.getElementById("imageToSearch").addEventListener('click', (clickEvent) 
         var chosenPicBase64 = imgElement.src.split("base64,")[1];
         var searchRequest = { ImageBytes: chosenPicBase64 };
         localStorage.setItem("SearchRequest", JSON.stringify(searchRequest));
-        window.location.href = "http://localhost/searchResults.html";
+        window.location.href = "/searchResults.html";
 })
 
 function sendSearchRequest(request) {
-    return fetch("http://localhost/search", {
+    return fetch("/search", {
         method: "POST",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"

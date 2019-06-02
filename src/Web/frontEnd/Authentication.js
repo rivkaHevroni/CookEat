@@ -22,7 +22,7 @@ try {
             UserName: userName,
             Password: password
         };
-        fetch('http://localhost/api/UserProfile/Login', {
+        fetch('/api/UserProfile/Login', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -34,7 +34,7 @@ try {
         console.log(authenticationResponse.authenticationResult);
         if(authenticationResponse.authenticationResult == "Success"){
             localStorage.setItem("userName", authenticationRequest.UserName);
-            window.location.href= "http://localhost/personalArea.html";
+            window.location.href= "/personalArea.html";
         }
         else{
 
@@ -79,7 +79,7 @@ try {
             UserName: userName,
             Password: password
         };
-        fetch('http://localhost/api/UserProfile/Register', {
+        fetch('/api/UserProfile/Register', {
             method: 'POST',
             headers: {
                 'Content-Type':'application/json',
@@ -91,7 +91,7 @@ try {
         console.log(authenticationResponse.authenticationResult);
         if(authenticationResponse.authenticationResult == "Success"){
             localStorage.setItem("userName", authenticationRequest.UserName);
-            window.location.href= "http://localhost/personalArea.html";
+            window.location.href= "/personalArea.html";
         }
         else{
 

@@ -121,7 +121,7 @@ function deleteRecipe(recipeId) {
         RecipeId: recipeId
     };
 
-    fetch("http://localhost/Api/UserProfile/RemoveRecipe", {
+    fetch("/Api/UserProfile/RemoveRecipe", {
         method: "POST",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
@@ -130,7 +130,7 @@ function deleteRecipe(recipeId) {
     }).
     then(() => {
         alert("המתכון הוסר בהצלחה!");
-        window.location.href = "http://localhost/PersonalArea.html";
+        window.location.href = "/PersonalArea.html";
     });
 }
 
@@ -208,10 +208,10 @@ function moreDetailsOnClick(recipes, id){
 
 var userName = localStorage.getItem("userName");
 if (userName == null) {
-	window.location.href = "http://localhost/Authentication.html";
+	window.location.href = "/Authentication.html";
 } else {
 	var getUserSavedRecipesRequest = { UserId: userName };
-	fetch("http://localhost/Api/UserProfile/UserRecipes",
+	fetch("/Api/UserProfile/UserRecipes",
 			{
 				method: "POST",
 				headers: {
@@ -232,13 +232,13 @@ document.getElementById("logoffBut").addEventListener('click',
 		(clickEvent) => {
 			clickEvent.preventDefault();
 			localStorage.removeItem("userName");
-			window.location.href = "http://localhost/index.html";
+			window.location.href = "/index.html";
 		})
 
 	document.getElementById("homePageBut").addEventListener('click',
 		(clickEvent) => {
 			clickEvent.preventDefault();
-			window.location.href = "http://localhost/index.html";
+			window.location.href = "/index.html";
 		})
 
 	document.getElementById("minus").addEventListener('click',
