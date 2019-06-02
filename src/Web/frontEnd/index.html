@@ -38,18 +38,16 @@
           <h1>ברוכים הבאים ל<span class="alignRight"> - CookEat</span></h1>
           <h2>?איך תרצו לחפש את המתכון הבא שלכם</h2><br><br>
         </div>
-        <div class="buttons" class="row" >
-          <div class="col-9" class = "nav nav-pills nav-justified">
-            <ul id="winChange" class="list-inline" class="smallWinClass">
-              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" class="tabs" data-toggle="pill" href="#menu1">חיפוש חופשי</a></li>             
-              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu2">תמונה</a></li> 
-              <li><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu3">מצרכים</a></li>
-            </ul>
-          </div>
+        <div id="home-page-buttons" >
+          <span id="winChange" class="list-inline" class="smallWinClass">
+            <span><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" class="tabs" data-toggle="pill" href="#menu1">חיפוש חופשי</a></span>             
+            <span><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu2">תמונה</a></span> 
+            <span><a style="padding:10px; margin: 3px; color:white; border: solid white 2px; border-radius: 10px; font-weight: bold; width: 120px; text-align: center;" data-toggle="pill" href="#menu3">מצרכים</a></span>
+          </span>
         </div>
         </div>
         <div class="tab-content" id="tabs-center">
-          <div id="menu1" class="tab-pane fade" class="buttons">
+          <div id="menu1" class="tab-pane fade">
             <br><br>
             <form>
               <div class="row">
@@ -76,19 +74,18 @@
           </div>
           <div id="menu3" class="tab-pane fade">
             <br><br>
-            <div class="row">
+            <div id="menu3-content" class="row">
               <div class="col-4"></div>
-              <div id="searchByIng">
-                <p id="add-remove">
-                  <a id="add" class="add-remove">הוסף מצרך</a>
-                  <a id="remove" class="add-remove">הסר מצרך</a>
-                </p>
-                <div id="content"></div>
-                <div class="row" id="row">
-                  <div class="col-3"></div>
-                  <button id="save">חפש</button>
-                </div>
-              </div>
+			  <div id="searchByIngredients">
+			  	<span id="add-remove">
+			  		<a id="add" class="add-remove">הוסף מצרך</a>
+			  		<a id="remove" class="add-remove">הסר מצרך</a>
+			  	</span>
+			  	<div id="content"></div>
+			  	<span class="row" id="search-wrapper">
+			  		<button id="sercheIng">חפש</button>
+			  	</span>
+			  </div>
             </div>
           </div>
         </div>

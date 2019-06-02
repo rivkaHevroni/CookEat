@@ -98,9 +98,7 @@ namespace CookEat
                     Take(400).
                     ToList();
 
-            CrawlerProfile.
-                SavedUrls.
-                AddRange(nonExistingUrls);
+            CrawlerProfile.SavedUrls.AddRange(nonExistingUrls);
 
             Console.WriteLine($"{nameof(MakoCrawler)} {nameof(CrawlAsync)} finished [{nameof(nonExistingUrls.Count)}={nonExistingUrls.Count}");
 

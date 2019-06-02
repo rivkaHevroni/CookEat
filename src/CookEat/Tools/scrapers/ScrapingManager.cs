@@ -39,9 +39,6 @@ namespace CookEat
               Scraper relevantScraper = GetRelevantScraper(url);
               await relevantScraper.ScrapeAsync(url);
 
-                /*await _scrapers.
-                    Single(scraper => scraper.IsRelevantUrl(url)).
-                    ScrapeAsync(url);*/
             }
         }
     }

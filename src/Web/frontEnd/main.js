@@ -24,7 +24,6 @@ document.getElementById('add').addEventListener('click', (clickEvent) =>
     }
 })
 
-
 document.getElementById('remove').addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault()
@@ -39,7 +38,7 @@ document.getElementById('remove').addEventListener('click', (clickEvent) =>
     }
 })
 
-document.getElementById('save').addEventListener('click', (clickEvent) =>
+document.getElementById('sercheIng').addEventListener('click', (clickEvent) =>
 {
     clickEvent.preventDefault()
     var allIngredientFull = true;
