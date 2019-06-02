@@ -15,10 +15,10 @@ namespace CookEat
         private readonly GoogleApiHelper _googleApiHelper;
         private readonly CancellationToken _cancellationToken;
 
-        public SearchManager(DBManager dbManager)
+        public SearchManager(DBManager dbManager,GoogleApiHelper googleApiHelper)
         {
             _dbManager = dbManager;
-            _googleApiHelper = new GoogleApiHelper();
+            _googleApiHelper = googleApiHelper;
         }
 
         [Route("")]

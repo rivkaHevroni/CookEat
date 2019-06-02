@@ -11,32 +11,42 @@ namespace CookEat
     {
         public static async Task Main(string[] Args)
         {
-            var cancellationTokenSource = new CancellationTokenSource();
-            var cancellationToken = cancellationTokenSource.Token;
-            var dbManager = new DBManager();
-            //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
-
-            using (WebApp.Start(
-                new StartOptions("http://*:80"),
-                app =>
-                {
-                    app.
-                        DisableCache().
-                        UseExceptionHandler().
-                        UseWebApi(
-                            new Dictionary<Type, Func<object>>
-                            {
-                                [typeof(SearchManager)] = () => new SearchManager(dbManager),
-                                [typeof(UserProfileManager)] = () => new UserProfileManager(dbManager)
-                            }).
-                        ServeStaticFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "frontEnd"));
-                }))
+            try
             {
-                Console.WriteLine("WebServer Started. Press Any Key To Close The Program...");
-                Console.ReadKey();
-            }
+                var cancellationTokenSource = new CancellationTokenSource();
+                var cancellationToken = cancellationTokenSource.Token;
+                var dbManager = new DBManager();
+                var googleApiHelper = new GoogleApiHelper();
+                //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
+            
 
-            cancellationTokenSource.Cancel();
+                using (WebApp.Start(
+                    new StartOptions("http://*:80"),
+                    app =>
+                    {
+                        app.
+                            DisableCache().
+                            UseExceptionHandler().
+                            UseWebApi(
+                                new Dictionary<Type, Func<object>>
+                                {
+                                    [typeof(SearchManager)] = () => new SearchManager(dbManager,googleApiHelper),
+                                    [typeof(UserProfileManager)] = () => new UserProfileManager(dbManager,googleApiHelper)
+                                }).
+                            ServeStaticFiles(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "frontEnd"));
+                    }))
+                {
+                    Console.WriteLine("WebServer Started. Press Any Key To Close The Program...");
+                    Console.ReadKey();
+                }
+
+                cancellationTokenSource.Cancel();
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.Handle(e);
+                Environment.Exit(1);
+            }
         }
     }
 }

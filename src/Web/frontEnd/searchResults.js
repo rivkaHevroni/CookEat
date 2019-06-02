@@ -135,7 +135,7 @@ function PrintRecipes(recipes) {
 function saveButtonOnClick(recipeId){ 
     var userName = localStorage.getItem("userName");
     if (userName == null) {
-        window.location.href = "http://localhost/Authentication.html";
+        window.location.href = "/Authentication.html";
     }
     else {
         var getUserSavedRecipesRequest = {UserId: userName};
@@ -144,7 +144,7 @@ function saveButtonOnClick(recipeId){
             RecipeId: recipeId
         };
 
-        fetch("http://localhost/Api/UserProfile/UserRecipes", {
+        fetch("/Api/UserProfile/UserRecipes", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json; charset=UTF-8"
@@ -161,7 +161,7 @@ function saveButtonOnClick(recipeId){
                 }
                 else {
 
-                    fetch("http://localhost/Api/UserProfile/SaveRecipe", {
+                    fetch("/Api/UserProfile/SaveRecipe", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json; charset=UTF-8"
@@ -237,7 +237,7 @@ function moreDetailsOnClick(recipes, id){
     });
 }
 
-fetch("http://localhost/api/search", {
+fetch("/api/search", {
         method: "POST",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
@@ -257,7 +257,7 @@ fetch("http://localhost/api/search", {
     enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {
         clickEvent.preventDefault();
         try {
-            window.location.href= "http://localhost/index.html";
+            window.location.href= "/index.html";
         }
         catch (err) {
             alert(err);
@@ -270,11 +270,11 @@ fetch("http://localhost/api/search", {
         try {
             if(localStorage.getItem("userName")== null)
             {
-                window.location.href= "http://localhost/Authentication.html";
+                window.location.href= "/Authentication.html";
             }
             else{
 
-                window.location.href= "http://localhost/personalArea.html";
+                window.location.href= "/personalArea.html";
             }
         }
         catch (err) {
