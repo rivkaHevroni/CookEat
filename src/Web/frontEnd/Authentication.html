@@ -8,71 +8,78 @@
 	<link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
-        <body>
-            <div class="imgcontainer">
-                <img src="cookEatLogo.png" alt="cookEat" class="avatar">
-            </div>
-            <div class="forms">
-            <div id="loginChange" class="login NewLogin">
-                <div class="container">
-                    <p>משתמש קיים</p>
-                    <label for="uname"><b>שם משתמש</b></label>
-                    
-                    <input type="text" placeholder="הזן שם משתמש" name="uname" id='loginUserName' required>
-                    <br>
-                    <label for="psw"><b>סיסמה</b></label>
-        
-                    <input type="password" placeholder="הזן סיסמה" name="psw" id='loginPassword' required>
-                    <br><br>
-                    <button id="loginButton">התחבר</button>
-                </div>
-            </div>     
-            <form id="register" method="POST" class="baseForm newForm">  
-                    <div class="container">
-                        <p>עדיין לא נרשמת ?</p>
-                        <label for="uname"><b>שם משתמש</b></label>
-                        <input type="text" placeholder="בחר שם משתמש" name="uname" id="registerUserNum" required >
-                        <br>
-                        <label for="psw"><b>סיסמה</b></label>
-                        <input type="password" placeholder="בחר סיסמה" name="psw" id="registerPassword" required>
-                        <br><br>
-                        <button id="registerButton">הירשם</button>
-                    </div>
-             </form>
-            </div>
-            <script src="Authentication.js"></script> 
-			<script>
-				$(window).on('resize', function () {
-					var win = $(this);
-					if (win.width() < 768) {
-						$('#register').removeClass('baseForm');
-						$('#register').addClass('newForm');
-						$('#loginChange').removeClass('login');
-						$('#loginChange').addClass('NewLogin');
-					}
-					else {
-						$('#register').removeClass('newForm');
-						$('#register').addClass('baseForm');
-						$('#loginChange').removeClass('NewLogin');
-						$('#loginChange').addClass('login');
-					}
-				});
+	<body>
+	<header>
+		<nav class="navbar navbar-custom">
+			<div id="menuButtons">
+				<span><button type="button" class="btn btn-danger" id="home"><i class="fa fa-home"></i> עמוד הבית</button></span>
+			</div>
+		</nav>
+	</header>
+	<div class="imgcontainer">
+		<img src="cookEatLogo.png" alt="cookEat" class="avatar">
+	</div>
+	<div class="forms">
+		<div id="loginChange" class="login NewLogin">
+			<div class="container">
+				<p>משתמש קיים</p>
+				<label for="uname"><b>שם משתמש</b></label>
 
-				$(window).on('load', function () {
-					var win = $(this);
-					if (win.width() < 768) {
-						$('#register').removeClass('baseForm');
-						$('#register').addClass('newForm');
-						$('#loginChange').removeClass('login');
-						$('#loginChange').addClass('NewLogin');
-					}
-					else {
-						$('#register').removeClass('newForm');
-						$('#register').addClass('baseForm');
-						$('#loginChange').removeClass('NewLogin');
-						$('#loginChange').addClass('login');
-					}
-				});
-			</script>
-        </body>
+				<input type="text" placeholder="הזן שם משתמש" name="uname" id='loginUserName' required>
+				<br>
+				<label for="psw"><b>סיסמה</b></label>
+
+				<input type="password" placeholder="הזן סיסמה" name="psw" id='loginPassword' required>
+				<br><br>
+				<button id="loginButton">התחבר</button>
+			</div>
+		</div>
+		<form id="register" method="POST" class="baseForm newForm">
+			<div class="container">
+				<p>עדיין לא נרשמת ?</p>
+				<label for="uname"><b>שם משתמש</b></label>
+				<input type="text" placeholder="בחר שם משתמש" name="uname" id="registerUserNum" required>
+				<br>
+				<label for="psw"><b>סיסמה</b></label>
+				<input type="password" placeholder="בחר סיסמה" name="psw" id="registerPassword" required>
+				<br><br>
+				<button id="registerButton">הירשם</button>
+			</div>
+		</form>
+	</div>
+	<script src="Authentication.js"></script>
+	<script>
+		$(window).on('resize', function () {
+			var win = $(this);
+			if (win.width() < 768) {
+				$('#register').removeClass('baseForm');
+				$('#register').addClass('newForm');
+				$('#loginChange').removeClass('login');
+				$('#loginChange').addClass('NewLogin');
+			}
+			else {
+				$('#register').removeClass('newForm');
+				$('#register').addClass('baseForm');
+				$('#loginChange').removeClass('NewLogin');
+				$('#loginChange').addClass('login');
+			}
+		});
+
+		$(window).on('load', function () {
+			var win = $(this);
+			if (win.width() < 768) {
+				$('#register').removeClass('baseForm');
+				$('#register').addClass('newForm');
+				$('#loginChange').removeClass('login');
+				$('#loginChange').addClass('NewLogin');
+			}
+			else {
+				$('#register').removeClass('newForm');
+				$('#register').addClass('baseForm');
+				$('#loginChange').removeClass('NewLogin');
+				$('#loginChange').addClass('login');
+			}
+		});
+	</script>
+</body>
 </html>

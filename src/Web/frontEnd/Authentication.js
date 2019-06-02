@@ -104,3 +104,14 @@ try {
         alert(err);
     }
 })
+
+var enterToPersonalInfoElm = document.getElementById('home');
+enterToPersonalInfoElm.addEventListener('click', (clickEvent) => {
+    clickEvent.preventDefault();
+    try {
+        window.location.href = "/index.html";
+    }
+    catch (err) {
+        alert(err);
+    }
+})

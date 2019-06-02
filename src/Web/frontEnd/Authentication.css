@@ -9,6 +9,14 @@
    width:100%;
 }
 
+nav.navbar.navbar-custom {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	border-radius: 0px;
+	color: red;
+}
+
 .login{
     border-left: 3px solid;
     border-left-color: white;
@@ -93,4 +101,12 @@ input[type=text], input[type=password] {
 	width: 100%;
 	background: transparent;
 	padding: 0px;
+}
+
+button#home.btn.btn-danger {
+	width: 110px;
+	height: 40px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
 }
