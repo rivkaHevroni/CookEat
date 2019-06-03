@@ -32,7 +32,7 @@ namespace CookEat
                             ToList();
                     await _scrapingManager.ScrapeAsync(urls);
                 },
-                1.Days(),
+                1.Hours(),
 				cancellationToken);
         }
     }

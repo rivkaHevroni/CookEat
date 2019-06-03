@@ -100,7 +100,7 @@ namespace CookEat
 
             CrawlerProfile.SavedUrls.AddRange(nonExistingUrls);
 
-            Console.WriteLine($"{nameof(MakoCrawler)} {nameof(CrawlAsync)} finished [{nameof(nonExistingUrls.Count)}={nonExistingUrls.Count}");
+            Console.WriteLine($"{nameof(MakoCrawler)} {nameof(CrawlAsync)} finished [{nameof(nonExistingUrls.Count)}={nonExistingUrls.Count}]");
 
             return nonExistingUrls;
         }
