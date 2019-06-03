@@ -14,6 +14,8 @@ namespace CookEat
 
         protected override async Task<Recipe> ScrapeInternalAsync(string url)
         {
+            Console.WriteLine($"{nameof(MakoScraper)} {nameof(ScrapeInternalAsync)} started [{nameof(url)}={url}]");
+
             var web = new HtmlWeb();
             var htmlDoc = await web.LoadWithRetryAsync(url);
 

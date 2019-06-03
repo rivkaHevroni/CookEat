@@ -9,7 +9,7 @@ namespace CookEat
 {
     public static class Program
     {
-        public static async Task Main(string[] Args)
+        public static async Task Main(string[] args)
         {
             try
             {
@@ -17,8 +17,7 @@ namespace CookEat
                 var cancellationToken = cancellationTokenSource.Token;
                 var dbManager = new DBManager();
                 var googleApiHelper = new GoogleApiHelper();
-                //var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
-            
+                var crawlerManager = new CrawlerManager(dbManager, cancellationToken);
 
                 using (WebApp.Start(
                     new StartOptions("http://*:80"),
